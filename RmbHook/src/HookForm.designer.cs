@@ -1,4 +1,4 @@
-﻿namespace SampleApplication
+﻿namespace RmbHook
 {
     partial class HookForm
     {
@@ -169,8 +169,10 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "HookForm";
             this.Text = "RmbHook";
-            this.Load += new System.EventHandler(this.TestForm_Load);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TestForm_FormClosed);
+            this.Load += new System.EventHandler(this.hookForm_Load);
+            this.SizeChanged += new System.EventHandler(this.HookForm_SizeChanged);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.hookForm_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HookForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

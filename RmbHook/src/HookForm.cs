@@ -7,140 +7,53 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using MouseKeyboardLibrary;
-
-namespace SampleApplication
+namespace RmbHook
 {
     public partial class HookForm : Form
     {
 
-        MouseHook mouseHook = new MouseHook();
-        KeyboardHook keyboardHook = new KeyboardHook();
+        private MouseKeybardLib mlib = new MouseKeybardLib();
+        private TaskbarNotify mtasknotify = new TaskbarNotify();
+        private RmbKey mrmbkey = new RmbKey();
 
         public HookForm()
         {
             InitializeComponent();
         }
 
-        private void TestForm_Load(object sender, EventArgs e)
+        private void hookForm_Load(object sender, EventArgs e)
         {
+            mtasknotify.init( this );
 
-            mouseHook.MouseMove += new MouseEventHandler(mouseHook_MouseMove);
-            mouseHook.MouseDown += new MouseEventHandler(mouseHook_MouseDown);
-            mouseHook.MouseUp += new MouseEventHandler(mouseHook_MouseUp);
-            mouseHook.MouseWheel += new MouseEventHandler(mouseHook_MouseWheel);
+            mlib.init( this );
+            mlib.start();
 
-            keyboardHook.KeyDown += new KeyEventHandler(keyboardHook_KeyDown);
-            keyboardHook.KeyUp += new KeyEventHandler(keyboardHook_KeyUp);
-            keyboardHook.KeyPress += new KeyPressEventHandler(keyboardHook_KeyPress);
-
-            mouseHook.Start();
-            keyboardHook.Start();
-
-            SetXYLabel(MouseSimulator.X, MouseSimulator.Y);
+            mrmbkey.init();
 
         }
-
-        void keyboardHook_KeyPress(object sender, KeyPressEventArgs e)
+        private void HookForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-            AddKeyboardEvent(
-                "KeyPress",
-                "",
-                e.KeyChar.ToString(),
-                "",
-                "",
-                ""
-                );
+            // Not necessary anymore, will stop when application exits
+            mlib.stop();
+            mtasknotify.exit();
+        }   
+        private void hookForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
 
         }
-
-        void keyboardHook_KeyUp(object sender, KeyEventArgs e)
+        private void HookForm_SizeChanged(object sender, EventArgs e)
         {
-
-            AddKeyboardEvent(
-                "KeyUp",
-                e.KeyCode.ToString(),
-                "",
-                e.Shift.ToString(),
-                e.Alt.ToString(),
-                e.Control.ToString()
-                );
-
+            mtasknotify.onFormSizeChanged();
         }
 
-        void keyboardHook_KeyDown(object sender, KeyEventArgs e)
+        
+// --- show event; ---
+
+        public void SetXYLabel(int x, int y)
         {
-
-
-            AddKeyboardEvent(
-                "KeyDown",
-                e.KeyCode.ToString(),
-                "",
-                e.Shift.ToString(),
-                e.Alt.ToString(),
-                e.Control.ToString()
-                );
-
-        }
-
-        void mouseHook_MouseWheel(object sender, MouseEventArgs e)
-        {
-
-            AddMouseEvent(
-                "MouseWheel",
-                "",
-                "",
-                "",
-                e.Delta.ToString()
-                );
-
-        }
-
-        void mouseHook_MouseUp(object sender, MouseEventArgs e)
-        {
-
-
-            AddMouseEvent(
-                "MouseUp",
-                e.Button.ToString(),
-                e.X.ToString(),
-                e.Y.ToString(),
-                ""
-                );
-
-        }
-
-        void mouseHook_MouseDown(object sender, MouseEventArgs e)
-        {
-
-
-            AddMouseEvent(
-                "MouseDown",
-                e.Button.ToString(),
-                e.X.ToString(),
-                e.Y.ToString(),
-                ""
-                );
-
-
-        }
-
-        void mouseHook_MouseMove(object sender, MouseEventArgs e)
-        {
-
-            SetXYLabel(e.X, e.Y);
-
-        }
-
-        void SetXYLabel(int x, int y)
-        {
-
             curXYLabel.Text = String.Format("Current Mouse Point: X={0}, y={1}", x, y);
-
         }
-
-        void AddMouseEvent(string eventType, string button, string x, string y, string delta)
+        public void AddMouseEvent(string eventType, string button, string x, string y, string delta)
         {
 
             listView1.Items.Insert(0,
@@ -152,12 +65,9 @@ namespace SampleApplication
                         y,
                         delta
                     }));
-
         }
-
-        void AddKeyboardEvent(string eventType, string keyCode, string keyChar, string shift, string alt, string control)
+        public void AddKeyboardEvent(string eventType, string keyCode, string keyChar, string shift, string alt, string control)
         {
-
             listView2.Items.Insert(0,
                  new ListViewItem(
                      new string[]{
@@ -168,19 +78,9 @@ namespace SampleApplication
                         alt,
                         control
                 }));
-
         }
 
-        private void TestForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-            // Not necessary anymore, will stop when application exits
-
-            //mouseHook.Stop();
-            //keyboardHook.Stop();
-
-        }
-
+          
 
     }
 }
