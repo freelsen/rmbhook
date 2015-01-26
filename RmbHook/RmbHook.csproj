@@ -107,6 +107,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>xcopy $(ProjectDir)src\res $(TargetDir)res\ /e /d</PreBuildEvent>
+    <PreBuildEvent>xcopy $(ProjectDir)src\res $(TargetDir)res\ /e /d /y</PreBuildEvent>
   </PropertyGroup>
 </Project>
