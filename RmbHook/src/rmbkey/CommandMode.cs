@@ -46,12 +46,12 @@ namespace RmbHook
             if (mkeymap.ContainsKey(key))
             {
                 Keys kmap = (Keys)mkeymap[key];
-                sendKeyNums(kmap);
+                sendKeyNumsPair(kmap);
                 eatkey = 1;
             }
             else                                
             {
-                eatkey = onKeyNum(key);
+                eatkey = onKeyNums(key);
             }
             return eatkey;
         }
@@ -62,6 +62,17 @@ namespace RmbHook
         }
 
         // --send repeat keys;---
+        private int mkeynum = 1;
+        private Hashtable mkeynumtable = new Hashtable();
+        private int getKeyNum() { return mkeynum; }
+
+        private void initKeyNum()
+        {
+            mkeynumtable.Add(Keys.F, (int)1);
+            mkeynumtable.Add(Keys.D, (int)2);
+            mkeynumtable.Add(Keys.S, (int)5);
+            mkeynumtable.Add(Keys.A, (int)10);
+        }
         private void sendKeyNum(Keys key)
         {
             sendKeyNum(key, mkeynum);
@@ -71,23 +82,12 @@ namespace RmbHook
             for (int i = 0; i < num; i++)
                 sendKey(key);
         }
-        private int mkeynum = 1;
-        private Hashtable mkeynumtable = new Hashtable();
-        private void initKeyNum()
-        {
-            mkeynumtable.Add(Keys.F, (int)1);
-            mkeynumtable.Add(Keys.D, (int)2);
-            mkeynumtable.Add(Keys.S, (int)5);
-            mkeynumtable.Add(Keys.A, (int)10);
-        }
         public int onKeyNum(Keys key)
         {
             int eatkey = 0;
             if (mkeynumtable.Contains(key))
             {
-                mkeynum = (int)mkeynumtable[key];
-
-                onKeyNums(mkeynum);            
+                mkeynum = (int)mkeynumtable[key];           
 
                 eatkey = 1;
             }
@@ -96,6 +96,8 @@ namespace RmbHook
         
         // ---+seperate repeat keys; ---
         private Hashtable mkeynums = new Hashtable();
+        private int mkeynumtemp = 1;
+        private int mkeynumscnt = 0;
         private void initKeyNums()
         {
             mkeynums.Add(Keys.Up, (int)1);
@@ -117,31 +119,33 @@ namespace RmbHook
             int num = 1;
             if (mkeynums.Contains(key))
             {
-                checkUpdateKeyNumsPair(key);
+                checkUpdateKeyNums(key);
 
                 num = (int)mkeynums[key];
             }
             sendKeyNum(key, num);
         }
-        private int mkeynumtemp = 1;
-        private void onKeyNums(int num)
+        private int onKeyNums(Keys key)
         {
-            mkeynumtemp = num;
-
-            mkeynumscnt = 2;
+            int eatkey = onKeyNum(key);
+            if (eatkey > 0)
+            {
+                mkeynumtemp = getKeyNum();
+                mkeynumscnt = 2;
+            }
+            return eatkey;
         }
-        private int mkeynumscnt = 0;
+        private void onKeyNumsStart()
+        {
+            if (mkeynumscnt > 0)
+                mkeynumscnt--;
+        }
         private void checkUpdateKeyNums(Keys key)
         {
             if (mkeynumscnt > 0)
             {
                 mkeynums[key] = mkeynumtemp;
             }
-        }
-        private void onKeyNumsStart()
-        {
-            if (mkeynumscnt > 0)
-                mkeynumscnt--;
         }
 
         // ---pair repeat keys ---
@@ -153,16 +157,16 @@ namespace RmbHook
             mkeynumspair.Add(Keys.Left, Keys.Right);
             mkeynumspair.Add(Keys.Right, Keys.Left);
         }
-        private void checkUpdateKeyNumsPair(Keys key)
+        private void sendKeyNumsPair(Keys key)
         {
-            checkUpdateKeyNums(key);
-
             if (mkeynumspair.Contains(key))
             {
                 Keys pair = (Keys)mkeynumspair[key];
 
                 checkUpdateKeyNums(pair);
             }
+
+            sendKeyNums(key);
         }
     }
 }
