@@ -17,6 +17,8 @@ namespace RmbHook
         private Form mparent = null;
         private Timer mtimer = new Timer();
 
+        private TaskbarMenu mtaskbarmenu = new TaskbarMenu();
+
         public TaskbarNotify()
         {
             gthis = this;
@@ -39,6 +41,7 @@ namespace RmbHook
 
             micon1 = new Icon("res\\icon1.ico");
 
+            mnotifyicon.Text = "RmbHook";
             mnotifyicon.Icon = micon1;
             mnotifyicon.MouseDoubleClick += new MouseEventHandler(mnotifyicon_MouseDoubleClick);
 
@@ -46,6 +49,9 @@ namespace RmbHook
             mtimer.Interval = 100;
             mtimer.Tick += new EventHandler(mtimer_Tick);
             mtimer.Start();
+
+            mtaskbarmenu.init();
+            mnotifyicon.ContextMenuStrip = mtaskbarmenu.getMenu();
 
             return 0;
         }
@@ -64,6 +70,10 @@ namespace RmbHook
 
         void mnotifyicon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            onFormShow();
+        }
+        public void onFormShow()
+        {
             mparent.Show();
             mparent.WindowState = FormWindowState.Normal;
             mparent.Activate();
@@ -76,8 +86,6 @@ namespace RmbHook
                 mnotifyicon.Visible = true;
             }
         }
-
-
         
     }
 }

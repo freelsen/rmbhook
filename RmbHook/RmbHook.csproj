@@ -82,6 +82,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\rmbkey\RmbKey.cs" />
+    <Compile Include="src\TaskbarMenu.cs" />
     <Compile Include="src\TaskbarNotify.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +92,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon1.ico" />
     <Content Include="icon3.ico" />
   </ItemGroup>
   <ItemGroup>
