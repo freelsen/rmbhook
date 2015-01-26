@@ -163,7 +163,7 @@ namespace RmbHook
         }
         private void onCmdModeStart()
         {
-
+            mcommandmode.onStart();
         }
         private void onCmdModeEnd()
         {
@@ -175,7 +175,16 @@ namespace RmbHook
         {
             int eatkey = 0;
 
-            eatkey = mcommandmode.onKey(key);
+            switch (key)
+            {
+                case Keys.G:
+                    setCmdMode(false);
+                    eatkey = 1;
+                    break;
+            }
+
+            if( 0 == eatkey )
+                eatkey = mcommandmode.onKey(key);
 
             return eatkey;
         }
