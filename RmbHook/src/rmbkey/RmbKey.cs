@@ -13,6 +13,7 @@ namespace RmbHook
         public static RmbKey gthis = null; 
 
         private TaskbarNotify mtasknotify = null;
+        private CommandMode mcommandmode = new CommandMode();
 
         public RmbKey()
         {
@@ -24,6 +25,8 @@ namespace RmbHook
             initKeyIcon();
 
             mtasknotify = TaskbarNotify.gthis;
+
+            mcommandmode.init();
 
             setCmdEnable(true);
 
@@ -171,14 +174,8 @@ namespace RmbHook
         public int onCmdKey(Keys key)
         {
             int eatkey = 0;
-            switch (key)
-            {
-                case Keys.Space:                // 140916;
-                    eatkey = 1;
-                    break;
-                default:
-                    break;
-            }
+
+            eatkey = mcommandmode.onKey(key);
 
             return eatkey;
         }
