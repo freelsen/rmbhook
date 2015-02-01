@@ -82,6 +82,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\rmbkey\CommandMode.cs" />
+    <Compile Include="src\rmbkey\KeyCmd.cs" />
     <Compile Include="src\rmbkey\RmbKey.cs" />
     <Compile Include="src\TaskbarMenu.cs" />
     <Compile Include="src\TaskbarNotify.cs" />
