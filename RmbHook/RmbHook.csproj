@@ -81,6 +81,7 @@
     <Compile Include="src\Program.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="src\rmbkey\CmdMode.cs" />
     <Compile Include="src\rmbkey\CommandMode.cs" />
     <Compile Include="src\rmbkey\KeyCmd.cs" />
     <Compile Include="src\rmbkey\RmbKey.cs" />

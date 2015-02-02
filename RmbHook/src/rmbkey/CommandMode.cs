@@ -94,7 +94,7 @@ namespace RmbHook
             return eatkey;
         }
         
-        // ---+seperate repeat keys; ---
+        // ---+separate repeat keys; ---
         private Hashtable mkeynums = new Hashtable();
         private int mkeynumtemp = 1;
         private int mkeynumscnt = 0;
