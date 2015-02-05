@@ -77,6 +77,7 @@
     <Compile Include="src\HookForm.designer.cs">
       <DependentUpon>HookForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\lcom\LObj.cs" />
     <Compile Include="src\MouseKeybardLib.cs" />
     <Compile Include="src\Program.cs">
       <SubType>Code</SubType>
@@ -84,6 +85,7 @@
     <Compile Include="src\rmbkey\CmdMode.cs" />
     <Compile Include="src\rmbkey\CommandMode.cs" />
     <Compile Include="src\rmbkey\KeyCmd.cs" />
+    <Compile Include="src\rmbkey\KeyCommand.cs" />
     <Compile Include="src\rmbkey\RmbKey.cs" />
     <Compile Include="src\TaskbarMenu.cs" />
     <Compile Include="src\TaskbarNotify.cs" />
