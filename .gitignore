@@ -1,5 +1,8 @@
+*.bak
+*.swp
 *~
-MouseKeyboardLibrary/obj
-MouseKeyboardLibrary/bin
-RmbHook/obj
-RmbHook/bin
+Thumbs.db
+obj
+**/bin/*
+!**/bin/*.ini
+
