@@ -59,6 +59,6 @@ namespace RmbHook
         {
             //mconfigfile.init();
         }
-        ConfigFile mconfigfile = new ConfigFile();
+        public ConfigFile mconfigfile = new ConfigFile();
     }
 }

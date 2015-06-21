@@ -17,6 +17,7 @@ namespace RmbHook
 
         // --- local variables;
         Keys mtopkey = Keys.Escape;
+        bool menbycount = false;
 
         public RmbKey()
         {
@@ -26,11 +27,16 @@ namespace RmbHook
         public int init()
         {
             int d = 0;
-            if ((d = setTopkey(Factor.gm.mparameter.getTopkey())) < 0)
+            Parameter prm = Factor.gm.mparameter;
+            if ((d = setTopkey(prm.getTopkey())) < 0)
             {
                 System.Console.WriteLine("->RmbKey.init(): setTopKey failed.");
             }
-
+            if (prm.mconfigfile.readInt("enable_by_count") >= 0)
+            {
+                d = prm.mconfigfile.getInt();
+                menbycount = (d > 0) ? true : false;
+            }
 
             initKeyIcon();
 
@@ -107,6 +113,9 @@ namespace RmbHook
         }
         private bool checkEnable()
         {
+            if (!menbycount)        // 20150621;
+                return false;
+            //
             mesccnt++;
             if (mesccnt >= 5)
             {
