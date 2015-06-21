@@ -2,6 +2,8 @@
 *.swp
 *~
 Thumbs.db
+RmbHook/.gitignore
+.git
 obj
 **/bin/*
 !**/bin/*.ini

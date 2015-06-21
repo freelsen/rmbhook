@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="lslibcs\ConfigureFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -94,13 +95,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="src\assit\Factor.cs" />
+    <Compile Include="src\assit\Parameter.cs" />
     <Compile Include="src\HookForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\HookForm.designer.cs">
       <DependentUpon>HookForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\lcom\LObj.cs" />
+    <Compile Include="src\assit\LObj.cs" />
     <Compile Include="src\MouseKeybardLib.cs" />
     <Compile Include="src\Program.cs">
       <SubType>Code</SubType>

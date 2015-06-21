@@ -15,6 +15,9 @@ namespace RmbHook
         private TaskbarNotify mtasknotify = null;
         private CommandMode mcommandmode = new CommandMode();
 
+        // --- local variables;
+        Keys mtopkey = Keys.Escape;
+
         public RmbKey()
         {
             gthis = this;
@@ -22,6 +25,13 @@ namespace RmbHook
 
         public int init()
         {
+            int d = 0;
+            if ((d = setTopkey(Factor.gm.mparameter.getTopkey())) < 0)
+            {
+                System.Console.WriteLine("->RmbKey.init(): setTopKey failed.");
+            }
+
+
             initKeyIcon();
 
             mtasknotify = TaskbarNotify.gthis;
@@ -33,6 +43,17 @@ namespace RmbHook
             return 1;
         }
 
+        // ---parameter; ---
+        public int setTopkey(string str)        // 20150621;
+        {
+            if (str.Length == 0) return -1;
+            //
+            if (str.Equals("esc")) mtopkey = Keys.Escape;
+            if (str.Equals("caps")) mtopkey = Keys.CapsLock;
+            if (str.Equals("tab")) mtopkey = Keys.Tab;
+
+            return 0;
+        }
         // ---key msg entry here;---
         public int onKeymsg(KeyEventArgs e)
         {
@@ -40,7 +61,8 @@ namespace RmbHook
 
             Keys key = e.KeyCode;
 
-            if (key == Keys.Escape)         
+            //if( (mtopkey == Keys.CapsLock) && Console.CapsLock)
+            if (key == mtopkey)// 20150621, Keys.Escape)
             {
                 // In any status( enable or disable ), if you tap the escape key 
                 // for x(now x=5) times, the status will change;
@@ -54,7 +76,8 @@ namespace RmbHook
                     // this is a must have function. or your apps will not receive esc key msg;
                     eatkey = checkEatEsc();
                     onModeChange();
-                }               
+                }
+                //eatkey = 0;
             }
             else
             {
