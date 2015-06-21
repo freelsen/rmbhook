@@ -14,6 +14,8 @@ namespace RmbHook
         public TaskbarNotify mtasknotify = new TaskbarNotify();
         public RmbKey mrmbkey = new RmbKey();
 
+        public WinMon mwinmon = new WinMon();
+
         public Factor()
         {
             gm = this;
@@ -24,11 +26,11 @@ namespace RmbHook
 
             HookForm hform = HookForm.mthis;
             mtasknotify.init(hform);
-
             mlib.init(hform);
             mlib.start();
-
             mrmbkey.init();
+
+            mwinmon.init();
 
             return 0;
         }

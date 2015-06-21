@@ -204,6 +204,21 @@ namespace RmbHook
                     setCmdMode(false);
                     eatkey = 1;
                     break;
+                case Keys.B:            // 20150621;
+                    WinMon.mthis.stBottom();
+                    setCmdMode(false);
+                    eatkey = 1;
+                    break;
+                case Keys.T:
+                    WinMon.mthis.restore();
+                    setCmdMode(false);
+                    eatkey = 1;
+                    break;
+                case Keys.Y:
+                    WinMon.mthis.minNow();
+                    setCmdMode(false);
+                    eatkey = 1;
+                    break;
             }
 
             if( 0 == eatkey )
