@@ -5,6 +5,12 @@ Thumbs.db
 RmbHook/.gitignore
 .git
 obj
-**/bin/*
-!**/bin/*.ini
+**/Debug/*
+**/Release/*
+!**/Debug/*.ini
+!**/Debug/res
+!**/Release/*.ini
+!**/Release/res
+
+
 
