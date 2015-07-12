@@ -53,7 +53,8 @@ namespace RmbHook
         }
         private void HookForm_SizeChanged(object sender, EventArgs e)
         {
-            mtasknotify.onFormSizeChanged();
+            if( mtasknotify != null )
+                mtasknotify.onFormSizeChanged();
         }
         
 // --- show event; ---
