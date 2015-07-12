@@ -2,8 +2,6 @@
 *.swp
 *~
 Thumbs.db
-RmbHook/.gitignore
-.git
 obj
 **/Debug/*
 **/Release/*
@@ -11,6 +9,3 @@ obj
 !**/Debug/res
 !**/Release/*.ini
 !**/Release/res
-
-
-
