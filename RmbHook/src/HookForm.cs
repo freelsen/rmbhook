@@ -63,7 +63,7 @@ namespace RmbHook
         {
             curXYLabel.Text = String.Format("Current Mouse Point: X={0}, y={1}", x, y);
         }
-        public void AddMouseEvent(string eventType, string button, string x, string y, string delta)
+        public void onMouseEvent(string eventType, string button, string x, string y, string delta)
         {
 
             listView1.Items.Insert(0,
@@ -76,7 +76,7 @@ namespace RmbHook
                         delta
                     }));
         }
-        public void AddKeyboardEvent(string eventType, string keyCode, string keyChar, string shift, string alt, string control)
+        public void onKeyboardEvent(string eventType, string keyCode, string keyChar, string shift, string alt, string control)
         {
             listView2.Items.Insert(0,
                  new ListViewItem(

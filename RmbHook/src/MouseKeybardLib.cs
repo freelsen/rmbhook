@@ -50,7 +50,7 @@ namespace RmbHook
         // --- keyboard event handle ---
         void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            mparent.AddKeyboardEvent( "KeyDown", e.KeyCode.ToString(), "", 
+            mparent.onKeyboardEvent( "KeyDown", e.KeyCode.ToString(), "", 
                e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString() );
 
             if (mrmbkey.onKeymsg(e) > 0)
@@ -58,12 +58,12 @@ namespace RmbHook
         }
         void keyboardHook_KeyUp(object sender, KeyEventArgs e)
         {
-            mparent.AddKeyboardEvent("KeyUp", e.KeyCode.ToString(), "",
+            mparent.onKeyboardEvent("KeyUp", e.KeyCode.ToString(), "",
                 e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString());
         }
         void keyboardHook_KeyPress(object sender, KeyPressEventArgs e)
         {
-            mparent.AddKeyboardEvent("KeyPress", "", e.KeyChar.ToString(), "", "", "");
+            mparent.onKeyboardEvent("KeyPress", "", e.KeyChar.ToString(), "", "", "");
         }
 
         // --- mouse event handle; ---
@@ -73,19 +73,19 @@ namespace RmbHook
         }
         void mouseHook_MouseDown(object sender, MouseEventArgs e)
         {
-            mparent.AddMouseEvent( "MouseDown", e.Button.ToString(),
+            mparent.onMouseEvent( "MouseDown", e.Button.ToString(),
                 e.X.ToString(), e.Y.ToString(), "" );
         }
         void mouseHook_MouseUp(object sender, MouseEventArgs e)
         {
-            mparent.AddMouseEvent( "MouseUp", e.Button.ToString(),
+            mparent.onMouseEvent( "MouseUp", e.Button.ToString(),
                 e.X.ToString(), e.Y.ToString(), "" );
         }
         void mouseHook_MouseWheel(object sender, MouseEventArgs e)
         {
             //if (isMouseRun())
             {
-                mparent.AddMouseEvent("MouseWheel", "", "", "", e.Delta.ToString());
+                mparent.onMouseEvent("MouseWheel", "", "", "", e.Delta.ToString());
             }
         }
 
