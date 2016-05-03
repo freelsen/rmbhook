@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using RmbHook.src.keyword;
 
 namespace RmbHook
 {
@@ -46,10 +47,11 @@ namespace RmbHook
         private void HookForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             exit();
+            LsKeyword.getThis().exit();     // 20160503;
         }   
         private void hookForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            Console.WriteLine("->hookform closed.");
         }
         private void HookForm_SizeChanged(object sender, EventArgs e)
         {

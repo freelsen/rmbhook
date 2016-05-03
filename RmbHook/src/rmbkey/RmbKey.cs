@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
+using RmbHook.src.keyword;
 
 namespace RmbHook
 {
@@ -227,6 +228,18 @@ namespace RmbHook
                     WinMon.mthis.minNow();
                     setCmdMode(false);
                     eatkey = 1;
+                    break;
+                case Keys.P:            // 20160503, keyword search;
+                    setCmdMode(false);
+                    eatkey = 1;
+                    LsKeyword kw = LsKeyword.getThis();
+                    kw.onSearchKey(true);
+                    break;
+                case Keys.N:
+                    setCmdMode(false);
+                    eatkey = 1;
+                    LsKeyword kw2 = LsKeyword.getThis();
+                    kw2.onSearchKey(false);
                     break;
             }
 
