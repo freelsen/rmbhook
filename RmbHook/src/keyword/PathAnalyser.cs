@@ -33,6 +33,10 @@ namespace RmbHook.src.keyword
         StringBuilder keywordgroup = new StringBuilder();
 
         Hashtable pathKeywords = new Hashtable();
+        public ICollection getPaths()
+        {
+            return pathKeywords.Keys;
+        }
         public HashSet<string> getPathKeyword(string key)
         {
             if (pathKeywords.Contains(key))
@@ -60,7 +64,7 @@ namespace RmbHook.src.keyword
                 hss = new HashSet<string>();
                 hss.Add(str);
                 keywordPaths.Add(key, hss);
-                keywordgroup.Append(str + " ");
+                keywordgroup.Append(key + " ");
             }
         }
         public void openPath(string path, bool list)
@@ -151,17 +155,45 @@ namespace RmbHook.src.keyword
             // analyse keys;
             string[] ss = key.Split(new string[] {",", " ", "."},
                 StringSplitOptions.RemoveEmptyEntries);
+            
+            // find keywords;
+            ArrayList alskeys = new ArrayList();
+            ArrayList allkeys = new ArrayList();
+            foreach (string s in ss)
+            {
+                ArrayList alskey = Searcher.search(s, keywordgroup.ToString());
+                if (alskey.Count > 0)
+                {
+                    alskeys.Add(alskey);
+                    foreach (string s1 in alskey)
+                        allkeys.Add(s1);
+                }
+            }
+            
             //
             ArrayList alhss = new ArrayList();
             HashSet<string> hss;
-            foreach (string s in ss)
+            foreach (ArrayList al in alskeys)
             {
-                if (keywordPaths.Contains(s))
+                foreach (string s in al)
                 {
-                    hss = (HashSet<string>)keywordPaths[s];
-                    alhss.Add(hss);
+                    if (keywordPaths.Contains(s))
+                    {
+                        hss = (HashSet<string>)keywordPaths[s];
+                        alhss.Add(hss);
+                    }
                 }
             }
+
+            //foreach (string s in ss)
+            //{
+            //    if (keywordPaths.Contains(s))
+            //    {
+            //        hss = (HashSet<string>)keywordPaths[s];
+            //        alhss.Add(hss);
+            //    }
+            //}
+
             //
             ArrayList als = new ArrayList();
             HashSet<string> hsres = new HashSet<string>();
@@ -169,7 +201,8 @@ namespace RmbHook.src.keyword
             {
                 foreach (string s in hs)
                 {
-                    if (this.checkContain(ss, s))
+                    //if (this.checkContain(ss, s))
+                    if (this.checkContain(allkeys, s))
                     {
                         //als.Add(s);
                         if (!hsres.Contains(s))
@@ -179,6 +212,22 @@ namespace RmbHook.src.keyword
             }
             return hsres;
         }
+
+        bool checkContain(ArrayList keys, string path)
+        {
+            bool b = true;
+            foreach (string s in keys)
+            {
+                if (!this.checkContain(s, path))
+                {
+                    b = false;
+                    break;
+                }
+            }
+
+            return b;
+        }
+
         bool checkContain(string[] keys, string path)
         {
             bool b = true;

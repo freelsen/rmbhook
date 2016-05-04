@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace RmbHook.src.keyword
 {
@@ -10,11 +12,20 @@ namespace RmbHook.src.keyword
         public Searcher()
         {
         }
-        public string search(string key, string setence)
+        public static ArrayList search(string key, string setence)
         {
-            string str = "";
+            string str = "(\\w*)" + key + "(\\w*)";
+            Regex regex = new Regex(str, RegexOptions.IgnoreCase);
+            MatchCollection mc = regex.Matches(setence);
 
-            return str;
+            ArrayList als = new ArrayList();
+            foreach (Match mt in mc)
+            {
+                //Console.WriteLine(mt.Value);
+                als.Add(mt.Value);
+
+            }
+            return als;
         }
     }
 }

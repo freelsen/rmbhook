@@ -157,15 +157,32 @@ namespace RmbHook.src.keyword
             this.comboBox1.Focus();
         }
 
+        // --- search form page 2; ----
         private void button1_Click(object sender, EventArgs e)
         {
             // test reg;
-            string str = "this is approximately forty people";
-            string s = @" \w*o\w*t\w* ";
+            string str = "this is approximately forty approximately people";
+            string s = @"\w*o(\w*)t\w*";
             Regex reg = new Regex(s);
-            //MatchCollection mc = Regex.Matches(str, s); 
-            Match mt = reg.Match(str);
-            string v = mt.Groups[1].Value;
+
+            MatchCollection mc;
+            //mc = Regex.Matches(str, s); 
+            mc = reg.Matches(str);
+
+            //Match mt = reg.Match(str);
+            //string v = mt.Groups[1].Value;
+            Console.WriteLine(mc.Count);
+
+            foreach (Match mt in mc)
+            {
+                Console.WriteLine(mt.Value);
+                
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LsKeyword.getThis().saveFile();
         }
     }
 }

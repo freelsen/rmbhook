@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.IO;
+using System.Collections;
 
 namespace RmbHook.src.keyword
 {
@@ -49,6 +50,14 @@ namespace RmbHook.src.keyword
             }
         }
 
+        public void saveFile()
+        {
+            ICollection ic = pathanalyser.getPaths();
+            string pf = pathfile.getPathfile();
+            pf = pf + ".new";
+            pathfile.saveFile(ic, pf);
+
+        }
         
     }
 }

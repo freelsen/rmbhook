@@ -10,7 +10,10 @@ namespace RmbHook.src.keyword
     public class PathFile
     {
         private string pathfile = "";
+        public string getPathfile() { return pathfile; }
+
         private string relativepath = ".\\";
+        public string getRelativePath() { return relativepath; }
 
         public PathFile()
         {
@@ -22,8 +25,8 @@ namespace RmbHook.src.keyword
             if (!fi.Exists)
                 return;
             //
-            this.relativepath = fi.Directory.FullName;
-            this.pathfile = fi.FullName;
+            this.relativepath = fi.Directory.FullName.ToLower() ;
+            this.pathfile = fi.FullName.ToLower();
 
             Console.WriteLine(this.relativepath);
             Console.WriteLine(this.pathfile);
@@ -41,16 +44,22 @@ namespace RmbHook.src.keyword
             string rpath = relativepath + "\\";
             foreach (string s in als)
             {
+                str = s;
                 if (s[0] == '\\')
                     str = relativepath + s;
-                else
-                    str = s.Replace(".\\", rpath);
+                else if (s[0] == '.')
+                {
+                    str = relativepath + s.Substring(1, s.Length - 1);
+                    //str = s.Replace(
+                }
                 hss.Add(str);
             }
 
             //
             PathAnalyser pas = LsKeyword.getThis().getPathAnalyser();
             pas.reset();
+
+            pas.openPath(relativepath, true);
             foreach (string s in hss)
             {
                 pas.openPath(s, false);
@@ -89,6 +98,49 @@ namespace RmbHook.src.keyword
             }
 
             return als;
+        }
+        public string getRelative(string path)
+        {
+            string str = path ;
+            if (path.Contains(relativepath))
+            {
+                str = "."+path.Substring(relativepath.Length, 
+                    path.Length-relativepath.Length);
+
+            }
+            return str;
+        }
+        public void saveFile(ICollection ic, string path)
+        {
+            int size = 256;
+
+            char[] cs = new char[256];
+            for( int i=0; i<size; i++)
+                cs[i] = ' ';
+
+            try
+            {
+                FileStream fs = new FileStream(path,
+                    FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+
+                string str;
+                foreach (string s in ic)
+                {
+                    str = this.getRelative(s);
+                    if (str.Length > size)
+                        str = str.Substring(0, size);
+                    //
+                    sw.Write(str);
+                    sw.WriteLine(cs, 0, size - str.Length);
+                }
+
+                sw.Close();
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
     }
 }
