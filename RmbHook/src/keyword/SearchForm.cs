@@ -71,7 +71,7 @@ namespace RmbHook.src.keyword
                 return;
 
             PathAnalyser pathanalyser = LsKeyword.getThis().getPathAnalyser();
-            pathanalyser.openPath(path, true);
+            pathanalyser.openPath(path, true,-1);
 
             //currentpath = path;
             setCurrentPath(path);  
@@ -183,6 +183,11 @@ namespace RmbHook.src.keyword
         private void button2_Click(object sender, EventArgs e)
         {
             LsKeyword.getThis().saveFile();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            LsKeyword.getThis().saveFiletable();
         }
     }
 }

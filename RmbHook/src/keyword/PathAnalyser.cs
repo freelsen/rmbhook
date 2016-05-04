@@ -9,6 +9,12 @@ namespace RmbHook.src.keyword
 {
     public class PathAnalyser
     {
+        //public struct PathInfo
+        //{
+        //    public int linenum;
+        //    public HashSet<string> keywords;
+        //}
+
         public PathAnalyser()
         {
         }
@@ -33,14 +39,19 @@ namespace RmbHook.src.keyword
         StringBuilder keywordgroup = new StringBuilder();
 
         Hashtable pathKeywords = new Hashtable();
+        public Hashtable getPathtable() { return pathKeywords; }
         public ICollection getPaths()
         {
             return pathKeywords.Keys;
         }
-        public HashSet<string> getPathKeyword(string key)
+        public HashSet<string> getPathKeyword(string path)
         {
-            if (pathKeywords.Contains(key))
-                return (HashSet<string>)pathKeywords[key];
+            if (pathKeywords.Contains(path))
+            {
+                PathInfo pi = (PathInfo)pathKeywords[path];
+                return pi.keywords;
+                //return (HashSet<string>)pathKeywords[path];
+            }
             else
                 return null;
         }
@@ -67,7 +78,7 @@ namespace RmbHook.src.keyword
                 keywordgroup.Append(key + " ");
             }
         }
-        public void openPath(string path, bool list)
+        public void openPath(string path, bool list, int linenum)
         {
             if (path == null)
                 return;
@@ -82,16 +93,30 @@ namespace RmbHook.src.keyword
                 foreach (DirectoryInfo dir in folder.GetDirectories())
                 {
                     //this.addKeyPath(dir.Name, dir.FullName + "\\");
-                    this.openPath(dir.FullName, false);
+                    this.openPath(dir.FullName, false,-1);
                 }
             }
 
+            PathInfo pi;
             path = path.ToLower();
             if (pathKeywords.Contains(path))
+            {
+                if (linenum >= 0)
+                {
+                   pi= (PathInfo)pathKeywords[path];
+                    if (pi.linenum != linenum)
+                        pi.linenum = linenum;
+                }
+                
                 return;
+            }
             //
             HashSet<string> hss = Keywords.mthis.getKeywords(this.getPathName(path));
-            pathKeywords.Add(path, hss);    //NOTE: hss may be empty;
+            pi = new PathInfo();
+            pi.keywords = hss;
+            pi.linenum = linenum;
+            //pathKeywords.Add(path, hss);    //NOTE: hss may be empty;
+            pathKeywords.Add(path, pi);
 
             //
             foreach( string s in hss )
@@ -100,7 +125,7 @@ namespace RmbHook.src.keyword
             }
 
             path = this.getParentPath(path);
-            this.openPath(path, false); // only list;
+            this.openPath(path, false,-1); // only list;
 
         }
 
@@ -246,16 +271,22 @@ namespace RmbHook.src.keyword
         {
             bool b = false;
             //string s; 
+            PathInfo pi;
             while (path != null)
             {
                 //s = this.getPathName(path);
-                HashSet<string> hss = (HashSet<string>)pathKeywords[path];
-                if( hss != null)
-                    if( hss.Contains(key))
-                    {
-                        b=true;
-                        break;
-                    }
+                if(pathKeywords.Contains(path))
+                {
+                    pi = (PathInfo)pathKeywords[path];
+                    //HashSet<string> hss = (HashSet<string>)pathKeywords[path];
+                    HashSet<string> hss = pi.keywords;
+                    if( hss != null)
+                        if( hss.Contains(key))
+                        {
+                            b=true;
+                            break;
+                        }
+                }
                 path = this.getParentPath(path);
             }
             return b;

@@ -58,6 +58,13 @@ namespace RmbHook.src.keyword
             pathfile.saveFile(ic, pf);
 
         }
+        public void saveFiletable()
+        {
+            Hashtable ic = pathanalyser.getPathtable();
+            string pf = pathfile.getPathfile();
+            //pf = pf + ".new";
+            pathfile.saveFile(ic, pf);
+        }
         
     }
 }

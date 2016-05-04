@@ -78,6 +78,7 @@
     <Compile Include="src\keyword\LsKeyword.cs" />
     <Compile Include="src\keyword\PathAnalyser.cs" />
     <Compile Include="src\keyword\PathFile.cs" />
+    <Compile Include="src\keyword\PathInfo.cs" />
     <Compile Include="src\keyword\ResultForm.cs">
       <SubType>Form</SubType>
     </Compile>
