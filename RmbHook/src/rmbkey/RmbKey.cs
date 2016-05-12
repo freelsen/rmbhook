@@ -58,6 +58,17 @@ namespace RmbHook
             if (str.Equals("esc")) mtopkey = Keys.Escape;
             if (str.Equals("caps")) mtopkey = Keys.CapsLock;
             if (str.Equals("tab")) mtopkey = Keys.Tab;
+            int d = 0;
+            try
+            {
+                //Keys.Oemtilde;//192;~
+                d = Int32.Parse(str);
+                mtopkey = (Keys)d;
+            }
+            catch (Exception e)
+            {
+                Console.Out.WriteLine("setTopkey: parse error.");
+            }
 
             return 0;
         }
