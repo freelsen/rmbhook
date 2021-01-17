@@ -49,12 +49,12 @@ namespace RmbHook
 
         void mkeyoffitem_Click(object sender, EventArgs e)
         {
-            mrmbkey.setCmdEnable(false);
+            mrmbkey.setHookMode(false);
         }
 
         void mkeyonitem_Click(object sender, EventArgs e)
         {
-            mrmbkey.setCmdEnable(true);
+            mrmbkey.setHookMode(true);
         }
 
         void mexititem_Click(object sender, EventArgs e)

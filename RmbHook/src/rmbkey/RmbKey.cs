@@ -16,14 +16,14 @@ namespace RmbHook
         private TaskbarNotify mtasknotify = null;
         private CommandMode mcommandmode = new CommandMode();
 
-        // --- local variables;
-        Keys mtopkey = Keys.Escape;
-        bool menbycount = false;
 
         public RmbKey()
         {
             gthis = this;
         }
+
+        private bool menWindow = false; // 2020-04-24;
+        private bool mensearch = false;
 
         public int init()
         {
@@ -36,28 +36,205 @@ namespace RmbHook
             if (prm.mconfigfile.readInt("enable_by_count") >= 0)
             {
                 d = prm.mconfigfile.getInt();
-                menbycount = (d > 0) ? true : false;
+                mHookmEnByKey = (d > 0) ? true : false;
             }
 
-            initKeyIcon();
+            if (prm.mconfigfile.readInt("enable_function_window") >= 0)
+            {
+                d = prm.mconfigfile.getInt();
+                menWindow = (d > 0) ? true : false;
+            }
+            if (prm.mconfigfile.readInt("enable_function_search") >= 0)
+            {
+                d = prm.mconfigfile.getInt();
+                mensearch = (d > 0) ? true : false;
+            }
+
+            initModeIcon();
 
             mtasknotify = TaskbarNotify.gthis;
 
             mcommandmode.init();
 
-            setCmdEnable(true);
+            setHookMode(true);
 
             return 1;
         }
 
-        // ---parameter; ---
-        public int setTopkey(string str)        // 20150621;
+        // ---key msg entry here;---
+        public int onKeymsg(KeyEventArgs e)
+        {
+            Keys key = e.KeyCode;
+
+            setEatKey(0);
+
+            if (key == getTopkey())// 20150621, Keys.Escape)
+            {
+                onTopkPressedHm();
+
+                if (getHookMode())
+                {
+                    setEatKey(1);
+
+                    // normally, when cmd mode is on, the top key will be eated;
+                    // but here give a chance: when you tap esc key twince, the last will be send to app(not eat);
+                    // this is a must have function. or your apps will not receive esc key msg;
+                    incEatCntCm();
+
+                    setCmdMode(!getCmdMode());
+                }
+            }
+            else
+            {
+                onNtopkPressedHm();
+
+                resetEatCntCm();
+
+                if (getCmdMode())
+                {
+                    int d = onCmdKey(key);
+                    setEatKey(d);
+                } 
+            }
+
+            return getEatKey();
+        }
+
+        public void onHookModeChangedHm()
+        {
+            if (getHookMode())
+            {
+                resetEatCntCm();
+            }
+
+            updateModeIcon();
+        }
+        public void onCmdModeChanged()
+        {
+            updateModeIcon();
+
+            if (getCmdMode())
+            {
+                mcommandmode.onStart();
+            }
+        }
+
+        // ---on cmd keys; ---
+        public int onCmdKey(Keys key)
+        {
+            int eatkey = 0;
+
+            // check function group-1,
+            switch (key)
+            {
+                case Keys.G:
+                    setCmdMode(false);
+                    eatkey = 1;
+                    break;
+            }
+
+            // window operation,
+            if (eatkey == 0 && menWindow)
+            {
+                switch (key)
+                {
+                    case Keys.B:            // 20150621;
+                        WinMon.mthis.stBottom();
+                        setCmdMode(false);
+                        eatkey = 1;
+                        break;
+                    case Keys.T:
+                        WinMon.mthis.restore();
+                        setCmdMode(false);
+                        eatkey = 1;
+                        break;
+                    case Keys.Y:
+                        WinMon.mthis.minNow();
+                        setCmdMode(false);
+                        eatkey = 1;
+                        break;
+                }
+            }
+
+            // search dialog,
+            if (eatkey == 0 && mensearch)
+            {
+                switch (key)
+                {
+                    case Keys.P:            // 20160503, keyword search;
+                        setCmdMode(false);
+                        eatkey = 1;
+                        LsKeyword kw = LsKeyword.getThis();
+                        kw.onSearchKey(true);
+                        break;
+                    case Keys.N:
+                        setCmdMode(false);
+                        eatkey = 1;
+                        LsKeyword kw2 = LsKeyword.getThis();
+                        kw2.onSearchKey(false);
+                        break;
+                }
+            }
+
+            // moving control,
+            if (0 == eatkey)
+            {
+                eatkey = mcommandmode.onKey(key);
+            }
+
+            // exit cmd mode if non-function chars pressed,2020-04-16,
+            if (0 == eatkey)
+            {
+                UInt16 d = (UInt16)key;
+                if (d >= 0x41 && d <= 0x5A)
+                {
+                    eatkey = 0;
+                    setCmdMode(false);
+                }
+            }
+
+            return eatkey;
+        }
+
+        // --- eat key control --- 
+        private int mEatKey = 0;
+        private void setEatKey(int d) { mEatKey = d; }
+        public int getEatKey() { return mEatKey; }
+
+        private int mEatCntCm = 0;           // determine if to eat topkey or not in cmd mode;
+        private void resetEatCntCm()
+        {
+            mEatCntCm = 0;
+        }
+        private void incEatCntCm()
+        {
+            if (mEatCntCm >= 2)
+                mEatCntCm = 0;
+            mEatCntCm++;
+            //Console.WriteLine(mEatCntCm.ToString());
+
+            if (mEatCntCm >= 2)
+            {
+                onEatCmChanged();
+            }
+        }
+        public void onEatCmChanged()
+        {
+            setEatKey(0);
+        }
+
+        // --- top key---;
+        Keys mtopkey = Keys.Escape;             // topkey is the key to trigger different modes,
+        public Keys getTopkey() { return mtopkey; }
+        public int setTopkey(string str)        // 2015-06-21;
         {
             if (str.Length == 0) return -1;
+
             //
-            if (str.Equals("esc")) mtopkey = Keys.Escape;
-            if (str.Equals("caps")) mtopkey = Keys.CapsLock;
-            if (str.Equals("tab")) mtopkey = Keys.Tab;
+            if (str.Equals("esc")) { mtopkey = Keys.Escape; return 0; }
+            if (str.Equals("caps")) { mtopkey = Keys.CapsLock; return 0; }
+            if (str.Equals("tab")) { mtopkey = Keys.Tab; return 0; }
+
             int d = 0;
             try
             {
@@ -72,209 +249,81 @@ namespace RmbHook
 
             return 0;
         }
-        // ---key msg entry here;---
-        public int onKeymsg(KeyEventArgs e)
+        
+        // ---hook mode---
+        public void onTopkPressedHm()
         {
-            int eatkey = 0;
-
-            Keys key = e.KeyCode;
-
-            //if( (mtopkey == Keys.CapsLock) && Console.CapsLock)
-            if (key == mtopkey)// 20150621, Keys.Escape)
+            if (mHookmEnByKey)              // 2015-06-21;
             {
-                // In any status( enable or disable ), if you tap the escape key 
-                // for x(now x=5) times, the status will change;
-                // thus give a keyboard way to enable/disable key hook function;
-                if (checkEnable())
-                    onCmdEnChange();
-                else if( mcmden )
-                {
-                    // normally, when cmd mode is on, the escape key will be eated;
-                    // but here give a chance: when you tap esc key twince, the last will be send to app(not eat);
-                    // this is a must have function. or your apps will not receive esc key msg;
-                    eatkey = checkEatEsc();
-                    onModeChange();
-                }
-                //eatkey = 0;
+                incTopKeyCntAll();
             }
-            else
+        }
+        public void onNtopkPressedHm()
+        {
+            resetTopkCntAll();
+        }
+        public void onHookModeChanged()
+        {
+            resetTopkCntAll();
+
+            onHookModeChangedHm();
+        }
+        private void onTopkCntAllChanged()
+        {
+            setHookMode(!getHookMode()); // change hood mode,
+        }
+
+        public bool getHookMode() { return mHookMode; }
+        public void setHookMode(bool b)
+        {
+            if ( (b==true  && mHookMode == false) ||
+                 (b==false && mHookMode == true ) )
             {
-                resetCount();
+                mHookMode = !mHookMode;                
 
-                if (mcmdmode)
-                {
-                    eatkey = onCmdKey(key);    // eat this key, if need;
-                }
+                onHookModeChanged();
             }
+        }
+        private bool mHookMode = false;   
+        private bool mHookmEnByKey = false;   // enable/disable by keep pressing the topkey,
+        public bool getHookmEnByKey() { return mHookmEnByKey; }
 
-            return eatkey;
-        }
-
-        // ---mesccnt: repeat Escape key, 
-        // ---mesccnt2: eat esc key or not when in cmd mode;
-        private int mesccnt = 0;
-        private int mesccnt2 = 0;
-        private void resetCount()
+        private int mTopKeyCntAll = 0;       // count topkey in any state,     
+        public void resetTopkCntAll()
         {
-            mesccnt = 0;
-            mesccnt2 = 0;
+            mTopKeyCntAll = 0;
         }
-        private void resetEsccnt2()
+        private void incTopKeyCntAll()
         {
-            mesccnt2 = 0;
-        }
-        private bool checkEnable()
-        {
-            if (!menbycount)        // 20150621;
-                return false;
-            //
-            mesccnt++;
-            if (mesccnt >= 5)
+            // In any status( enable or disable ), if you tap the topkey 
+            // for x(now x=5) times, the status will change;
+            // thus give a keyboard way to enable/disable key hook function;
+            // count number of pressing the topkey,
+            mTopKeyCntAll++;
+            if (mTopKeyCntAll >= 5)
             {
-                mesccnt = 0;
+                mTopKeyCntAll = 0;
 
-                return true;
+                onTopkCntAllChanged();
             }
-            return false;
-        }
-        private int checkEatEsc()
-        {
-            int eat = 0;
-            if (mcmden)
-            {
-                if (mesccnt2 >= 2)
-                    mesccnt2 = 0;
-                mesccnt2++;
-
-                if (mesccnt2 >= 2)
-                    eat = 0;
-                else
-                    eat = 1;
-            }
-            return eat;
-        }
-
-        // ---mode enable;---
-        private bool mcmden = false;
-        private void onCmdEnChange()
-        {
-            setCmdEnable(!mcmden);
-        }
-        public void setCmdEnable(bool en)
-        {
-            if (en && !mcmden)
-            {
-                onCmdEnable();
-            }
-            else if (!en && mcmden)
-                onCmdDisable();
-
-            mcmden = en;
-
-            updateIcon();
-        }
-        private void onCmdEnable()
-        {
-            resetCmdMode();
-
-            resetEsccnt2();
-        }
-        private void onCmdDisable()
-        {
-
         }
 
         // ---command mode; ---
-        private bool mcmdmode = false;
-        private void resetCmdMode()
-        {
-            mcmdmode = false;
-        }
-        private void onModeChange()
-        {
-            setCmdMode(!mcmdmode);
-        }
-        private void setCmdMode(bool b)
-        {
-            mcmdmode = b;
+        public bool getCmdMode() { return mCmdMode; }
+        public void setCmdMode(bool b) 
+        { 
+            mCmdMode = b;
 
-            updateIcon();
-
-            if (mcmdmode)
-                onCmdModeStart();
-            else
-                onCmdModeEnd();
-        }
-        private void onCmdModeStart()
-        {
-            mcommandmode.onStart();
-        }
-        private void onCmdModeEnd()
-        {
-
-        }
-
-        // ---on cmd keys; ---
-        public int onCmdKey(Keys key)
-        {
-            int eatkey = 0;
-
-            switch (key)
-            {
-                case Keys.G:
-                    setCmdMode(false);
-                    eatkey = 1;
-                    break;
-                case Keys.B:            // 20150621;
-                    WinMon.mthis.stBottom();
-                    setCmdMode(false);
-                    eatkey = 1;
-                    break;
-                case Keys.T:
-                    WinMon.mthis.restore();
-                    setCmdMode(false);
-                    eatkey = 1;
-                    break;
-                case Keys.Y:
-                    WinMon.mthis.minNow();
-                    setCmdMode(false);
-                    eatkey = 1;
-                    break;
-                case Keys.P:            // 20160503, keyword search;
-                    setCmdMode(false);
-                    eatkey = 1;
-                    LsKeyword kw = LsKeyword.getThis();
-                    kw.onSearchKey(true);
-                    break;
-                case Keys.N:
-                    setCmdMode(false);
-                    eatkey = 1;
-                    LsKeyword kw2 = LsKeyword.getThis();
-                    kw2.onSearchKey(false);
-                    break;
-            }
-
-            if( 0 == eatkey )
-                eatkey = mcommandmode.onKey(key);
-
-            return eatkey;
-        }
-
+            onCmdModeChanged();
+        }        
+        private bool mCmdMode = false;          // cmd model,
+        
         // ---indicator icon ---
-        private Icon micon2;
-        private Icon micon3;
-        private int initKeyIcon()
+        public void updateModeIcon()
         {
-            micon2 = new Icon("res\\icon2.ico");
-            micon3 = new Icon("res\\icon3.ico");
-
-            return 0;
-        }
-        private void updateIcon()
-        {
-            if (mcmden)
+            if (getHookMode())
             {
-                if( mcmdmode )
+                if( getCmdMode() )
                     mtasknotify.setIcon(micon3);    // cmd mode on;
                 else
                     mtasknotify.setIcon(micon2);    // cmd monde off;
@@ -282,5 +331,15 @@ namespace RmbHook
             else
                 mtasknotify.setIcon(null);          // default;
         }
+        private Icon micon2;
+        private Icon micon3;
+        private int initModeIcon()
+        {
+            micon2 = new Icon("res\\icon2.ico");
+            micon3 = new Icon("res\\icon3.ico");
+
+            return 0;
+        }
+
     }
 }

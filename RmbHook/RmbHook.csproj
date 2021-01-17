@@ -92,7 +92,9 @@
     <Compile Include="src\keyword\SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\win\WinMon.cs" />
+    <Compile Include="src\win\WinMon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

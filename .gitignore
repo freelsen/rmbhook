@@ -1,6 +1,8 @@
 *.bak
 *.swp
 *~
+*.old.cs
+*.suo
 Thumbs.db
 obj
 **/Debug/*

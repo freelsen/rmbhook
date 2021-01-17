@@ -189,22 +189,11 @@ namespace RmbHook
 
                 int pid;
                 int fhwnd = hwnd;
-                int fid = GetWindowThreadProcessId(hwnd, out pid);
-
                 Thread.Sleep(100);
 
-                hwnd = gtWinMouse();
-                GetWindowText(hwnd, msb, msb.Capacity);
-                Console.Out.WriteLine(" show win> " + hwnd.ToString() + "=" + msb);
-                //SetActiveWindow(hwnd);
+                int fid = GetWindowThreadProcessId(hwnd, out pid);
+                setWinUnderMouseForeground(fid);
 
-                int cid = GetWindowThreadProcessId(hwnd, out pid);
-                AttachThreadInput(fid, cid, true);
-
-                ShowWindow(hwnd, 1);    //SW_SHOWNORMAL=1                // SW_SHOW=5;
-                SetWindowPos(  hwnd,   HWND_TOPMOST,   0,0,0,0,   SWP_NOSIZE|SWP_NOMOVE   );   
-                SetWindowPos(  hwnd,   HWND_NOTOPMOST,   0,0,0,0,   SWP_NOSIZE|SWP_NOMOVE   );
-                SetForegroundWindow(hwnd);
                 //SetFocus(hwnd);
 
                 /*
@@ -230,6 +219,25 @@ namespace RmbHook
 
                
             }
+        }
+        public int setWinUnderMouseForeground(int attachId)
+        {
+            int hwnd = getWinUnderMouse();
+            int d= GetWindowText(hwnd, msb, msb.Capacity);
+            //Console.Out.WriteLine(" getwindowtext: " + d.ToString());
+            Console.Out.WriteLine(" show win (" + hwnd.ToString() + "): " + msb);
+            //SetActiveWindow(hwnd);
+
+            int pid=0;
+            int cid = GetWindowThreadProcessId(hwnd, out pid);
+            AttachThreadInput(attachId, cid, true);
+
+            ShowWindow(hwnd, 1);    //SW_SHOWNORMAL=1                // SW_SHOW=5;
+            SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+            SetForegroundWindow(hwnd);
+
+            return hwnd;
         }
         void stTop(int hwnd)
         {
@@ -443,7 +451,7 @@ namespace RmbHook
             }
         }
 
-        public static int gtWinMouse()
+        public static int getWinUnderMouse()
          {
              POINTAPI point = new POINTAPI();                   //必须用与之相兼容的结构体，类也可以
 
