@@ -28,7 +28,7 @@ namespace RmbHook
         public int init()
         {
             int d = 0;
-            Parameter prm = Factor.gm.mparameter;
+            Parameter prm = ObjMan.gthis.mparameter;
             if ((d = setTopkey(prm.getTopkey())) < 0)
             {
                 System.Console.WriteLine("->RmbKey.init(): setTopKey failed.");

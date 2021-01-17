@@ -6,7 +6,7 @@ using lslibcs;      // 20150621;
 
 namespace RmbHook
 {
-    public class Parameter
+    class Parameter
     {
         // ----
         public int init()

@@ -5,6 +5,7 @@
 *.suo
 Thumbs.db
 obj
+old
 **/Debug/*
 **/Release/*
 !**/Debug/*.ini

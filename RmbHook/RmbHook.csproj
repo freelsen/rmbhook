@@ -12,7 +12,7 @@
     <AssemblyName>RmbHook</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>icon3.ico</ApplicationIcon>
+    <ApplicationIcon>src\GUI\icon3.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -92,7 +92,10 @@
     <Compile Include="src\keyword\SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\win\WinMon.cs">
+    <Compile Include="src\application\AppMan.cs" />
+    <Compile Include="src\application\FormEventMan.cs" />
+    <Compile Include="src\module\hook\HookHandler.cs" />
+    <Compile Include="src\module\win\WinMon.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -100,7 +103,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\HookForm.resx">
+    <EmbeddedResource Include="src\GUI\HookForm.resx">
       <DependentUpon>HookForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -123,26 +126,26 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="src\assit\Factor.cs" />
-    <Compile Include="src\assit\Parameter.cs" />
-    <Compile Include="src\HookForm.cs">
+    <Compile Include="src\application\ObjMan.cs" />
+    <Compile Include="src\configuration\Parameter.cs" />
+    <Compile Include="src\GUI\HookForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\HookForm.designer.cs">
+    <Compile Include="src\GUI\HookForm.designer.cs">
       <DependentUpon>HookForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\assit\LObj.cs" />
-    <Compile Include="src\MouseKeybardLib.cs" />
-    <Compile Include="src\Program.cs">
+    <Compile Include="src\application\LObj.cs" />
+    <Compile Include="src\module\hook\MouseKeybardLib.cs" />
+    <Compile Include="src\application\Program.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\rmbkey\CmdMode.cs" />
-    <Compile Include="src\rmbkey\CommandMode.cs" />
-    <Compile Include="src\rmbkey\KeyCmd.cs" />
-    <Compile Include="src\rmbkey\KeyCommand.cs" />
-    <Compile Include="src\rmbkey\RmbKey.cs" />
-    <Compile Include="src\TaskbarMenu.cs" />
-    <Compile Include="src\TaskbarNotify.cs" />
+    <Compile Include="src\module\rmbkey\CmdMode.cs" />
+    <Compile Include="src\module\rmbkey\CommandMode.cs" />
+    <Compile Include="src\module\rmbkey\KeyCmd.cs" />
+    <Compile Include="src\module\rmbkey\KeyCommand.cs" />
+    <Compile Include="src\module\rmbkey\RmbKey.cs" />
+    <Compile Include="src\GUI\TaskbarMenu.cs" />
+    <Compile Include="src\GUI\TaskbarNotify.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MouseKeyboardLibrary\MouseKeyboardLibrary.csproj">
@@ -151,7 +154,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon3.ico" />
+    <Content Include="src\GUI\icon3.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\res\" />

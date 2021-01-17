@@ -12,51 +12,32 @@ namespace RmbHook
 {
     public partial class HookForm : Form
     {
-        public static HookForm mthis = null;
-        private Factor mfactor = new Factor();  //20150621;
-
-        private MouseKeybardLib mlib;// = new MouseKeybardLib();
-        private TaskbarNotify mtasknotify;// = new TaskbarNotify();
-        private RmbKey mrmbkey;// = new RmbKey();
+        public static HookForm gthis = null;
 
         public HookForm()
         {
-            mthis = this;
+            AppMan.create();
+
+            gthis = this;
             InitializeComponent();
-        }
-        public int init()
-        {
-            mlib = Factor.gm.mlib;
-            mtasknotify = Factor.gm.mtasknotify;
-            mrmbkey = Factor.gm.mrmbkey;
-
-            int d = mfactor.init();
-
-            return d;
-        }
-        public void exit()
-        {
-            mfactor.exit();
         }
 
 // --- form event; ---
         private void hookForm_Load(object sender, EventArgs e)
         {
-            init();
+            FormEventMan.Load(sender, e);
         }
         private void HookForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            exit();
-            LsKeyword.getThis().exit();     // 20160503;
+            FormEventMan.Closing(sender, e);
         }   
         private void hookForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Console.WriteLine("->hookform closed.");
+            FormEventMan.Closed(sender, e);
         }
         private void HookForm_SizeChanged(object sender, EventArgs e)
         {
-            if( mtasknotify != null )
-                mtasknotify.onFormSizeChanged();
+            FormEventMan.SizeChanged(sender, e);
         }
         
 // --- show event; ---

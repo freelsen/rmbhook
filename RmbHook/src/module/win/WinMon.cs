@@ -123,7 +123,7 @@ namespace RmbHook
 
         public int init()
         {
-            mprm = Factor.gm.mparameter;
+            mprm = ObjMan.gthis.mparameter;
 
             mkeeptime = mprm.getKeepTime();
             mkeepnum = mprm.getKeepNum();
