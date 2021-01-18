@@ -30,31 +30,41 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.curXYLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listView2 = new System.Windows.Forms.ListView();
-            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader13 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader14 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader15 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.mhookStart = new System.Windows.Forms.Button();
+            this.mhookStop = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.mhookStop);
+            this.groupBox1.Controls.Add(this.mhookStart);
             this.groupBox1.Controls.Add(this.listView1);
             this.groupBox1.Controls.Add(this.curXYLabel);
-            this.groupBox1.Location = new System.Drawing.Point(12, 11);
+            this.groupBox1.Location = new System.Drawing.Point(6, 19);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(391, 138);
+            this.groupBox1.Size = new System.Drawing.Size(492, 163);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mouse";
@@ -69,7 +79,7 @@
             this.columnHeader5});
             this.listView1.Location = new System.Drawing.Point(6, 35);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(379, 98);
+            this.listView1.Size = new System.Drawing.Size(379, 122);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -101,15 +111,17 @@
             // curXYLabel
             // 
             this.curXYLabel.AutoSize = true;
+            this.curXYLabel.ForeColor = System.Drawing.SystemColors.Desktop;
             this.curXYLabel.Location = new System.Drawing.Point(22, 20);
             this.curXYLabel.Name = "curXYLabel";
-            this.curXYLabel.Size = new System.Drawing.Size(0, 12);
+            this.curXYLabel.Size = new System.Drawing.Size(131, 12);
             this.curXYLabel.TabIndex = 0;
+            this.curXYLabel.Text = "Mouse Location: (x,y)";
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.listView2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 155);
+            this.groupBox2.Location = new System.Drawing.Point(6, 218);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(391, 138);
             this.groupBox2.TabIndex = 0;
@@ -160,22 +172,82 @@
             this.columnHeader15.Text = "Control";
             this.columnHeader15.Width = 50;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 69);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(512, 388);
+            this.tabControl1.TabIndex = 1;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(504, 362);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "KeyMouse";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(504, 362);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // mhookStart
+            // 
+            this.mhookStart.Location = new System.Drawing.Point(400, 35);
+            this.mhookStart.Name = "mhookStart";
+            this.mhookStart.Size = new System.Drawing.Size(75, 23);
+            this.mhookStart.TabIndex = 2;
+            this.mhookStart.Text = "Start";
+            this.mhookStart.UseVisualStyleBackColor = true;
+            this.mhookStart.Click += new System.EventHandler(this.mhookStart_Click);
+            // 
+            // mhookStop
+            // 
+            this.mhookStop.Location = new System.Drawing.Point(400, 78);
+            this.mhookStop.Name = "mhookStop";
+            this.mhookStop.Size = new System.Drawing.Size(75, 23);
+            this.mhookStop.TabIndex = 3;
+            this.mhookStop.Text = "Stop";
+            this.mhookStop.UseVisualStyleBackColor = true;
+            this.mhookStop.Click += new System.EventHandler(this.mhookStop_Click);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
             // HookForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 305);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(543, 502);
+            this.Controls.Add(this.tabControl1);
             this.Name = "HookForm";
             this.Text = "RmbHook";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HookForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.hookForm_FormClosed);
             this.Load += new System.EventHandler(this.hookForm_Load);
             this.SizeChanged += new System.EventHandler(this.HookForm_SizeChanged);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.hookForm_FormClosed);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HookForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -198,6 +270,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader14;
         private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button mhookStop;
+        private System.Windows.Forms.Button mhookStart;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

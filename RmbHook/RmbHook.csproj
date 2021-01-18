@@ -18,6 +18,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -53,6 +53,38 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\RmbHook.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;D:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;D:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\RmbHook.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;D:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;D:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -73,28 +105,36 @@
   <ItemGroup>
     <Compile Include="lslibcs\ConfigureFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\keyword\Info.cs" />
-    <Compile Include="src\keyword\Keywords.cs" />
-    <Compile Include="src\keyword\LsKeyword.cs" />
-    <Compile Include="src\keyword\PathAnalyser.cs" />
-    <Compile Include="src\keyword\PathFile.cs" />
-    <Compile Include="src\keyword\PathInfo.cs" />
-    <Compile Include="src\keyword\ResultForm.cs">
+    <Compile Include="src\module\gesture\GestureMan.cs" />
+    <Compile Include="src\module\keyword\Info.cs" />
+    <Compile Include="src\module\keyword\Keywords.cs" />
+    <Compile Include="src\module\keyword\LsKeyword.cs" />
+    <Compile Include="src\module\keyword\PathAnalyser.cs" />
+    <Compile Include="src\module\keyword\PathFile.cs" />
+    <Compile Include="src\module\keyword\PathInfo.cs" />
+    <Compile Include="src\module\keyword\ResultForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\keyword\ResultForm.Designer.cs">
+    <Compile Include="src\module\keyword\ResultForm.Designer.cs">
       <DependentUpon>ResultForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\keyword\Searcher.cs" />
-    <Compile Include="src\keyword\SearchForm.cs">
+    <Compile Include="src\module\keyword\Searcher.cs" />
+    <Compile Include="src\module\keyword\SearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\keyword\SearchForm.Designer.cs">
+    <Compile Include="src\module\keyword\SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\application\AppMan.cs" />
-    <Compile Include="src\application\FormEventMan.cs" />
+    <Compile Include="src\GUI\FormEventMan.cs" />
+    <Compile Include="src\WinAPI\FetchColor.cs" />
+    <Compile Include="src\module\gesture\GesFun.cs" />
+    <Compile Include="src\module\gesture\GesPair.cs" />
+    <Compile Include="src\module\gesture\GesPairEvent.cs" />
+    <Compile Include="src\module\gesture\Gesture.cs" />
     <Compile Include="src\module\hook\HookHandler.cs" />
+    <Compile Include="src\module\gesture\LSortedList.cs" />
+    <Compile Include="src\module\gesture\UltraHighTimer.cs" />
     <Compile Include="src\module\win\WinMon.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -111,10 +151,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="src\keyword\ResultForm.resx">
+    <EmbeddedResource Include="src\module\keyword\ResultForm.resx">
       <DependentUpon>ResultForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\keyword\SearchForm.resx">
+    <EmbeddedResource Include="src\module\keyword\SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -135,7 +175,7 @@
       <DependentUpon>HookForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\application\LObj.cs" />
-    <Compile Include="src\module\hook\MouseKeybardLib.cs" />
+    <Compile Include="src\module\hook\MouseKeyHook.cs" />
     <Compile Include="src\application\Program.cs">
       <SubType>Code</SubType>
     </Compile>

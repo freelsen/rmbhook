@@ -36,5 +36,34 @@ namespace RmbHook
             if (mtasknotify != null)
                 mtasknotify.onFormSizeChanged();
         }
+
+        // hook control;
+        public static void HookStart()
+        {
+            MouseKeyHook.gthis.startMouseHook();
+        }
+        public static void HookStop()
+        {
+            MouseKeyHook.gthis.stopMouseHook();
+        }
+        public static void KeyOn()
+        {
+            RmbKey.gthis.setHookMode(true);
+        }
+        public static void KeyOff()
+        {
+            RmbKey.gthis.setHookMode(false);
+        }
+        public static void MouseOn()
+        {
+            //MouseKeyHook.gthis.startMouseHook();
+            GestureMan.mthis.Start();
+        }
+        public static void MouseOff()
+        {
+            GestureMan.mthis.Stop();
+            //MouseKeyHook.gthis.stopMouseHook();
+        }
+
     }
 }

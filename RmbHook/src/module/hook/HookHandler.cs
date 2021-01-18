@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace RmbHook
 {
-    class HookHandler
+    class HookEventHandler
     {
         public static HookForm mform = null;
         public static RmbKey mrmbkey = null;
@@ -33,19 +34,27 @@ namespace RmbHook
         // mouse event;
         public static void MouseMove(object sender, MouseEventArgs e)
         {
-            mform.SetXYLabel(e.X, e.Y);
+            //Color c = FetchColor.gtColor(e.X, e.Y);
+            //Console.Out.WriteLine(c.A.ToString()+c.B.ToString()+c.G.ToString());    
+            //mform.ShowColor(c);
+            //mform.ShowMouseLocation(e.X, e.Y);
+
+            //mgesture.onMove2(e.X, e.Y);
         }
 
         public static void MouseDown(object sender, MouseEventArgs e)
         {
-            mform.onMouseEvent("MouseDown", e.Button.ToString(),
-                e.X.ToString(), e.Y.ToString(), "");
+            //WinMon.gtWinMouse();
+            //mgesture.ts_dis(e);
+
+            //mform.onMouseEvent("MouseDown", e.Button.ToString(),
+            //    e.X.ToString(), e.Y.ToString(), "");
         }
 
         public static void MouseUp(object sender, MouseEventArgs e)
         {
-            mform.onMouseEvent("MouseUp", e.Button.ToString(),
-                e.X.ToString(), e.Y.ToString(), "");
+            //mform.onMouseEvent("MouseUp", e.Button.ToString(),
+            //    e.X.ToString(), e.Y.ToString(), "");
         }
 
         public static void MouseWheel(object sender, MouseEventArgs e)

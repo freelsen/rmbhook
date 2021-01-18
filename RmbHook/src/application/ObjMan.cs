@@ -10,23 +10,22 @@ namespace RmbHook
         public static ObjMan gthis = null;
 
         // configuration;
-        public Parameter mparameter = null;
+        public Parameter mparameter = new Parameter();
         // hook lib;
-        public MouseKeybardHook mmklib = null;
+        public MouseKeyHook mmkhook = new MouseKeyHook();
         // user functions;
-        public RmbKey mrmbkey = null;
-        public WinMon mwinmon = null;
+        public RmbKey mrmbkey = new RmbKey();
+        public WinMon mwinmon = new WinMon();
         // GUI;
         public HookForm mform = null;
-        public TaskbarNotify mtasknotify = null;
+        public TaskbarNotify mtasknotify = new TaskbarNotify();
+        // Gesture;
+        public GesFun mgesfun = new GesFun();
+        public Gesture mgesture = new Gesture();
+        public GestureMan mgesman = new GestureMan();
 
         private void create()
         {
-            mparameter = new Parameter();
-            mmklib = new MouseKeybardHook();
-            mtasknotify = new TaskbarNotify();
-            mrmbkey = new RmbKey();
-            mwinmon = new WinMon();
         }
         
         public ObjMan()
@@ -41,22 +40,30 @@ namespace RmbHook
          
             mparameter.init(); 
             mtasknotify.init(mform);
+            
+            // gesture;
+            mgesture.linit();
+            mgesfun.linit();
+
+            mgesman.mgesfun = mgesfun;
+            mgesman.mgesture = mgesture;
+            mgesman.init();
 
             mrmbkey.init();
             mwinmon.init();
 
-            HookHandler.mform = mform;
-            HookHandler.mrmbkey = mrmbkey;
+            HookEventHandler.mform = mform;
+            HookEventHandler.mrmbkey = mrmbkey;
 
-            mmklib.init();
-            mmklib.start();
+            mmkhook.init();
+            mmkhook.start();
 
             return 0;
         }
         public int exit()
         {
             // Not necessary anymore, will stop when application exits
-            mmklib.stop();
+            mmkhook.stop();
             mtasknotify.exit();
             return 0;
         }

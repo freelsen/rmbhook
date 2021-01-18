@@ -158,7 +158,7 @@ namespace MouseKeyboardLibrary
 
         #region Methods
 
-        public void Start()
+        public bool Start()
         {
 
             if (!_isStarted &&
@@ -183,6 +183,7 @@ namespace MouseKeyboardLibrary
 
             }
 
+            return _isStarted;
         }
 
         public void Stop()

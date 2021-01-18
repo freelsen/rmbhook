@@ -10,7 +10,7 @@ namespace RmbHook
     public class TaskbarMenu
     {
         private TaskbarNotify mnotify = null;
-        private RmbKey mrmbkey = null;
+        //private RmbKey mrmbkey = null;
 
         public TaskbarMenu()
         {
@@ -21,6 +21,8 @@ namespace RmbHook
         private ToolStripMenuItem mexititem = new ToolStripMenuItem();
         private ToolStripMenuItem mkeyonitem = new ToolStripMenuItem();
         private ToolStripMenuItem mkeyoffitem = new ToolStripMenuItem();
+        private ToolStripMenuItem mmouseonitem = new ToolStripMenuItem();
+        private ToolStripMenuItem mmouseoffitem = new ToolStripMenuItem();
         public ContextMenuStrip getMenu() { return mmenu; }
 
         public int init()
@@ -29,42 +31,61 @@ namespace RmbHook
             mopenitem.Text = "Open";
             mopenitem.Click += new EventHandler(mopenitem_Click);
             mexititem.Text = "Exit";
+
             mexititem.Click += new EventHandler(mexititem_Click);
             mkeyonitem.Text = "Key On";
             mkeyonitem.Click += new EventHandler(mkeyonitem_Click);
             mkeyoffitem.Text = "Key Off";
             mkeyoffitem.Click += new EventHandler(mkeyoffitem_Click);
 
+            mmouseonitem.Text = "Mouse On";
+            mmouseonitem.Click += new EventHandler(MouseOnItem_Click);
+            mmouseoffitem.Text = "Mouse Off";
+            mmouseoffitem.Click += new EventHandler(MouseOffItem_Click);
+
+
             mmenu.Items.Add(mopenitem);
             mmenu.Items.Add(mkeyonitem);
             mmenu.Items.Add(mkeyoffitem);
+            mmenu.Items.Add(mmouseonitem);
+            mmenu.Items.Add(mmouseoffitem);
             mmenu.Items.Add(mexititem);
 
             mnotify = TaskbarNotify.gthis;
 
-            mrmbkey = RmbKey.gthis;
+            //mrmbkey = RmbKey.gthis;
             
             return 0;
         }
-
-        void mkeyoffitem_Click(object sender, EventArgs e)
+        void mopenitem_Click(object sender, EventArgs e)
         {
-            mrmbkey.setHookMode(false);
-        }
-
-        void mkeyonitem_Click(object sender, EventArgs e)
-        {
-            mrmbkey.setHookMode(true);
-        }
-
+            mnotify.onFormShow();
+        } 
         void mexititem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        void mopenitem_Click(object sender, EventArgs e)
+        void mkeyoffitem_Click(object sender, EventArgs e)
         {
-            mnotify.onFormShow();
+            FormEventMan.KeyOff();
         }
+        void mkeyonitem_Click(object sender, EventArgs e)
+        {
+            FormEventMan.KeyOn();
+        }
+
+        void MouseOnItem_Click(object sender, EventArgs e)
+        {
+            FormEventMan.MouseOn();
+        }
+        void MouseOffItem_Click(object sender, EventArgs e)
+        {
+            FormEventMan.MouseOff();
+        }
+
+
+
+
     }
 }
