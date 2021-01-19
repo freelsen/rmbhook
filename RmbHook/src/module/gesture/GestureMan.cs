@@ -26,16 +26,19 @@ namespace RmbHook
         {
             mhtimer.setEvent(onHtimerTick);
 
-            mgesture.setTinterval((int)mhtimer.mintervalMs);
+            //mgesture.setTinterval(mhtimer.mticktime);
 
             mbkworker = HookForm.gthis.getWorker();
 
             return 0;
         }
 
-
+        bool mrunning = false;
         public void Start()
         {
+            if (mrunning) return;
+            mrunning = true;
+
             mgesture.start();               // 140712;
             mhtimer.Start();
 
@@ -47,31 +50,17 @@ namespace RmbHook
             //stMouseRun(false);
             mgesture.stop();
             mhtimer.Stop();
+            mrunning = false;
         }
 
         // callback by the timer thread;
         public void onHtimerTick(int tm)
         {
-            mgesture.ResetReport();
-
-            mgesture.onHtimerTick(tm);
-
-            if (mgesture.GetReport())
+            if (mgesture.onHtimerTick(tm))
             {
-                //GestureMan mgesman = GestureMan.mthis;
-                //mgesman.mptstart = mptstart;
-                //mgesman.mptend = mptend;
-                //mgesman.mdirect = mdirect[ma];
-                //mgesman.ma = ma;
-                //mgesman.mptup = mptup;
-                //mgesman.mptdown = mptdown;
-                //mgesman.mdis = mdis;
-
-                ma = mgesture.GetMa();
+                ma = mgesture.GetAreaIndex();
 
                 mbkworker.ReportProgress(1);
-
-                mgesture.ResetReport();
             }
         }
 

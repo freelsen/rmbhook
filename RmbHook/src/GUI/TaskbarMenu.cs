@@ -23,6 +23,8 @@ namespace RmbHook
         private ToolStripMenuItem mkeyoffitem = new ToolStripMenuItem();
         private ToolStripMenuItem mmouseonitem = new ToolStripMenuItem();
         private ToolStripMenuItem mmouseoffitem = new ToolStripMenuItem();
+        private ToolStripMenuItem mgestureonitem = new ToolStripMenuItem();
+        private ToolStripMenuItem mgestureoffitem = new ToolStripMenuItem();
         public ContextMenuStrip getMenu() { return mmenu; }
 
         public int init()
@@ -38,6 +40,11 @@ namespace RmbHook
             mkeyoffitem.Text = "Key Off";
             mkeyoffitem.Click += new EventHandler(mkeyoffitem_Click);
 
+            mgestureonitem.Text = "Gesture On";
+            mgestureonitem.Click += new EventHandler(GestureOnItem_Click);
+            mgestureoffitem.Text = "Gesture Off";
+            mgestureoffitem.Click += new EventHandler(GestureOffItem_Click);
+
             mmouseonitem.Text = "Mouse On";
             mmouseonitem.Click += new EventHandler(MouseOnItem_Click);
             mmouseoffitem.Text = "Mouse Off";
@@ -45,10 +52,16 @@ namespace RmbHook
 
 
             mmenu.Items.Add(mopenitem);
+
             mmenu.Items.Add(mkeyonitem);
             mmenu.Items.Add(mkeyoffitem);
+
+            mmenu.Items.Add(mgestureonitem);
+            mmenu.Items.Add(mgestureoffitem);
+
             mmenu.Items.Add(mmouseonitem);
             mmenu.Items.Add(mmouseoffitem);
+
             mmenu.Items.Add(mexititem);
 
             mnotify = TaskbarNotify.gthis;
@@ -75,6 +88,7 @@ namespace RmbHook
             FormEventMan.KeyOn();
         }
 
+
         void MouseOnItem_Click(object sender, EventArgs e)
         {
             FormEventMan.MouseOn();
@@ -82,6 +96,16 @@ namespace RmbHook
         void MouseOffItem_Click(object sender, EventArgs e)
         {
             FormEventMan.MouseOff();
+        }
+
+
+        void GestureOnItem_Click(object sender, EventArgs e)
+        {
+            FormEventMan.GestureOn();
+        }
+        void GestureOffItem_Click(object sender, EventArgs e)
+        {
+            FormEventMan.GestureOff();
         }
 
 

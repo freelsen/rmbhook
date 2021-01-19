@@ -49,12 +49,14 @@ namespace RmbHook
         bool running = true;
         Thread mthread = null;
 
-        public long mintervalMs;                     // interval in mimliseccond;
+        public long mticktimeL=10;                     // interval in mimliseccond;
+        public int mticktime=10;
 
         public void stInterval( long value)         // ms;
         {
-                mintervalMs = value;
-                intevalTicks.QuadPart = (value * clockFrequency.QuadPart / 1000);
+            mticktime = (int)value;
+            mticktimeL = value;
+            intevalTicks.QuadPart = (value * clockFrequency.QuadPart / 1000);
         }
 
         public void setEvent(ManualTimerEventHandler tickHandler)
@@ -115,9 +117,10 @@ namespace RmbHook
 
                 if (mtickevent != null)
                 {
-                    mtickevent((int)ElapsedMicroseconds.QuadPart);
+                    if (ElapsedMicroseconds.QuadPart >=mticktime)
+                        mtickevent((int)ElapsedMicroseconds.QuadPart);
                 }
-                Thread.Sleep((int)mintervalMs);                    // 140715;
+                Thread.Sleep(mticktime);                    // 140715;
             }
         }
 
@@ -168,7 +171,7 @@ namespace RmbHook
                 
                 if (mtickevent != null)
                 {
-                    mtickevent((int)this.mintervalMs);
+                    mtickevent((int)this.mticktimeL);
                 }
             }
         }

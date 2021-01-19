@@ -13,72 +13,9 @@ namespace RmbHook
     {
         public static Gesture mthis = null;
 
-        [StructLayout(LayoutKind.Sequential)]           //定义与API相兼容结构体
-        public struct POINTAPI
-        {
-            public int X;
-            public int Y;
-        }
-        [DllImport("user32.dll", EntryPoint = "GetCursorPos")]              //获取鼠标坐标
-        public static extern int GetCursorPos(ref POINTAPI lpPoint);
-
-        POINTAPI mpt32 = new POINTAPI();
-
-         Point mo = new Point(0, 0);
-         Point mv = new Point();
-
-        Point mpto = new Point(0,0);                 // origin point;
-        Point mptnow = new Point(0,0);
-        Point mptlast = new Point(0,0);
-
-        //int mdismin = 20;
-        //Point mlastmv = new Point();
-        Point mptend = new Point();
-        Point mptstart = new Point();
-        Point mptup = new Point();
-        Point mptdown = new Point();
-
-        DateTime mdt = DateTime.Now;
-        DateTime mdtnow = DateTime.Now;
-        DateTime mdtlast = DateTime.Now;
-        int mtres = 10;//ms;
-
-        int mtinterval = 10; // ms;
-        int mgapcnt = 60; // ms;
-        int movcnt = 200; //ms;
-        int mdvmin = 5;//2; // 40pixel/10ms;
-        public void setTinterval(int t){ mtinterval=t;}
-
-        double mdis;
-        int mdx;
-        int mdy;
-        int ma;
-        int mdismin = 40;                           // 140716;
-        public int GetMa() { return ma; }
 
         public Rectangle mcenter;                   // = new Rectangle();
         int mcsize = 400;
-
-        bool mbstart = false;
-        int mstartcnt = 0;
-        int mstopcnt = 0;
-
-        int mmode = 0;                              // 0=single; 1=pair;
-        GesPair mgespair = new GesPair();           // 140717;
-
-        //int mstatictm = 0;
-        //int mstatictmmin = 100; //ms;
-        TimeSpan mts;
-        DateTime mdtstart = DateTime.Now;
-        //int mstartmax = 1000; //ms;
-
-        //bool mbstatic = false;
-
-
-        double [] mcos = new double[10];
-        int[] marea = new int[10];
-        string [] mdirect = new string [10];
-
 
         public Gesture()
         {
@@ -96,21 +33,208 @@ namespace RmbHook
             
             mcenter = new Rectangle( cw-mcsize/2, ch-mcsize/2, mcsize, mcsize);
 
+            InitDirection();
+        }
+
+        public void linit()
+        {
+            mgespair.linit();
+        }
+        public void start()
+        {
+            mgespair.start();                           // 140717;  
+        }
+        public void stop()
+        {
+            
+        }
+
+
+
+        // tick;
+        int mticktime = 10; // ms;
+        //public void setTinterval(int t) { mticktime = t; }
+        Point mtickptnow = new Point(0, 0);
+        Point mtickptlast = new Point(0, 0);
+        double mtickvelocity = 0.0;
+
+        // gesture cycle;
+        public int mvelocitymin = 5;//2; // 40pixel/10ms;
+
+        bool mgesstart = false;
+        int mgesstartcnt = 0;
+        int mgesstopcnt = 0;
+        Point mgesptend = new Point();
+        Point mgesptstart = new Point();
+
+        double mgesdis = 0.0;
+        public int mdistancemin = 40;                           // 140716;
+        public int mgesgap = 60; // ms;
+        public int mgesduration = 200; //ms;
+
+        //private bool mreport = false;
+        //public bool GetReport() { return mreport; }
+        //public void ResetReport() { mreport = false; }
+
+        public bool onHtimerTick(int tm)
+        {
+            bool ges = false;
+            //Console.Out.WriteLine(">hi timer tick,"+tm.ToString());
+            mticktime = tm;                            // 140716;
+
+            WinAPIs.POINTAPI mpt32 = new WinAPIs.POINTAPI();
+            WinAPIs.GetCursorPos(ref mpt32);
+
+            ges = onMove3(mpt32.X, mpt32.Y);
+            return ges;
+        }
+        // stratagy 1: accurate timer;
+        public bool onMove3(int x, int y)
+        {
+            bool ges = false;
+
+            mtickptlast = mtickptnow;
+            mtickptnow.X = x; mtickptnow.Y = y;
+
+            double ds = cDis(mtickptnow, mtickptlast);
+            mtickvelocity = ds / mticktime;
+
+            //Console.Out.WriteLine(">dv=" + dv.ToString());
+            //onVelocity(mtickvelocity);
+            if (CheckGesture())
+            {
+                CalGesture();
+                Console.WriteLine(mdirect[mareaidx]);
+                //mreport = true;
+                ges = true;
+            }
+            return ges;
+        }
+
+        public bool CheckGesture()
+        {
+            bool gesdone = false;
+
+            if (mgesstart)//(mtickvelocity < mvelocitymin)
+            {
+                mgesstartcnt += mticktime;
+            }
+            else
+            {
+                if (mgesstopcnt < 5000) mgesstopcnt += mticktime;
+            }
+
+            if ((mtickvelocity > mvelocitymin) && (!mgesstart) && (mgesstopcnt >= gtStopGap()))
+                StartGesture();
+            else if (mgesstart && (mtickvelocity<mvelocitymin)) // stop when moving slow;
+               gesdone=StopGesture();
+            else if (mgesstart && (mgesstartcnt > mgesduration)) // stop when moving overtime;
+                gesdone=StopGesture();
+
+            return gesdone;
+
+        }
+        void StartGesture()
+        {
+            mgesstart = true;
+            mgesstartcnt = 0;
+            mgesstopcnt = 0;
+
+            mgesptstart = mtickptnow;
+
+            onStart(); // for gespair;
+        }
+        bool StopGesture()
+        {
+            mgesstart = false;
+            mgesstopcnt = 0;
+
+            mgesptend = mtickptnow;
+            
+            mgesdis = cDis(mgesptend, mgesptstart);
+
+            return (checkDistance()); //   { mgesstopcnt = mgesgap;  }
+                
+        }
+
+        int mmode = 0;                              // 0=single; 1=pair;
+        GesPair mgespair = new GesPair();           // 140717;
+
+        int gtStopGap()                             // 140716;
+        {
+            if (mmode == 0)
+            {
+                return mgesgap;
+            }
+            else
+            {
+                int gapcnt = mgespair.gtStopGap();
+                if (gapcnt > 0)
+                    return gapcnt;
+                else
+                    return mgesgap;
+            }
+        }
+        void onStart()
+        {
+            if (mmode == 1)
+                mgespair.onStart();
+        }
+        bool checkDistance()
+        {
+            if (mmode == 0)
+            {
+                return (mgesdis > mdistancemin);
+            }
+            else
+            {
+                return (mgespair.onStop(mgesdis, mdistancemin));
+            }
+        }
+
+
+        int mareaidx;
+        public int GetAreaIndex() { return mareaidx; }
+
+        public void CalGesture()
+        {
+            mareaidx = CalAreaIndex(mgesptstart, mgesptend);
+            
+            // cal up, down point;
+            // cUpDown();
+
+            if (mmode == 1)
+            {
+                int a = mgespair.ckPair(mareaidx);
+                if (a < 0)
+                {
+                    Console.WriteLine("gesture.onGesture()> ckpair failed.");
+                    return;
+                }
+                mareaidx = a;
+            }
+        }
+
+        double[] mcos = new double[10];
+        int[] marea = new int[10];
+        string[] mdirect = new string[10];
+        void InitDirection()
+        {
             mcos[0] = 0.9239;
             mcos[1] = 0.3827;
             mcos[2] = -0.3827;
             mcos[3] = -0.9239;
             mcos[4] = -1;
 
-            marea[0] = 0; 
-            marea[1] = 1; 
-            marea[2] = 2; 
-            marea[3] = 3; 
-            marea[4] = 4; 
-            marea[5] = 4; 
-            marea[6] = 5; 
-            marea[7] = 6; 
-            marea[8] = 7; 
+            marea[0] = 0;
+            marea[1] = 1;
+            marea[2] = 2;
+            marea[3] = 3;
+            marea[4] = 4;
+            marea[5] = 4;
+            marea[6] = 5;
+            marea[7] = 6;
+            marea[8] = 7;
             marea[9] = 0;
 
             mdirect[0] = "右";
@@ -125,206 +249,20 @@ namespace RmbHook
             //mdirect[9] = "右";
         }
 
-        public void linit()
+        int CalAreaIndex(Point p0, Point p1)
         {
-            mgespair.linit();
+            //pbm> the distance is in pixel unit.
+            // should be in metric unit;
 
-            //mbkworker = HookForm.gthis.getWorker();
-        }
-        public void start()
-        {
-            Parameter prm = Parameter.mthis;
+            double dx = cDx(p1, p0);
+            double dy = cDy(p1, p0);
+            double dis = cDis(p1, p0);
+            double cos = dx /dis;
 
-            mdvmin = prm.mvmin;                         // 140715;
-            mgapcnt = prm.mgaptm;
-            movcnt = prm.movertime;
-           
-            mdismin = prm.mdismin;
+            //Console.WriteLine("(dx,dy,dis,cos)=" + dx.ToString() + "," + dy.ToString()
+            //    + "," + dis.ToString("{.00}") + "," + cos.ToString("{0.0000}"));
 
-            mmode = prm.mpair;
-
-            mgespair.start();                           // 140717;
-
-           
-        }
-        public void stop()
-        {
-            
-        }
-
-        public void onHtimerTick(int tm)
-        {
-            //Console.Out.WriteLine(">hi timer tick,"+tm.ToString());
-            mtinterval = tm;                            // 140716;
-
-            GetCursorPos(ref mpt32);
-            onMove3(mpt32.X, mpt32.Y);
-        }
-        
-        
-
-        public void onMove3(int x, int y)
-        {
-            mptnow.X = x; mptnow.Y = y;
-
-            double ds = cDis(mptnow, mptlast);
-            // update;
-            mptlast = mptnow;
-            mdtlast = mdtnow;
-
-            // cal;
-            if (mtinterval <= 0)                        // 140715;
-                return;
-            double dv = ds / mtinterval;
-
-            //Console.Out.WriteLine(">dv=" + dv.ToString());
-            onDv(dv);
-
-        }
-        public void onDv(double dv)
-        {
-            //Console.WriteLine(">dv=" + dv.ToString());
-            if (mmode == 1)
-            {
-                if (mgespair.ckOvtime(mtinterval))
-                {
-                    mstartcnt = 0;
-                    mstopcnt = 0;
-                    return;
-                }
-
-            }
-            if (dv < mdvmin)    // 140715;Parameter.mthis.mvmin )                // 140713;
-            {
-                //Console.WriteLine(">  dv<mdvmin," + dv.ToString());
-                if (mstopcnt < 5000) // ms;
-                    mstopcnt += mtinterval;
-
-                if (mbstart) // stop when no moving;
-                {
-                    mbstart = false;
-                    Console.Out.WriteLine(">>stop no moving, startcnt=" + (mstartcnt).ToString() + "," + mptnow.X.ToString() + "," + mptnow.Y.ToString());
-                    if (!onStop())
-                    {
-                        mstopcnt = mgapcnt;
-                    }
-                }
-
-                mstartcnt = 0;
-            }
-            else
-            {
-                //Console.WriteLine(">      dv>=mdvmin," + dv.ToString());
-                //if (!mbstart && (mstopcnt >= mgapcnt) && mcenter.Contains(mptnow))
-                if (!mbstart && (mstopcnt >= gtStopGap()) )  // 140716; mgapcnt) )
-                {
-
-                    mbstart = true;
-                    Console.Out.WriteLine(">>start, stopcnt=" + (mstopcnt).ToString() + "," + mptnow.X.ToString() + "," + mptnow.Y.ToString());
-                    onStart();
-                }
-                mstopcnt = 0;
-
-                if (mstartcnt < 5000)
-                    mstartcnt += mtinterval;
-                //Console.Out.WriteLine(">>mstartcnt=" + mstartcnt.ToString());
-
-                if (mbstart && (mstartcnt > movcnt)) // stop when moving=overtime;
-                {
-                    mbstart = false;
-                    mstartcnt = 0;
-                    Console.Out.WriteLine(">> overtime, startcnt=" + (mstartcnt).ToString());
-                    onStop();
-                }
-            }
-        }
-        int gtStopGap()                             // 140716;
-        {
-            if (mmode == 0)
-            {
-                return mgapcnt;
-            }
-            else
-            {
-                int gapcnt = mgespair.gtStopGap();
-                if (gapcnt > 0)
-                    return gapcnt;
-                else
-                    return mgapcnt;
-            }
-        }
-        void onStart()
-        {
-            mptstart = mptnow;
-
-            if (mmode == 1)
-                mgespair.onStart();
-        }
-        bool onStop()
-        {
-            mptend = mptnow;
-
-            // cal dis, tan;
-            mdis = cDis(mptend, mptstart);
-            if (mmode == 0)
-            {
-                if (mdis > mdismin)
-                {
-                    onGesture();
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
-            {
-                if (mgespair.onStop(mdis, mdismin))
-                {
-                    onGesture();
-                    return true;
-                }
-                else
-                    return false;
-            }
-
-        }
-
-        private bool mreport = false;
-        public bool GetReport() { return mreport; }
-        public void ResetReport() { mreport = false; }
-
-        public void onGesture()
-        {
-            mdx = cDx(mptend, mptstart);
-            mdy = cDy(mptend, mptstart);
-            double cos = mdx / mdis;
-            //
-            ma = ckArea(cos, mdy >= 0);
-            Console.WriteLine(mdirect[ma] + "(dx,dy,dis,cos)=" + mdx.ToString() + "," + mdy.ToString()
-                + "," + mdis.ToString("{.00}") + "," + cos.ToString("{0.0000}"));
-            // cal up, down point;
-//            cUpDown();
-
-            /*
-            if (mmode == 1)
-            {
-                int a = mgespair.ckPair(ma);
-                if (a < 0)
-                {
-                    Console.WriteLine("gesture.onGesture()> ckpair failed.");
-                    return;
-                }
-                ma = a;
-            }
-             */
-
-            // report;
-            mreport = true;
-
-            // cal dis, tan;
-            //double dis = cDis(mptend, mptstart);
-            //double tan = cTan(mptend, mptstart);
-
+            return ckArea(cos, dy >= 0);
         }
         int ckArea(double cos, bool up)
         {
@@ -347,7 +285,7 @@ namespace RmbHook
                 {
                     if (cos >= mcos[i])
                     {
-                        a = marea[9-i];
+                        a = marea[9 - i];
                         break;
                     }
                 }
@@ -355,47 +293,94 @@ namespace RmbHook
 
             return a;
         }
-        public void onMove2(int x, int y)
+
+
+
+
+
+
+
+
+
+
+
+
+        public void onVelocity(double velocity)
         {
-            mdtnow = DateTime.Now;
-            mts = mdtnow.Subtract(mdtlast);
-            int dt = (int)mts.TotalMilliseconds;    // time difference;
-            if (dt > mtres)
+            //Console.WriteLine(">dv=" + dv.ToString());
+            if (mmode == 1)
             {
-                mptnow.X = x; mptnow.Y = y;
-                double ds = cDis(mptnow, mptlast);  // distance;
+                if (mgespair.ckOvtime(mticktime))
+                {
+                    mgesstartcnt = 0;
+                    mgesstopcnt = 0;
+                    return;
+                }
 
-                // update;
-                mptlast = mptnow;
-                mdtlast = mdtnow;
+            }
+            if (velocity < mvelocitymin)    // 140715;Parameter.mthis.mvmin )                // 140713;
+            {
+                //Console.WriteLine(">  dv<mdvmin," + dv.ToString());
+                if (mgesstopcnt < 5000) // ms;
+                    mgesstopcnt += mticktime;
 
-                // cal;
-                double dv = ds / dt;                // velosity;
+                if (mgesstart) // stop when no moving;
+                {
+                    mgesstart = false;
+                    //Console.Out.WriteLine(">>stop no moving, startcnt=" + (mstartcnt).ToString() + "," + mptnow.X.ToString() + "," + mptnow.Y.ToString());
+                    if (!checkDistance())
+                    {
+                        mgesstopcnt = mgesgap;
+                    }
+                }
 
-                //Console.Out.WriteLine(">dv=" + dv.ToString());
-                onDv(dv);
+                mgesstartcnt = 0;
+            }
+            else
+            {
+                //Console.WriteLine(">      dv>=mdvmin," + dv.ToString());
+                //if (!mbstart && (mstopcnt >= mgapcnt) && mcenter.Contains(mptnow))
+                if (!mgesstart && (mgesstopcnt >= gtStopGap()) )  // 140716; mgapcnt) )
+                {
 
+                    mgesstart = true;
+                    Console.Out.WriteLine(">>start, stopcnt=" + (mgesstopcnt).ToString() + "," + mtickptnow.X.ToString() + "," + mtickptnow.Y.ToString());
+                    onStart();
+                }
+                mgesstopcnt = 0;
+
+                if (mgesstartcnt < 5000)
+                    mgesstartcnt += mticktime;
+                //Console.Out.WriteLine(">>mstartcnt=" + mstartcnt.ToString());
+
+                if (mgesstart && (mgesstartcnt > mgesduration)) // stop when moving=overtime;
+                {
+                    mgesstart = false;
+                    mgesstartcnt = 0;
+                    Console.Out.WriteLine(">> overtime, startcnt=" + (mgesstartcnt).ToString());
+                    checkDistance();
+                }
             }
         }
         public void onDv2(double dv)
         {
             //Console.WriteLine(">dv=" + dv.ToString());
-            if (dv < mdvmin)        // 140715;Parameter.mthis.mvmin)//mdvmin) // 
+            if (dv < mvelocitymin)        // 140715;Parameter.mthis.mvmin)//mdvmin) // 
             {
-                if (mstartcnt > 0)
+                if (mgesstartcnt > 0)
                 {
-                    mstartcnt--;
+                    mgesstartcnt--;
                     //mstopcnt = 0;
                 }
-                if (mstartcnt == 0 && mbstart)
+                if (mgesstartcnt == 0 && mgesstart)
                 {
-                    mbstart = false;
+                    mgesstart = false;
                     //Console.Out.WriteLine(">> no moving, startcnt=" + (mstartcnt).ToString() + "," + mptnow.X.ToString() + "," + mptnow.Y.ToString());
-                    onStop();
+                    checkDistance();
                     //mstopcnt = 0;
                 }
-                if (mstopcnt < 5000) // ms;
-                    mstopcnt += mtinterval;
+                if (mgesstopcnt < 5000) // ms;
+                    mgesstopcnt += mticktime;
 
                 //if (mbstart  ) // stop when no moving;
                 //{
@@ -408,134 +393,177 @@ namespace RmbHook
             }
             else
             {
-                if (!mbstart && (mstopcnt > mgapcnt))
+                if (!mgesstart && (mgesstopcnt > mgesgap))
                 {
-                    mbstart = true;
+                    mgesstart = true;
                     //Console.Out.WriteLine(">>start, stopcnt=" + (mstopcnt).ToString() + "," + mptnow.X.ToString() + "," + mptnow.Y.ToString());
                     onStart();
                 }
-                mstopcnt = 0;
+                mgesstopcnt = 0;
 
-                if (mstartcnt < 5000)
-                    mstartcnt += mtinterval;
+                if (mgesstartcnt < 5000)
+                    mgesstartcnt += mticktime;
                 //Console.Out.WriteLine(">>mstartcnt=" + mstartcnt.ToString());
 
-                if (mbstart && (mstartcnt > movcnt)) // stop when moving=overtime;
+                if (mgesstart && (mgesstartcnt > mgesduration)) // stop when moving=overtime;
                 {
-                    mbstart = false;
-                    mstartcnt = 0;
+                    mgesstart = false;
+                    mgesstartcnt = 0;
                     //Console.Out.WriteLine(">> overtime, startcnt=" + (mstartcnt).ToString());
-                    onStop();
+                    checkDistance();
                 }
             }
         }
+
+
+      
+
+
+        // stratagey 2: 
+         DateTime mdt = DateTime.Now;
+        DateTime mdtnow = DateTime.Now;
+        DateTime mdtlast = DateTime.Now;
+        int mtres = 10;//ms;
+        TimeSpan mts;
+
+       public void onMove2(int x, int y)
+        {
+            mdtnow = DateTime.Now;
+            mts = mdtnow.Subtract(mdtlast);
+            int dt = (int)mts.TotalMilliseconds;    // time difference;
+            if (dt > mtres)
+            {
+                mtickptnow.X = x; mtickptnow.Y = y;
+                double ds = cDis(mtickptnow, mtickptlast);  // distance;
+
+                // update;
+                mtickptlast = mtickptnow;
+                mdtlast = mdtnow;
+
+                // cal;
+                double dv = ds / dt;                // velosity;
+
+                //Console.Out.WriteLine(">dv=" + dv.ToString());
+                onVelocity(dv);
+            }
+        }
+
+
+
+
+
+       Point mo = new Point(0, 0);
+       Point mv = new Point();
+       Point mptup = new Point();
+       Point mptdown = new Point();
+
         void cUpDown()
         {
             double cosup = 1, cosdown = 1;
 
-            if (ma == 0)
+            if (mareaidx == 0)
             {
                 cosup = 0.9239;
                 cosdown = 0.9239;
             }
-            else if (ma == 1)
+            else if (mareaidx == 1)
             {
                 cosup = 0.3827;
                 cosdown = 0.9239;
             }
-            else if (ma == 2)
+            else if (mareaidx == 2)
             {
                 cosup = -0.3827;
                 cosdown = 0.3827;
             }
-            else if (ma == 3)
+            else if (mareaidx == 3)
             {
                 cosup = -0.9239;
                 cosdown = -0.3827;
             }
-            else if (ma == 4)
+            else if (mareaidx == 4)
             {
                 cosup = -0.9239;
                 cosdown = -0.9239;
             }
-            else if (ma == 5)
+            else if (mareaidx == 5)
             {
                 cosup = -0.9239;
                 cosdown = -0.3827;
             }
-            else if (ma == 6)
+            else if (mareaidx == 6)
             {
                 cosup = -0.3827;
                 cosdown = 0.3827;
             }
-            else if (ma == 7)
+            else if (mareaidx == 7)
             {
                 cosup = 0.9239;
                 cosdown = 0.3827;
             }
-            double disup = mdis;// mdx / cosup;
+            double disup = mgesdis;// mdx / cosup;
             double dxup = Math.Abs(disup * cosup);//Math.Sqrt(disup * disup - mdx * mdx);
             double dyup = Math.Sqrt(disup * disup - dxup * dxup);
 
-            double disdown = mdis;// mdx / cosdown;
+            double disdown = mgesdis;// mdx / cosdown;
             double dxdown = Math.Abs(disdown * cosdown);// Math.Sqrt(disdown * disdown - mdx * mdx);
             double dydown = Math.Sqrt(disdown * disdown - dxdown * dxdown);
             //Console.WriteLine("=>a,dir=" + ma.ToString() + "," + mdirect[ma]);
-            if (ma == 0)
+            if (mareaidx == 0)
             {
-                mptup.X = mptstart.X + (int)dxup;
-                mptup.Y = mptstart.Y - (int)dyup;
-                mptdown.X = mptstart.X + (int)dxdown;
-                mptdown.Y = mptstart.Y + (int)dydown;
+                mptup.X = mgesptstart.X + (int)dxup;
+                mptup.Y = mgesptstart.Y - (int)dyup;
+                mptdown.X = mgesptstart.X + (int)dxdown;
+                mptdown.Y = mgesptstart.Y + (int)dydown;
             }
-            else if (ma == 1)
+            else if (mareaidx == 1)
             {
-                mptup.X = mptstart.X + (int)dxup;
-                mptup.Y = mptstart.Y - (int)dyup;
-                mptdown.X = mptstart.X + (int)dxdown;
-                mptdown.Y = mptstart.Y - (int)dydown;
+                mptup.X = mgesptstart.X + (int)dxup;
+                mptup.Y = mgesptstart.Y - (int)dyup;
+                mptdown.X = mgesptstart.X + (int)dxdown;
+                mptdown.Y = mgesptstart.Y - (int)dydown;
             }
-            if (ma == 2)
+            if (mareaidx == 2)
             {
-                mptup.X = mptstart.X - (int)dxup;
-                mptup.Y = mptstart.Y - (int)dyup;
-                mptdown.X = mptstart.X + (int)dxdown;
-                mptdown.Y = mptstart.Y - (int)dydown;
+                mptup.X = mgesptstart.X - (int)dxup;
+                mptup.Y = mgesptstart.Y - (int)dyup;
+                mptdown.X = mgesptstart.X + (int)dxdown;
+                mptdown.Y = mgesptstart.Y - (int)dydown;
             }
-            if (ma == 3)
+            if (mareaidx == 3)
             {
-                mptup.X = mptstart.X - (int)dxup;
-                mptup.Y = mptstart.Y - (int)dyup;
-                mptdown.X = mptstart.X - (int)dxdown;
-                mptdown.Y = mptstart.Y - (int)dydown;
+                mptup.X = mgesptstart.X - (int)dxup;
+                mptup.Y = mgesptstart.Y - (int)dyup;
+                mptdown.X = mgesptstart.X - (int)dxdown;
+                mptdown.Y = mgesptstart.Y - (int)dydown;
             }
-            if (ma == 4)
+            if (mareaidx == 4)
             {
-                mptup.X = mptstart.X - (int)dxup;
-                mptup.Y = mptstart.Y + (int)dyup;
-                mptdown.X = mptstart.X - (int)dxdown;
-                mptdown.Y = mptstart.Y - (int)dydown;
+                mptup.X = mgesptstart.X - (int)dxup;
+                mptup.Y = mgesptstart.Y + (int)dyup;
+                mptdown.X = mgesptstart.X - (int)dxdown;
+                mptdown.Y = mgesptstart.Y - (int)dydown;
             }
-            if (ma == 5)
+            if (mareaidx == 5)
             {
-                mptup.X = mptstart.X - (int)dxup;
-                mptup.Y = mptstart.Y + (int)dyup;
-                mptdown.X = mptstart.X - (int)dxdown;
-                mptdown.Y = mptstart.Y + (int)dydown;
+                mptup.X = mgesptstart.X - (int)dxup;
+                mptup.Y = mgesptstart.Y + (int)dyup;
+                mptdown.X = mgesptstart.X - (int)dxdown;
+                mptdown.Y = mgesptstart.Y + (int)dydown;
             }
-            if (ma == 6)
+            if (mareaidx == 6)
             {
-                mptup.X = mptstart.X + (int)dxup;
-                mptup.Y = mptstart.Y + (int)dyup;
-                mptdown.X = mptstart.X - (int)dxdown;
-                mptdown.Y = mptstart.Y + (int)dydown;
+                mptup.X = mgesptstart.X + (int)dxup;
+                mptup.Y = mgesptstart.Y + (int)dyup;
+                mptdown.X = mgesptstart.X - (int)dxdown;
+                mptdown.Y = mgesptstart.Y + (int)dydown;
             }
-            if (ma == 7)
+            if (mareaidx == 7)
             {
-                mptup.X = mptstart.X + (int)dxup;
-                mptup.Y = mptstart.Y + (int)dyup;
-                mptdown.X = mptstart.X + (int)dxdown;
-                mptdown.Y = mptstart.Y + (int)dydown;
+                mptup.X = mgesptstart.X + (int)dxup;
+                mptup.Y = mgesptstart.Y + (int)dyup;
+                mptdown.X = mgesptstart.X + (int)dxdown;
+                mptdown.Y = mgesptstart.Y + (int)dydown;
             }
 
         }
@@ -600,7 +628,8 @@ namespace RmbHook
 
         public void gtMouse()
         {
-            GetCursorPos(ref mpt32);
+            WinAPIs.POINTAPI mpt32 = new WinAPIs.POINTAPI();
+            WinAPIs.GetCursorPos(ref mpt32);
         }
     }
 }

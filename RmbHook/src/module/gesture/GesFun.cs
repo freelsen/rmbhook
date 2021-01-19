@@ -13,8 +13,9 @@ namespace RmbHook
 
         int mpgidx = 0;
 
-        Keys[] mkeys = new Keys[8];
-        Keys[] mkeys1 = new Keys[8];
+        public static int mkeynum=64;
+        public Keys[] mkeys = new Keys[mkeynum];
+        Keys[] mkeys1 = new Keys[mkeynum];
 
         public GesFun()
         {
@@ -36,6 +37,12 @@ namespace RmbHook
             mkeys1[6] = Keys.X;  // down
             mkeys1[7] = Keys.C;  // down righg;
 
+            // initializa;
+            for (int i = 8; i < mkeynum; i++)
+            {
+                mkeys[i] = Keys.D0;
+                mkeys1[i] = Keys.D0;
+            }
         }
 
         public int linit()
@@ -53,13 +60,13 @@ namespace RmbHook
         {
             if (mpgidx == 0)
             {
-                if (idx == 5)
-                {
-                    KeyboardSimulator.KeyDown(Keys.Alt);
-                    KeyboardSimulator.KeyPress(Keys.D4);
-                    KeyboardSimulator.KeyUp(Keys.Alt);
-                    return;
-                }
+                //if (idx == 5)
+                //{
+                //    KeyboardSimulator.KeyDown(Keys.Alt);
+                //    KeyboardSimulator.KeyPress(Keys.D4);
+                //    KeyboardSimulator.KeyUp(Keys.Alt);
+                //    return;
+                //}
                 sendKey( mkeys, idx);
                 
             }

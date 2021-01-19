@@ -23,6 +23,7 @@ namespace RmbHook
         public GesFun mgesfun = new GesFun();
         public Gesture mgesture = new Gesture();
         public GestureMan mgesman = new GestureMan();
+        public GestureParamter mgesprm = new GestureParamter();
 
         private void create()
         {
@@ -38,10 +39,15 @@ namespace RmbHook
         {
             mform = HookForm.gthis;
          
-            mparameter.init(); 
+            mparameter.init();
+
             mtasknotify.init(mform);
             
             // gesture;
+            mgesprm.mgesfun = mgesfun;
+            mgesprm.mgesture = mgesture;
+            mgesprm.init();
+
             mgesture.linit();
             mgesfun.linit();
 
@@ -49,6 +55,7 @@ namespace RmbHook
             mgesman.mgesture = mgesture;
             mgesman.init();
 
+            // rmbkey;
             mrmbkey.init();
             mwinmon.init();
 
