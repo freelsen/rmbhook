@@ -13,6 +13,7 @@ namespace RmbHook
         public Parameter mparameter = new Parameter();
         // hook lib;
         public MouseKeyHook mmkhook = new MouseKeyHook();
+        public MouseEHandler mmehandler = new MouseEHandler();
         // user functions;
         public RmbKey mrmbkey = new RmbKey();
         public WinMon mwinmon = new WinMon();
@@ -21,7 +22,7 @@ namespace RmbHook
         public TaskbarNotify mtasknotify = new TaskbarNotify();
         // Gesture;
         public GesFun mgesfun = new GesFun();
-        public Gesture mgesture = new Gesture();
+        public GestureRec mgesture = new GestureRec();
         public GestureMan mgesman = new GestureMan();
         public GestureParamter mgesprm = new GestureParamter();
 
@@ -61,6 +62,7 @@ namespace RmbHook
 
             HookEventHandler.mform = mform;
             HookEventHandler.mrmbkey = mrmbkey;
+            HookEventHandler.mmehandler = mmehandler;
 
             mmkhook.init();
             mmkhook.start();

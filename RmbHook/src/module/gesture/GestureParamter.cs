@@ -11,7 +11,7 @@ namespace RmbHook
     {
         public static GestureParamter mthis = null;
         public GesFun mgesfun = null;
-        public Gesture mgesture = null;
+        public GestureRec mgesture = null;
 
         string msection = "gesture";
         public GestureParamter()
@@ -35,9 +35,24 @@ namespace RmbHook
                 {
                     if (Str2Key(ref key, str) > 0)
                     {
-                        mgesfun.mkeys[0] = key;
+                        mgesfun.mkeys[i] = key;
                     }
                 }
+            }
+            //
+            int d = 0;
+            if (ConfigReadWrite.readInt(ref d, "ismodifier") > 0)
+            {
+                mgesfun.mismodifier = d;
+            }
+            if (ConfigReadWrite.read(ref str, "modifier") > 0)
+            {
+                if (str.Equals("ctl"))
+                {
+                    mgesfun.mmodifier = Keys.Control;
+                }
+                else if(str.Equals("alt"))
+                    mgesfun.mmodifier=Keys.Alt;
             }
 
             // Gesture;
@@ -63,6 +78,9 @@ namespace RmbHook
                 case 4:     // distance min;
                     str = mgesture.mdistancemin.ToString();
                     break;
+                case 5:     // ;
+                    str = mgesture.mgestrystopmax.ToString();
+                    break;
                 default:
                     break;
             }
@@ -83,6 +101,9 @@ namespace RmbHook
                     break;
                 case 4:     // distance min;
                     mgesture.mdistancemin = Int32.Parse(str);
+                    break;
+                case 5:     // ;
+                    mgesture.mgestrystopmax = Int32.Parse(str);
                     break;
                 default:
                     break;

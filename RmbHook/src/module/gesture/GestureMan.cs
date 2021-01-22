@@ -11,7 +11,7 @@ namespace RmbHook
     {
         public static GestureMan mthis = null;
 
-        public Gesture mgesture = null;
+        public GestureRec mgesture = null;
         public GesFun mgesfun = null;
 
         UltraHighAccurateTimer mhtimer = new UltraHighAccurateTimer();
@@ -59,6 +59,8 @@ namespace RmbHook
             if (mgesture.onHtimerTick(tm))
             {
                 ma = mgesture.GetAreaIndex();
+                Console.WriteLine(mgesture.mdirect[ma]);
+                //Console.WriteLine(mgesfun.mkeys[ma].ToString());
 
                 mbkworker.ReportProgress(1);
             }

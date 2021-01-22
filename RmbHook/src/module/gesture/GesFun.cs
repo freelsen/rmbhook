@@ -17,6 +17,9 @@ namespace RmbHook
         public Keys[] mkeys = new Keys[mkeynum];
         Keys[] mkeys1 = new Keys[mkeynum];
 
+        public int mismodifier = 0;
+        public Keys mmodifier = Keys.Control;
+
         public GesFun()
         {
             mkeys[0] = Keys.E;  // right;
@@ -51,24 +54,13 @@ namespace RmbHook
         }
         public void start()
         {
-            //Parameter prm = Parameter.mthis;
-            //mpgidx = prm.mpage;
-
             mwinmon = WinMon.mthis;
         }
         public void onGesture(int idx)
         {
             if (mpgidx == 0)
             {
-                //if (idx == 5)
-                //{
-                //    KeyboardSimulator.KeyDown(Keys.Alt);
-                //    KeyboardSimulator.KeyPress(Keys.D4);
-                //    KeyboardSimulator.KeyUp(Keys.Alt);
-                //    return;
-                //}
                 sendKey( mkeys, idx);
-                
             }
             else if (mpgidx == 1)
             {
@@ -105,12 +97,15 @@ namespace RmbHook
         
         void sendKey(Keys [] keys, int idx)
         {
-            sendKey(keys[idx]);
+            if (mismodifier>0)   KeyboardSimulator.KeyDown(mmodifier);
+            KeyboardSimulator.KeyPress(keys[idx]);
+            if (mismodifier>0)   KeyboardSimulator.KeyUp(mmodifier);
         }
         void sendKey(Keys key)
         {
-            KeyboardSimulator.KeyDown(key);
-            KeyboardSimulator.KeyUp(key);
+            KeyboardSimulator.KeyPress(key);
+            //KeyboardSimulator.KeyDown(key);
+            //KeyboardSimulator.KeyUp(key);
         }
     }
 }

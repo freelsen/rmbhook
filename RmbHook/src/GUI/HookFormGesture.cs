@@ -35,6 +35,7 @@ namespace RmbHook
             textBox6.Text = gesprm.GetGesturePrm(2);
             textBox7.Text = gesprm.GetGesturePrm(3);
             textBox8.Text = gesprm.GetGesturePrm(4);
+            textBox9.Text = gesprm.GetGesturePrm(5);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,6 +45,7 @@ namespace RmbHook
             gesprm.SetGesturePrm(textBox6.Text, 2);
             gesprm.SetGesturePrm(textBox7.Text, 3);
             gesprm.SetGesturePrm(textBox8.Text, 4);
+            gesprm.SetGesturePrm(textBox9.Text, 5);
 
         }
         private void button2_Click(object sender, EventArgs e)

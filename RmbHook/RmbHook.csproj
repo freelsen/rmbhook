@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="src\module\gesture\GestureMan.cs" />
     <Compile Include="src\module\gesture\GestureParamter.cs" />
+    <Compile Include="src\module\hook\MouseEvent.cs" />
     <Compile Include="src\module\keyword\Info.cs" />
     <Compile Include="src\module\keyword\Keywords.cs" />
     <Compile Include="src\module\keyword\LsKeyword.cs" />

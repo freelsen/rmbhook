@@ -22,10 +22,10 @@ namespace RmbHook
 
         public int init()
         {
-            mouseHook.MouseMove += new MouseEventHandler(HookEventHandler.MouseMove);
+            //mouseHook.MouseMove += new MouseEventHandler(HookEventHandler.MouseMove);
             mouseHook.MouseDown += new MouseEventHandler(HookEventHandler.MouseDown);
             mouseHook.MouseUp += new MouseEventHandler(HookEventHandler.MouseUp);
-            mouseHook.MouseWheel += new MouseEventHandler(HookEventHandler.MouseWheel);
+            //mouseHook.MouseWheel += new MouseEventHandler(HookEventHandler.MouseWheel);
 
             keyboardHook.KeyDown += new KeyEventHandler(HookEventHandler.KeyDown);
             //keyboardHook.KeyUp += new KeyEventHandler(kHookHandler.KeyUp);

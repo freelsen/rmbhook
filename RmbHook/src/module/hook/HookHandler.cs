@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using MouseKeyboardLibrary;
 
 namespace RmbHook
 {
@@ -11,24 +12,28 @@ namespace RmbHook
     {
         public static HookForm mform = null;
         public static RmbKey mrmbkey = null;
+        public static MouseEHandler mmehandler = null;
+
 
         // keyboard events;
         public static void KeyDown(object sender, KeyEventArgs e)
         {
+#if DEBUG
             mform.onKeyboardEvent("KeyDown", e.KeyCode.ToString(), "",
                e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString());
+#endif
 
             if (mrmbkey.onKeymsg(e) > 0)
                 e.Handled = true;
         }
         public static void KeyUp(object sender, KeyEventArgs e)
         {
-            mform.onKeyboardEvent("KeyUp", e.KeyCode.ToString(), "",
-                e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString());
+            //mform.onKeyboardEvent("KeyUp", e.KeyCode.ToString(), "",
+            //    e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString());
         }
         public static void KeyPress(object sender, KeyPressEventArgs e)
         {
-            mform.onKeyboardEvent("KeyPress", "", e.KeyChar.ToString(), "", "", "");
+            //mform.onKeyboardEvent("KeyPress", "", e.KeyChar.ToString(), "", "", "");
         }
 
         // mouse event;
@@ -46,6 +51,25 @@ namespace RmbHook
         {
             //WinMon.gtWinMouse();
             //mgesture.ts_dis(e);
+
+            //Console.WriteLine(e.Button.ToString());
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    mmehandler.OnLdown();
+                    break;
+                case MouseButtons.Right:
+                    if (mmehandler.OnRDown())
+                    {
+                        //Console.WriteLine("dclick");
+                        KeyboardSimulator.KeyDown(Keys.Oemtilde);
+                        KeyboardSimulator.KeyUp(Keys.Oemtilde);
+                    }
+                    break;
+                case MouseButtons.Middle:
+                    mmehandler.OnMDown();
+                    break;
+            }
 
             //mform.onMouseEvent("MouseDown", e.Button.ToString(),
             //    e.X.ToString(), e.Y.ToString(), "");

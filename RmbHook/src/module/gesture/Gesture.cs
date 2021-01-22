@@ -9,35 +9,25 @@ using System.ComponentModel;
 
 namespace RmbHook
 {
-    public class Gesture
+    public class GestureRec
     {
-        public static Gesture mthis = null;
+        public static GestureRec mthis = null;
 
 
-        public Rectangle mcenter;                   // = new Rectangle();
-        int mcsize = 400;
 
-        public Gesture()
+        public GestureRec()
         {
             mthis = this;
             //mtinterval = (int)mhtimer.mintervalMs;
 
-            int SH = Screen.PrimaryScreen.Bounds.Height;
-            int SW = Screen.PrimaryScreen.Bounds.Width;
-
-            int sh = SystemInformation.WorkingArea.Height; // no taskbar;
-            int sw = SystemInformation.WorkingArea.Width;
-
-            int ch = sh / 2;
-            int cw = sw / 2;
-            
-            mcenter = new Rectangle( cw-mcsize/2, ch-mcsize/2, mcsize, mcsize);
 
             InitDirection();
         }
 
         public void linit()
         {
+            InitStartArea();
+
             mgespair.linit();
         }
         public void start()
@@ -60,6 +50,7 @@ namespace RmbHook
 
         // gesture cycle;
         public int mvelocitymin = 5;//2; // 40pixel/10ms;
+        double mvelocitystatic = 0.5; // 2021-01-20;
 
         bool mgesstart = false;
         int mgesstartcnt = 0;
@@ -70,11 +61,12 @@ namespace RmbHook
         double mgesdis = 0.0;
         public int mdistancemin = 40;                           // 140716;
         public int mgesgap = 60; // ms;
-        public int mgesduration = 200; //ms;
+        public int mgesduration = 300; //ms;
 
-        //private bool mreport = false;
-        //public bool GetReport() { return mreport; }
-        //public void ResetReport() { mreport = false; }
+        // 2021-01-29, gesture direction;
+        // use direction to determin if it comes back,
+        // record the max distance in the same direction;
+        Point mgesdirection = new Point(0, 0);
 
         public bool onHtimerTick(int tm)
         {
@@ -89,6 +81,45 @@ namespace RmbHook
             return ges;
         }
         // stratagy 1: accurate timer;
+
+        // start area;
+        //public int[] mstartarea = new int[4];
+        Rectangle mcenterrect;                   // = new Rectangle();
+        int mcsize = 400;
+        Point mcenterpt;
+        int mradius = 100;
+
+        void InitStartArea()
+        {
+            int SH = Screen.PrimaryScreen.Bounds.Height;
+            int SW = Screen.PrimaryScreen.Bounds.Width;
+
+            int sh = SystemInformation.WorkingArea.Height; // no taskbar;
+            int sw = SystemInformation.WorkingArea.Width;
+
+            int ch = sh / 2;
+            int cw = sw / 2;
+
+            mcenterrect = new Rectangle(cw - (cw/8), ch - (ch/8), cw/4, ch/4);
+
+            mcenterpt = new Point(cw, ch);
+        }
+
+        bool CheckStartArea()
+        {
+            bool inside = false;
+
+            // rectangular;
+            //if (mcenterrect.Contains(pt))
+            //    inside = true;
+            if (mgesdisnow < mradius)
+                inside = true;
+
+            return inside;
+        }
+
+        double mtickdis = 0.0;
+
         public bool onMove3(int x, int y)
         {
             bool ges = false;
@@ -96,21 +127,131 @@ namespace RmbHook
             mtickptlast = mtickptnow;
             mtickptnow.X = x; mtickptnow.Y = y;
 
-            double ds = cDis(mtickptnow, mtickptlast);
-            mtickvelocity = ds / mticktime;
+            mtickdis = cDis(mtickptnow, mtickptlast);
+            mtickvelocity = mtickdis / mticktime;
 
-            //Console.Out.WriteLine(">dv=" + dv.ToString());
-            //onVelocity(mtickvelocity);
-            if (CheckGesture())
+            if (!mgesstart)
             {
-                CalGesture();
-                Console.WriteLine(mdirect[mareaidx]);
-                //mreport = true;
-                ges = true;
+                if (CheckGesStart())
+                    StartGesture();
             }
+            else
+            {
+                if (CheckGesStop())
+                {
+                    StopGesture();
+                    if (CheckGesture())
+                    {
+                        CalGesture();
+                        //Console.WriteLine(mdirect[mareaidx]);
+                        //Console.WriteLine(mgesstartcnt.ToString()+","+mgesdis.ToString());
+                        ges = true;
+                    }
+                }
+            }
+
             return ges;
         }
 
+        int mgesturestate = 0;
+
+        bool CheckGesStart()
+        {
+            bool start = false;
+            
+            // 2021-01-20; have to remain static for a while;
+            if (mtickvelocity < mvelocitystatic)
+            {
+                if (mgesstopcnt < 5000) mgesstopcnt += mticktime;
+
+                if (mgesstopcnt < gtStopGap())
+                    return false;
+            }
+
+            //if (!CheckStartArea(mtickptnow))
+            //{
+            //    return false;
+            //}
+
+            if ((mtickvelocity > mvelocitymin))
+            {
+                //mgesturestate = 1;
+                //Console.WriteLine(mgesturestate.ToString());
+                start = true; 
+            }
+            return start;
+        }
+        bool CheckGesStop()
+        {
+            bool stop = false;
+            mgesstartcnt += mticktime;
+
+            if (mgesstartcnt > mgesduration) // stop when moving overtime;
+            {
+                Console.WriteLine("stop:overtime");
+                return true;
+            }
+
+            mgesdisnow = cDis(mgesptstart, mtickptnow);
+            RecordMaxDis();
+
+            bool inside = CheckStartArea();
+            //Console.WriteLine(inside.ToString());
+            if (!inside && (mgesturestate == 1))
+            {
+                mgesturestate = 2;
+                //Console.WriteLine(mgesturestate.ToString());
+            }
+            if (inside && (mgesturestate == 2))
+            {
+                mgesturestate = 3;
+                //Console.WriteLine("stop:back");
+                //stop = true;
+            }
+
+            //double disnow = cDis(mgesptstart, mtickptnow);
+            double avgnow = mdismax / mgesstartcnt;
+            if (avgnow < mvelocitystatic)//2.0)
+            {
+                Console.WriteLine(avgnow.ToString());
+                stop = true;
+            }
+            //if (mtickvelocity < mvelocitymin) // stop when moving slow;
+            //{
+            //    // 2021-01-18; double check?
+            //    if (++mgestrystopcnt >= mgestrystopmax)
+            //        stop = true;
+            //}
+
+            return stop;
+        }
+
+        // 2021-01-18;
+        
+        //double mgesdisavg = 0.0;
+        double mgesdisnow = 0.0;
+        double mdismax = 0.0;
+        Point mptdismax;
+        // check is the distance decresed; 
+        bool mgesisback = false;   // 2021-01-20;
+        
+        void RecordMaxDis()    // 2021-01-18;
+        {
+            // 2021-01-20, check the direction first; (!not done yet)
+            // 2021-01-20, use the distance to check if it comes back;
+            if (!mgesisback)
+            {
+                if (mgesdisnow > mdismax)
+                {
+                    mdismax = mgesdisnow;
+                    mptdismax = mtickptnow;
+                }
+                else
+                    mgesisback = true;
+            }
+        }
+
+        /* 2021-01-18;
         public bool CheckGesture()
         {
             bool gesdone = false;
@@ -118,6 +259,7 @@ namespace RmbHook
             if (mgesstart)//(mtickvelocity < mvelocitymin)
             {
                 mgesstartcnt += mticktime;
+                CalMaxDis();
             }
             else
             {
@@ -125,37 +267,74 @@ namespace RmbHook
             }
 
             if ((mtickvelocity > mvelocitymin) && (!mgesstart) && (mgesstopcnt >= gtStopGap()))
+            {
                 StartGesture();
-            else if (mgesstart && (mtickvelocity<mvelocitymin)) // stop when moving slow;
-               gesdone=StopGesture();
+            }
+            else if (mgesstart && (mtickvelocity < mvelocitymin)) // stop when moving slow;
+            {
+                // 2021-01-18; double check?
+                if (++mgestrystopcnt >= mgestrystopmax)
+                    gesdone = StopGesture();
+            }
             else if (mgesstart && (mgesstartcnt > mgesduration)) // stop when moving overtime;
-                gesdone=StopGesture();
+                gesdone = StopGesture();
 
             return gesdone;
-
         }
+         */
+
+        // 2021-01-18; n times to stop;
+        int mgestrystopcnt = 0;
+        public int mgestrystopmax = 3;
+
         void StartGesture()
         {
             mgesstart = true;
             mgesstartcnt = 0;
             mgesstopcnt = 0;
+            mdismax = 0.0;  // 2021-01-18;
+
+            mgestrystopcnt = 0;
+            mgesturestate = 1;
 
             mgesptstart = mtickptnow;
 
+            mgesisback = false;// 2021-01-20;
+
             onStart(); // for gespair;
+
+            Console.WriteLine(">>>ges start.");
         }
-        bool StopGesture()
+        void StopGesture()
         {
             mgesstart = false;
             mgesstopcnt = 0;
 
-            mgesptend = mtickptnow;
-            
+            //Console.WriteLine(mgesturestate.ToString());
+
+            mgesptend = mtickptnow; // final position;
+
+            //Console.WriteLine("ges stoped");
+        }
+        bool CheckGesture()
+        {
             mgesdis = cDis(mgesptend, mgesptstart);
 
-            return (checkDistance()); //   { mgesstopcnt = mgesgap;  }
-                
+            if (mgesdis < mdismax)  // 2021-01-17, use the maximum point;
+            {
+                mgesdis = mdismax;
+                mgesptend = mptdismax;
+            }
+            
+            
+            bool b1 = checkDistance();
+            bool b2= (mgesturestate > 1);
+            Console.WriteLine(mdismax.ToString() + "," + mgesturestate.ToString());
+            return b1 && b2;
+            //return (checkDistance()); //   { mgesstopcnt = mgesgap;  }
         }
+
+
 
         int mmode = 0;                              // 0=single; 1=pair;
         GesPair mgespair = new GesPair();           // 140717;
@@ -217,7 +396,8 @@ namespace RmbHook
 
         double[] mcos = new double[10];
         int[] marea = new int[10];
-        string[] mdirect = new string[10];
+        public string[] mdirect = new string[10];
+
         void InitDirection()
         {
             mcos[0] = 0.9239;
@@ -572,11 +752,11 @@ namespace RmbHook
             mv.X = e.X;
             mv.Y = e.Y;
 
-            int dis = (int)Gesture.cDis(mv, mo);
-            int dis2 = Gesture.cDis2(mv, mo);
-            int dx = Gesture.cDx(mv, mo);
-            int dy = Gesture.cDy(mv, mo);
-            double tan = Gesture.cTan(mv, mo);
+            int dis = (int)GestureRec.cDis(mv, mo);
+            int dis2 = GestureRec.cDis2(mv, mo);
+            int dx = GestureRec.cDx(mv, mo);
+            int dy = GestureRec.cDy(mv, mo);
+            double tan = GestureRec.cTan(mv, mo);
             Console.Out.WriteLine(" (dis,dis2,dx,dy,tan)=("
                  + dis.ToString() + ","
                  + dis2.ToString() + ","
