@@ -12,6 +12,7 @@ namespace RmbHook
         FileStream mfs = null;
         StreamReader msr = null;
         StreamWriter msw = null;
+
         public TextMan()
         {
         }
@@ -42,7 +43,7 @@ namespace RmbHook
         }
         public void Close()
         {
-            msr.Close();
+            //msr.Close();
             msw.Close();
             mfs.Close();
         }
@@ -52,7 +53,14 @@ namespace RmbHook
         {
             if (msw != null)
             {
-                msw.WriteLine(str);
+                try
+                {
+                    msw.WriteLine(str);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
             }
         }
 

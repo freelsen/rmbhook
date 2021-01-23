@@ -23,10 +23,10 @@ namespace RmbHook
         public HookForm mform = null;
         public TaskbarNotify mtasknotify = new TaskbarNotify();
         // Gesture;
-        public GesFun mgesfun = new GesFun();
-        public GestureRec mgesture = new GestureRec();
-        public GestureMan mgesman = new GestureMan();
-        public GestureParamter mgesprm = new GestureParamter();
+        //public GestureDirectionCommand mgesfun = new GestureDirectionCommand();
+        //public GestureDetectByDirectionOne mgesture = new GestureDetectByDirectionOne();
+        public GestureMan mGestureMan = new GestureMan();
+        //public GestureParamter mgesprm = new GestureParamter();
 
         private void create()
         {
@@ -47,16 +47,8 @@ namespace RmbHook
             mtasknotify.init(mform);
             
             // gesture;
-            mgesprm.mgesfun = mgesfun;
-            mgesprm.mgesture = mgesture;
-            mgesprm.init();
-
-            mgesture.linit();
-            mgesfun.linit();
-
-            mgesman.mgesfun = mgesfun;
-            mgesman.mgesture = mgesture;
-            mgesman.init();
+            mGestureMan.mBkgWorker = mform.getWorker();
+            mGestureMan.init();
 
             // rmbkey;
             mrmbkey.init();

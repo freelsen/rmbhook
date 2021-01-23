@@ -7,9 +7,9 @@ using MouseKeyboardLibrary;
 
 namespace RmbHook
 {
-    public class GesFun                         // 140717;
+    public class GestureDirectionCommand                         // 140717;
     {
-        private WinMon mwinmon = null;
+        public WinMon mwinmon = null;
 
         int mpgidx = 0;
 
@@ -20,7 +20,7 @@ namespace RmbHook
         public int mismodifier = 0;
         public Keys mmodifier = Keys.Control;
 
-        public GesFun()
+        public GestureDirectionCommand()
         {
             mkeys[0] = Keys.E;  // right;
             mkeys[1] = Keys.D3;  // right up;
@@ -48,14 +48,11 @@ namespace RmbHook
             }
         }
 
-        public int linit()
+        public int init()
         {
             return 0;
         }
-        public void start()
-        {
-            mwinmon = WinMon.mthis;
-        }
+
         public void onGesture(int idx)
         {
             if (mpgidx == 0)
@@ -71,6 +68,9 @@ namespace RmbHook
                 sendWin( idx );
             }
         }
+
+
+//-------------------------------------------------------
         void sendWin( int idx)
         {
             if (idx == 1)

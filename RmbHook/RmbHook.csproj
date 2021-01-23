@@ -116,8 +116,12 @@
     <Compile Include="src\GUI\HookFormMouse.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\module\gesture\detect_method_by_direction\GestureDetectByDirection.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\GestureDirection.cs" />
+    <Compile Include="src\module\gesture\GestureCommon.cs" />
     <Compile Include="src\module\gesture\GestureMan.cs" />
     <Compile Include="src\module\gesture\GestureParamter.cs" />
+    <Compile Include="src\module\gesture\method1\GestureDetectByDirectionFromMouse.cs" />
     <Compile Include="src\module\hook\KeyHandler.cs" />
     <Compile Include="src\module\hook\MouseEvent.cs" />
     <Compile Include="src\module\keyword\Info.cs" />
@@ -149,12 +153,12 @@
     </Compile>
     <Compile Include="src\module\rmbkey\QuickNoteMan.cs" />
     <Compile Include="src\WinAPI\FetchColor.cs" />
-    <Compile Include="src\module\gesture\GesFun.cs" />
-    <Compile Include="src\module\gesture\GesPair.cs" />
-    <Compile Include="src\module\gesture\GesPairEvent.cs" />
-    <Compile Include="src\module\gesture\Gesture.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\GestureDirectionCommand.cs" />
+    <Compile Include="src\module\gesture\method1\GesPair.cs" />
+    <Compile Include="src\module\gesture\method1\GesPairEvent.cs" />
+    <Compile Include="src\module\gesture\method1\GestureDetectByDirectionOne.cs" />
     <Compile Include="src\module\hook\HookHandler.cs" />
-    <Compile Include="src\module\gesture\LSortedList.cs" />
+    <Compile Include="src\module\gesture\method1\LSortedList.cs" />
     <Compile Include="src\module\gesture\UltraHighTimer.cs" />
     <Compile Include="src\module\win\WinMon.cs">
       <SubType>Code</SubType>

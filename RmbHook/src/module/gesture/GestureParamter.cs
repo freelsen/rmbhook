@@ -10,8 +10,8 @@ namespace RmbHook
     class GestureParamter
     {
         public static GestureParamter mthis = null;
-        public GesFun mgesfun = null;
-        public GestureRec mgesture = null;
+        public GestureDirectionCommand mgesfun = null;
+        public GestureDetectByDirectionOne mgesture = null;
 
         string msection = "gesture";
         public GestureParamter()
@@ -67,16 +67,16 @@ namespace RmbHook
             switch (idx)
             {
                 case 1:     // velocity min;
-                    str = mgesture.mvelocitymin.ToString();
+                    str = mgesture.mSpeedMin.ToString();
                     break;
                 case 2:     // gap time;
-                    str = mgesture.mgesgap.ToString();
+                    str = mgesture.mgesGapTime.ToString();
                     break;
                 case 3:     // overtime;
-                    str = mgesture.mgesduration.ToString();
+                    str = mgesture.mgesDurationTime.ToString();
                     break;
                 case 4:     // distance min;
-                    str = mgesture.mdistancemin.ToString();
+                    str = mgesture.mgesDistanceMin.ToString();
                     break;
                 case 5:     // ;
                     str = mgesture.mgestrystopmax.ToString();
@@ -91,16 +91,16 @@ namespace RmbHook
             switch (idx)
             {
                 case 1:     // velocity min;
-                    mgesture.mvelocitymin = Int32.Parse(str);
+                    mgesture.mSpeedMin = Int32.Parse(str);
                     break;
                 case 2:     // gap time;
-                    mgesture.mgesgap = Int32.Parse(str);
+                    mgesture.mgesGapTime = Int32.Parse(str);
                     break;
                 case 3:     // overtime;
-                    mgesture.mgesduration = Int32.Parse(str);
+                    mgesture.mgesDurationTime = Int32.Parse(str);
                     break;
                 case 4:     // distance min;
-                    mgesture.mdistancemin = Int32.Parse(str);
+                    mgesture.mgesDistanceMin = Int32.Parse(str);
                     break;
                 case 5:     // ;
                     mgesture.mgestrystopmax = Int32.Parse(str);
