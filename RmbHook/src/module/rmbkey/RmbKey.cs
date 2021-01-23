@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
 using RmbHook.src.keyword;
+using System.Globalization;
 
 namespace RmbHook
 {
@@ -133,6 +134,40 @@ namespace RmbHook
                     break;
             }
 
+            // 2021-01-22; quick note window;
+            if (key == Keys.H)
+            {
+                QuickNoteMan.mthis.ShowWindow();
+                setCmdMode(false);
+                eatkey = 1;
+            }
+            else if (key == Keys.N)
+            {
+                QuickNoteMan.mthis.ResetWindow();
+                setCmdMode(false);
+                eatkey = 1;
+            }
+
+            if (key == Keys.T) // 2021-01-22, sent date time
+            {
+                DateTime dt = DateTime.Now;
+                string date = dt.ToString("yyyy-MM-dd");
+                Console.WriteLine(date);
+                KeyHandler.SentString(date);
+                setCmdMode(false);
+                eatkey = 1;
+            }
+            else if (key == Keys.Y)
+            {
+                DateTime dt = DateTime.Now;
+                string date = dt.ToString("hh:mm:ss tt");
+                Console.WriteLine(date);
+                KeyHandler.SentString(date);
+                setCmdMode(false);
+                eatkey = 1;
+            }
+
+
             // window operation,
             if (eatkey == 0 && menWindow)
             {
@@ -167,7 +202,7 @@ namespace RmbHook
                         LsKeyword kw = LsKeyword.getThis();
                         kw.onSearchKey(true);
                         break;
-                    case Keys.N:
+                    case Keys.M://2021-01-22;N:
                         setCmdMode(false);
                         eatkey = 1;
                         LsKeyword kw2 = LsKeyword.getThis();
@@ -232,7 +267,7 @@ namespace RmbHook
 
             //
             if (str.Equals("esc")) { mtopkey = Keys.Escape; return 0; }
-            if (str.Equals("caps")) { mtopkey = Keys.CapsLock; return 0; }
+            if (str.Equals("cap")) { mtopkey = Keys.CapsLock; return 0; }
             if (str.Equals("tab")) { mtopkey = Keys.Tab; return 0; }
 
             int d = 0;

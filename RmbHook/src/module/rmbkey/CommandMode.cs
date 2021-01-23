@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using MouseKeyboardLibrary;
 using System.Collections;
+using System.Globalization;
 
 namespace RmbHook
 {
@@ -16,6 +17,8 @@ namespace RmbHook
         public CommandMode()
         {
         }
+
+//--------------------------------------------------
         public int init()
         {
             mkeymap.Add(Keys.I, Keys.Up);
@@ -49,12 +52,15 @@ namespace RmbHook
                 sendKeyNumsPair(kmap);
                 eatkey = 1;
             }
-            else                                
+            else
             {
                 eatkey = onKeyNums(key);
             }
             return eatkey;
         }
+
+
+//----------------------------------------------------------
         private void sendKey(Keys key)
         {
             KeyboardSimulator.KeyDown(key);

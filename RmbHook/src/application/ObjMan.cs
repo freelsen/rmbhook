@@ -17,6 +17,8 @@ namespace RmbHook
         // user functions;
         public RmbKey mrmbkey = new RmbKey();
         public WinMon mwinmon = new WinMon();
+        public QuickNoteMan mqkman = new QuickNoteMan();// 2021-01-22;
+
         // GUI;
         public HookForm mform = null;
         public TaskbarNotify mtasknotify = new TaskbarNotify();
@@ -63,6 +65,9 @@ namespace RmbHook
             HookEventHandler.mform = mform;
             HookEventHandler.mrmbkey = mrmbkey;
             HookEventHandler.mmehandler = mmehandler;
+
+            // quick note;
+            mqkman.init();
 
             mmkhook.init();
             mmkhook.start();

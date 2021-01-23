@@ -32,11 +32,13 @@ namespace RmbHook
         }
         public void start()
         {
-            mgespair.start();                           // 140717;  
+            mtextman.Open();    // 2021-01-22;
+
+            mgespair.start();                           // 140717;
         }
         public void stop()
         {
-            
+            mtextman.Close();
         }
 
 
@@ -119,6 +121,8 @@ namespace RmbHook
         }
 
         double mtickdis = 0.0;
+        static string mfilename = "d:\\temp\\rmbhook\\mouse.txt";
+        TextMan mtextman = new TextMan(mfilename);
 
         public bool onMove3(int x, int y)
         {
@@ -129,6 +133,9 @@ namespace RmbHook
 
             mtickdis = cDis(mtickptnow, mtickptlast);
             mtickvelocity = mtickdis / mticktime;
+
+            // save; 2021-01-22;
+            mtextman.WriteLine(x.ToString() + "," + y.ToString() + "," + mtickvelocity.ToString("f4"));
 
             if (!mgesstart)
             {
