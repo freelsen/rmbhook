@@ -10,11 +10,11 @@ using System.Globalization;
 
 namespace RmbHook
 {
-    public class CommandMode
+    public class KeyCommandMove
     {
         private Hashtable mkeymap = new Hashtable();
 
-        public CommandMode()
+        public KeyCommandMove()
         {
         }
 

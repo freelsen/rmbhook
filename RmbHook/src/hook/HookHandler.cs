@@ -10,34 +10,47 @@ namespace RmbHook
 {
     class HookEventHandler
     {
-        public static HookForm mform = null;
-        public static RmbKey mrmbkey = null;
-        public static MouseEHandler mmehandler = null;
+        public HookForm mForm = null;
+        //RmbKey mrmbkey = null;
+        public KeyEventMan mKeyEventMan = null;
+        public MouseEHandler mMouseEHandler = null;
 
 
-        // keyboard events;
-        public static void KeyDown(object sender, KeyEventArgs e)
+// ---------------------keyboard events;-----------------------------------
+        // 2021-01-23. this variable is used to pervent re-enter the msg proc;
+        // re-enter happens when you send key-msg during the process;
+        bool misbusy = false;   
+        public void KeyDown(object sender, KeyEventArgs e)
         {
+            if (misbusy)
+                return;
+            else
+                misbusy = true;
 #if DEBUG
-            mform.onKeyboardEvent("KeyDown", e.KeyCode.ToString(), "",
+            mForm.onKeyboardEvent("KeyDown", e.KeyCode.ToString(), "",
                e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString());
+            //Console.WriteLine("KeyDown" + "-" + e.KeyCode.ToString() + "-" + e.Shift.ToString() + "-" + e.Alt.ToString() + "-" + e.Control.ToString());
 #endif
-
-            if (mrmbkey.onKeymsg(e) > 0)
-                e.Handled = true;
+            e.Handled = mKeyEventMan.onKeyDown(sender, e);
+            misbusy = false;
         }
-        public static void KeyUp(object sender, KeyEventArgs e)
+
+        public void KeyUp(object sender, KeyEventArgs e)
         {
             //mform.onKeyboardEvent("KeyUp", e.KeyCode.ToString(), "",
             //    e.Shift.ToString(), e.Alt.ToString(), e.Control.ToString());
+
+            //if (mrmbkey.onKeymsg(e) > 0)
+            //    e.Handled = true;
         }
-        public static void KeyPress(object sender, KeyPressEventArgs e)
+        public void KeyPress(object sender, KeyPressEventArgs e)
         {
             //mform.onKeyboardEvent("KeyPress", "", e.KeyChar.ToString(), "", "", "");
         }
 
-        // mouse event;
-        public static void MouseMove(object sender, MouseEventArgs e)
+
+// --------------------mouse event;----------------------------------------
+        public void MouseMove(object sender, MouseEventArgs e)
         {
             //Color c = FetchColor.gtColor(e.X, e.Y);
             //Console.Out.WriteLine(c.A.ToString()+c.B.ToString()+c.G.ToString());    
@@ -47,7 +60,7 @@ namespace RmbHook
             //mgesture.onMove2(e.X, e.Y);
         }
 
-        public static void MouseDown(object sender, MouseEventArgs e)
+        public void MouseDown(object sender, MouseEventArgs e)
         {
             //WinMon.gtWinMouse();
             //mgesture.ts_dis(e);
@@ -56,10 +69,10 @@ namespace RmbHook
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    mmehandler.OnLdown();
+                    mMouseEHandler.OnLdown();
                     break;
                 case MouseButtons.Right:
-                    if (mmehandler.OnRDown())
+                    if (mMouseEHandler.OnRDown())
                     {
                         //Console.WriteLine("dclick");
                         KeyboardSimulator.KeyDown(Keys.Oemtilde);
@@ -67,7 +80,7 @@ namespace RmbHook
                     }
                     break;
                 case MouseButtons.Middle:
-                    mmehandler.OnMDown();
+                    mMouseEHandler.OnMDown();
                     break;
             }
 
@@ -75,17 +88,17 @@ namespace RmbHook
             //    e.X.ToString(), e.Y.ToString(), "");
         }
 
-        public static void MouseUp(object sender, MouseEventArgs e)
+        public void MouseUp(object sender, MouseEventArgs e)
         {
             //mform.onMouseEvent("MouseUp", e.Button.ToString(),
             //    e.X.ToString(), e.Y.ToString(), "");
         }
 
-        public static void MouseWheel(object sender, MouseEventArgs e)
+        public void MouseWheel(object sender, MouseEventArgs e)
         {
             //if (isMouseRun())
             {
-                mform.onMouseEvent("MouseWheel", "", "", "", e.Delta.ToString());
+                mForm.onMouseEvent("MouseWheel", "", "", "", e.Delta.ToString());
             }
         }
     }

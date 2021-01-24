@@ -117,50 +117,55 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\module\gesture\detect_method_by_direction\GestureDetectByDirection.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\method3\GestureDetectByDirectionAxis.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\GestureDirection.cs" />
     <Compile Include="src\module\gesture\GestureCommon.cs" />
     <Compile Include="src\module\gesture\GestureMan.cs" />
     <Compile Include="src\module\gesture\GestureParamter.cs" />
-    <Compile Include="src\module\gesture\method1\GestureDetectByDirectionFromMouse.cs" />
-    <Compile Include="src\module\hook\KeyHandler.cs" />
-    <Compile Include="src\module\hook\MouseEvent.cs" />
-    <Compile Include="src\module\keyword\Info.cs" />
-    <Compile Include="src\module\keyword\Keywords.cs" />
-    <Compile Include="src\module\keyword\LsKeyword.cs" />
-    <Compile Include="src\module\keyword\PathAnalyser.cs" />
-    <Compile Include="src\module\keyword\PathFile.cs" />
-    <Compile Include="src\module\keyword\PathInfo.cs" />
-    <Compile Include="src\module\keyword\ResultForm.cs">
+    <Compile Include="src\module\gesture\detect_method_by_direction\method2\GestureDetectByDirectionFromMouse.cs" />
+    <Compile Include="src\hook\KeyHandler.cs" />
+    <Compile Include="src\hook\MouseEvent.cs" />
+    <Compile Include="src\module\search\Info.cs" />
+    <Compile Include="src\module\search\Keywords.cs" />
+    <Compile Include="src\module\search\LsKeyword.cs" />
+    <Compile Include="src\module\search\PathAnalyser.cs" />
+    <Compile Include="src\module\search\PathFile.cs" />
+    <Compile Include="src\module\search\PathInfo.cs" />
+    <Compile Include="src\module\search\ResultForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\module\keyword\ResultForm.Designer.cs">
+    <Compile Include="src\module\search\ResultForm.Designer.cs">
       <DependentUpon>ResultForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\module\keyword\Searcher.cs" />
-    <Compile Include="src\module\keyword\SearchForm.cs">
+    <Compile Include="src\module\search\Searcher.cs" />
+    <Compile Include="src\module\search\SearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\module\keyword\SearchForm.Designer.cs">
+    <Compile Include="src\module\search\SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\application\AppMan.cs" />
     <Compile Include="src\GUI\FormEventMan.cs" />
-    <Compile Include="src\module\rmbkey\QickNoteForm.cs">
+    <Compile Include="src\module\cmd_move\KeyCommandNonmove.cs" />
+    <Compile Include="src\module\cmd_move\KeyEventMan.cs" />
+    <Compile Include="src\module\cmd_move\KeyParameter.cs" />
+    <Compile Include="src\module\cmd_move\QickNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\module\rmbkey\QickNoteForm.Designer.cs">
+    <Compile Include="src\module\cmd_move\QickNoteForm.Designer.cs">
       <DependentUpon>QickNoteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\module\rmbkey\QuickNoteMan.cs" />
+    <Compile Include="src\module\cmd_move\QuickNoteMan.cs" />
+    <Compile Include="src\module\cmd_move\nouse\RmbKeyOne.cs" />
     <Compile Include="src\WinAPI\FetchColor.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\GestureDirectionCommand.cs" />
-    <Compile Include="src\module\gesture\method1\GesPair.cs" />
-    <Compile Include="src\module\gesture\method1\GesPairEvent.cs" />
-    <Compile Include="src\module\gesture\method1\GestureDetectByDirectionOne.cs" />
-    <Compile Include="src\module\hook\HookHandler.cs" />
-    <Compile Include="src\module\gesture\method1\LSortedList.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\method2\GesPair.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\method2\GesPairEvent.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\method1\GestureDetectByDirectionOne.cs" />
+    <Compile Include="src\hook\HookHandler.cs" />
+    <Compile Include="src\module\gesture\detect_method_by_direction\method2\LSortedList.cs" />
     <Compile Include="src\module\gesture\UltraHighTimer.cs" />
-    <Compile Include="src\module\win\WinMon.cs">
+    <Compile Include="src\module\window\WinMon.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\WinAPI\WinAPIs.cs" />
@@ -177,13 +182,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="src\module\keyword\ResultForm.resx">
+    <EmbeddedResource Include="src\module\search\ResultForm.resx">
       <DependentUpon>ResultForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\module\keyword\SearchForm.resx">
+    <EmbeddedResource Include="src\module\search\SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\module\rmbkey\QickNoteForm.resx">
+    <EmbeddedResource Include="src\module\cmd_move\QickNoteForm.resx">
       <DependentUpon>QickNoteForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -204,15 +209,15 @@
       <DependentUpon>HookForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\application\LObj.cs" />
-    <Compile Include="src\module\hook\MouseKeyHook.cs" />
+    <Compile Include="src\hook\MouseKeyHook.cs" />
     <Compile Include="src\application\Program.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\module\rmbkey\CmdMode.cs" />
-    <Compile Include="src\module\rmbkey\CommandMode.cs" />
-    <Compile Include="src\module\rmbkey\KeyCmd.cs" />
-    <Compile Include="src\module\rmbkey\KeyCommand.cs" />
-    <Compile Include="src\module\rmbkey\RmbKey.cs" />
+    <Compile Include="src\module\cmd_move\nouse\CmdMode.cs" />
+    <Compile Include="src\module\cmd_move\KeyCommandMove.cs" />
+    <Compile Include="src\module\cmd_move\nouse\KeyCmd.cs" />
+    <Compile Include="src\module\cmd_move\nouse\KeyCommand.cs" />
+    <Compile Include="src\module\cmd_move\KeyMode.cs" />
     <Compile Include="src\GUI\TaskbarMenu.cs" />
     <Compile Include="src\GUI\TaskbarNotify.cs" />
   </ItemGroup>

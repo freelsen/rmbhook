@@ -8,9 +8,10 @@ using System.Windows.Forms;
 
 namespace RmbHook
 {
-    public class MouseKeyHook
+    class MouseKeyHook
     {
         public static MouseKeyHook gthis = null;
+        public HookEventHandler mHookEventHandler = null;
     
         MouseHook mouseHook = new MouseHook();
         KeyboardHook keyboardHook = new KeyboardHook();
@@ -22,14 +23,14 @@ namespace RmbHook
 
         public int init()
         {
-            //mouseHook.MouseMove += new MouseEventHandler(HookEventHandler.MouseMove);
-            mouseHook.MouseDown += new MouseEventHandler(HookEventHandler.MouseDown);
-            mouseHook.MouseUp += new MouseEventHandler(HookEventHandler.MouseUp);
-            //mouseHook.MouseWheel += new MouseEventHandler(HookEventHandler.MouseWheel);
+            //mouseHook.MouseMove += new MouseEventHandler(mHookEventHandler.MouseMove);
+            mouseHook.MouseDown += new MouseEventHandler(mHookEventHandler.MouseDown);
+            //mouseHook.MouseUp += new MouseEventHandler(mHookEventHandler.MouseUp);
+            //mouseHook.MouseWheel += new MouseEventHandler(mHookEventHandler.MouseWheel);
 
-            keyboardHook.KeyDown += new KeyEventHandler(HookEventHandler.KeyDown);
-            //keyboardHook.KeyUp += new KeyEventHandler(kHookHandler.KeyUp);
-            //keyboardHook.KeyPress += new KeyPressEventHandler(HookHandler.KeyPress);
+            keyboardHook.KeyDown += new KeyEventHandler(mHookEventHandler.KeyDown);
+            //keyboardHook.KeyUp += new KeyEventHandler(mHookEventHandler.KeyUp);
+            //keyboardHook.KeyPress += new KeyPressEventHandler(mHookEventHandler.KeyPress);
 
             return 0;
         }

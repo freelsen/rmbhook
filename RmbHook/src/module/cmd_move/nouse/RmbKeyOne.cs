@@ -2,55 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Drawing;
 using RmbHook.src.keyword;
-using System.Globalization;
+using System.Drawing;
+
+// 2021-01-23. Sheng Li. AB.CA;
+// It is a backup for the `RmbKey` class before re-design;
 
 namespace RmbHook
 {
-    public class RmbKey
+    class RmbKeyOne
     {
-        public static RmbKey gthis = null; 
+        public static RmbKeyOne gthis = null; 
 
         private TaskbarNotify mtasknotify = null;
-        private CommandMode mcommandmode = new CommandMode();
+        private KeyCommandMove mcommandmode = new KeyCommandMove();
+
+        // topkey is the key to trigger different modes,
+        public Keys mtopkey = Keys.Escape;             
+
+        public bool mHookMode = false;
+        // enable/disable by keep pressing the topkey,
+        public bool mHookmEnByKey = false;
+
+        public bool menWindow = false; // 2020-04-24;
+        public bool mensearch = false;
 
 
-        public RmbKey()
+        public RmbKeyOne()
         {
             gthis = this;
         }
 
-        private bool menWindow = false; // 2020-04-24;
-        private bool mensearch = false;
-
         public int init()
         {
-            int d = 0;
-            Parameter prm = ObjMan.gthis.mparameter;
-            if ((d = setTopkey(prm.getTopkey())) < 0)
-            {
-                System.Console.WriteLine("->RmbKey.init(): setTopKey failed.");
-            }
-            if (prm.mconfigfile.readInt("enable_by_count") >= 0)
-            {
-                d = prm.mconfigfile.getInt();
-                mHookmEnByKey = (d > 0) ? true : false;
-            }
-
-            if (prm.mconfigfile.readInt("enable_function_window") >= 0)
-            {
-                d = prm.mconfigfile.getInt();
-                menWindow = (d > 0) ? true : false;
-            }
-            if (prm.mconfigfile.readInt("enable_function_search") >= 0)
-            {
-                d = prm.mconfigfile.getInt();
-                mensearch = (d > 0) ? true : false;
-            }
-
             initModeIcon();
 
             mtasknotify = TaskbarNotify.gthis;
@@ -69,7 +54,7 @@ namespace RmbHook
 
             setEatKey(0);
 
-            if (key == getTopkey())// 20150621, Keys.Escape)
+            if (key == mtopkey)// 20150621, Keys.Escape)
             {
                 onTopkPressedHm();
 
@@ -110,6 +95,7 @@ namespace RmbHook
 
             updateModeIcon();
         }
+
         public void onCmdModeChanged()
         {
             updateModeIcon();
@@ -151,22 +137,26 @@ namespace RmbHook
             if (key == Keys.T) // 2021-01-22, sent date time
             {
                 DateTime dt = DateTime.Now;
-                string date = dt.ToString("yyyy-MM-dd");
-                Console.WriteLine(date);
-                KeyHandler.SentString(date);
+                string str = dt.ToString("yyyy-MM-dd");
+                Console.WriteLine(str);
+                KeyHandler.SentString(str);
                 setCmdMode(false);
                 eatkey = 1;
             }
             else if (key == Keys.Y)
             {
                 DateTime dt = DateTime.Now;
-                string date = dt.ToString("hh:mm:ss tt");
-                Console.WriteLine(date);
-                KeyHandler.SentString(date);
+                string str = dt.ToString("hh:mm tt");
+                //Console.WriteLine(str);
+                KeyHandler.SentString(str);
+
+                //KeyHandler.SentString("abc");
                 setCmdMode(false);
                 eatkey = 1;
+                //return eatkey;
             }
-
+            //Console.WriteLine(getCmdMode().ToString());
+            //Console.WriteLine(key.ToString());
 
             // window operation,
             if (eatkey == 0 && menWindow)
@@ -258,32 +248,6 @@ namespace RmbHook
             setEatKey(0);
         }
 
-        // --- top key---;
-        Keys mtopkey = Keys.Escape;             // topkey is the key to trigger different modes,
-        public Keys getTopkey() { return mtopkey; }
-        public int setTopkey(string str)        // 2015-06-21;
-        {
-            if (str.Length == 0) return -1;
-
-            //
-            if (str.Equals("esc")) { mtopkey = Keys.Escape; return 0; }
-            if (str.Equals("cap")) { mtopkey = Keys.CapsLock; return 0; }
-            if (str.Equals("tab")) { mtopkey = Keys.Tab; return 0; }
-
-            int d = 0;
-            try
-            {
-                //Keys.Oemtilde;//192;~
-                d = Int32.Parse(str);
-                mtopkey = (Keys)d;
-            }
-            catch (Exception e)
-            {
-                Console.Out.WriteLine("setTopkey: parse error.");
-            }
-
-            return 0;
-        }
         
         // ---hook mode---
         public void onTopkPressedHm()
@@ -319,9 +283,6 @@ namespace RmbHook
                 onHookModeChanged();
             }
         }
-        private bool mHookMode = false;   
-        private bool mHookmEnByKey = false;   // enable/disable by keep pressing the topkey,
-        public bool getHookmEnByKey() { return mHookmEnByKey; }
 
         private int mTopKeyCntAll = 0;       // count topkey in any state,     
         public void resetTopkCntAll()
@@ -376,5 +337,34 @@ namespace RmbHook
             return 0;
         }
 
+
+
+
+
+        // --- top key---;
+
+        //public int setTopkey(string str)        // 2015-06-21;
+        //{
+        //    if (str.Length == 0) return -1;
+
+        //    //
+        //    if (str.Equals("esc")) { mtopkey = Keys.Escape; return 0; }
+        //    if (str.Equals("cap")) { mtopkey = Keys.CapsLock; return 0; }
+        //    if (str.Equals("tab")) { mtopkey = Keys.Tab; return 0; }
+
+        //    int d = 0;
+        //    try
+        //    {
+        //        //Keys.Oemtilde;//192;~
+        //        d = Int32.Parse(str);
+        //        mtopkey = (Keys)d;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.Out.WriteLine("setTopkey: parse error.");
+        //    }
+
+        //    return 0;
+        //}
     }
 }

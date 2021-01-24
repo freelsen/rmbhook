@@ -51,11 +51,11 @@ namespace RmbHook
 
         public static void KeyOn()
         {
-            RmbKey.gthis.setHookMode(true);
+            KeyMode.gthis.startKeyMode();
         }
         public static void KeyOff()
         {
-            RmbKey.gthis.setHookMode(false);
+            KeyMode.gthis.stopKeyMode();
         }
 
 

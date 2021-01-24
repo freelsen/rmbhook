@@ -13,10 +13,12 @@ namespace RmbHook
         public Parameter mparameter = new Parameter();
         // hook lib;
         public MouseKeyHook mmkhook = new MouseKeyHook();
+        public HookEventHandler mHookEventHandler = new HookEventHandler();//2021-01-23
         public MouseEHandler mmehandler = new MouseEHandler();
         // user functions;
-        public RmbKey mrmbkey = new RmbKey();
-        public WinMon mwinmon = new WinMon();
+        KeyEventMan mKeyEventman = new KeyEventMan();//2021-01-23;
+        //public RmbKey mrmbkey = new RmbKey();
+        //public WinMon mwinmon = new WinMon();
         public QuickNoteMan mqkman = new QuickNoteMan();// 2021-01-22;
 
         // GUI;
@@ -51,16 +53,18 @@ namespace RmbHook
             mGestureMan.init();
 
             // rmbkey;
-            mrmbkey.init();
-            mwinmon.init();
+            mKeyEventman.init();
+            //mrmbkey.init();
+            //mwinmon.init();
 
-            HookEventHandler.mform = mform;
-            HookEventHandler.mrmbkey = mrmbkey;
-            HookEventHandler.mmehandler = mmehandler;
+            mHookEventHandler.mForm = mform;
+            mHookEventHandler.mKeyEventMan = mKeyEventman;
+            mHookEventHandler.mMouseEHandler = mmehandler;
 
             // quick note;
             mqkman.init();
 
+            mmkhook.mHookEventHandler = mHookEventHandler;
             mmkhook.init();
             mmkhook.start();
 
