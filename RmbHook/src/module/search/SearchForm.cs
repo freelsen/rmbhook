@@ -10,7 +10,7 @@ using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace RmbHook.src.keyword
+namespace KeyMouseDo.src.keyword
 {
     public partial class SearchForm : Form
     {

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class GestureDetectByDirectionOne : GestureDetectByDirection
     {
@@ -135,7 +135,7 @@ namespace RmbHook
             mtickPositionLast = mtickPositionNow;
             mtickPositionNow.X = x; mtickPositionNow.Y = y;
 
-            mtickDistance = GestureCommon.cDis(mtickPositionNow, mtickPositionLast);
+            mtickDistance = GestureCommon.calDistance(mtickPositionNow, mtickPositionLast);
             mtickSpeed = mtickDistance / mtickTime;
 
             // save; 2021-01-22;
@@ -188,7 +188,7 @@ namespace RmbHook
                 return true;
             }
 
-            mgesdisnow = GestureCommon.cDis(mgesBeginPos, mtickPositionNow);
+            mgesdisnow = GestureCommon.calDistance(mgesBeginPos, mtickPositionNow);
             RecordMaxDis();
 
             bool inside = CheckStartArea();
@@ -308,7 +308,7 @@ namespace RmbHook
 
         bool CheckGesture()
         {
-            mgesDistance = GestureCommon.cDis(mgesEndPos, mgesBeginPos);
+            mgesDistance = GestureCommon.calDistance(mgesEndPos, mgesBeginPos);
 
             if (mgesDistance < mdismax)  // 2021-01-17, use the maximum point;
             {

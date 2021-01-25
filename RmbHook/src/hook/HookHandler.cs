@@ -6,11 +6,11 @@ using System.Windows.Forms;
 using System.Drawing;
 using MouseKeyboardLibrary;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class HookEventHandler
     {
-        public HookForm mForm = null;
+        public MainForm mForm = null;
         //RmbKey mrmbkey = null;
         public KeyEventMan mKeyEventMan = null;
         public MouseEHandler mMouseEHandler = null;

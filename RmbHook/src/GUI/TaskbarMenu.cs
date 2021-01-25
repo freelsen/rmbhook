@@ -5,7 +5,7 @@ using System.Text;
 
 using System.Windows.Forms;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public class TaskbarMenu
     {

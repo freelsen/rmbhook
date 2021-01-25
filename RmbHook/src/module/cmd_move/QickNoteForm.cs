@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public partial class QuickNoteForm : Form
     {
@@ -41,7 +41,7 @@ namespace RmbHook
                 //string str = TextMan.ReadLastLine(mfilename,mskipline);
                 //textBox1.Text = str;
 
-                string str= "### *" + DateTime.Now.ToString("hh:mm tt") + "* ";
+                string str= "### **" + DateTime.Now.ToString("hh:mm tt") + "** ";
                 textBox1.AppendText(str);
                 textBox1.Select(textBox1.TextLength, 0);
 

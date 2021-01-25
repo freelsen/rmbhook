@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class ObjMan
     {
@@ -22,7 +22,7 @@ namespace RmbHook
         public QuickNoteMan mqkman = new QuickNoteMan();// 2021-01-22;
 
         // GUI;
-        public HookForm mform = null;
+        public MainForm mform = null;
         public TaskbarNotify mtasknotify = new TaskbarNotify();
         // Gesture;
         //public GestureDirectionCommand mgesfun = new GestureDirectionCommand();
@@ -42,7 +42,7 @@ namespace RmbHook
 
         public int init()
         {
-            mform = HookForm.gthis;
+            mform = MainForm.gthis;
          
             mparameter.init();
 

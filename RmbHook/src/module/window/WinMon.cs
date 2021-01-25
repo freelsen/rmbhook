@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Threading;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public delegate bool CallBack(int hwnd, int lParam);
     

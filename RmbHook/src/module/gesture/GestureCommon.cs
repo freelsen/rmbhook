@@ -4,11 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class GestureCommon
     {
-        public static double cDis(Point a, Point b)
+        public static double calDistance(int x1,int y1, int x2,int y2)
+        {
+            int dx = x1-x2;
+            int dy = y1-y2;
+
+            double f = dx * dx + dy * dy;//Math.Pow(dx) + Math.Pow(dy);
+            f = Math.Sqrt(f);
+
+            return f;
+        }
+        public static double calDistance(Point a, Point b)
         {
             int dx = a.X - b.X;
             int dy = a.Y - b.Y;

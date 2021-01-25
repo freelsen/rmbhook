@@ -1,4 +1,4 @@
-﻿namespace RmbHook.src.keyword
+﻿namespace KeyMouseDo.src.keyword
 {
     partial class ResultForm
     {

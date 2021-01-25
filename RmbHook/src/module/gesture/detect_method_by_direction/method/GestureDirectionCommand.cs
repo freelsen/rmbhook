@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using MouseKeyboardLibrary;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public class GestureDirectionCommand                         // 140717;
     {

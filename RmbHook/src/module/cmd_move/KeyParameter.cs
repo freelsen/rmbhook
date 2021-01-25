@@ -7,7 +7,7 @@ using System.Windows.Forms;
 // 2021-01-23. sheng li. AB.CA;
 // set the parameters related to the keyboard;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class KeyParameter
     {

@@ -1,4 +1,4 @@
-﻿namespace RmbHook
+﻿namespace KeyMouseDo
 {
     partial class QuickNoteForm
     {

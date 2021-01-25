@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     static class Program
     {
@@ -19,7 +19,7 @@ namespace RmbHook
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new HookForm());
+                Application.Run(new MainForm());
 
             }
             catch(Exception ex)

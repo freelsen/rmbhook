@@ -6,7 +6,7 @@ using System.Text;
 using MouseKeyboardLibrary;
 using System.Windows.Forms;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class MouseKeyHook
     {

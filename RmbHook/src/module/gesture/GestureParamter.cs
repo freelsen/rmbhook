@@ -5,7 +5,7 @@ using System.Text;
 using lslibcs;
 using System.Windows.Forms;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class GestureParamter
     {

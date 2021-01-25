@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
-    public partial class HookForm : Form
+    public partial class MainForm : Form
     {
         private void mhookStart_Click(object sender, EventArgs e)
         {

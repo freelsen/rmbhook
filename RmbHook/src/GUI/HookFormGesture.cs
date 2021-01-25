@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
-    public partial class HookForm : Form
+    public partial class MainForm : Form
     {
         // a thread;
         public BackgroundWorker getWorker()

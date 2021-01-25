@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections;
 using System.IO;
 
-namespace RmbHook.src.keyword
+namespace KeyMouseDo.src.keyword
 {
     public class PathAnalyser
     {

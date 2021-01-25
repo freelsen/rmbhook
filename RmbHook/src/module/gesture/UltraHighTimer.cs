@@ -6,7 +6,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     /// 
     /// ManualTimer
@@ -59,11 +59,6 @@ namespace RmbHook
             intevalTicks.QuadPart = (value * clockFrequency.QuadPart / 1000);
         }
 
-        public void setEvent(ManualTimerEventHandler tickHandler)
-        {
-            mtickevent += new UltraHighAccurateTimer.ManualTimerEventHandler(tickHandler);
-        }
-
         public UltraHighAccurateTimer()
         {
             if (QueryPerformanceFrequency(out clockFrequency) == false)
@@ -74,6 +69,13 @@ namespace RmbHook
 
             stInterval(10);                         // 10ms;
         }
+
+        public void setEvent(ManualTimerEventHandler tickHandler)
+        {
+            mtickevent += new UltraHighAccurateTimer.ManualTimerEventHandler(tickHandler);
+            //mtickevent += new UltraHighAccurateTimer.ManualTimerEventHandler(TestEventHandler);
+        }
+        //-------------------------------------------------------------
         public void Start()
         {
             //mthread.Start();                      //  thread run;
@@ -124,7 +126,37 @@ namespace RmbHook
             }
         }
 
+        // 2021-01-25, event handler test;
+        public static bool misbusy = false;
+        public static void TestEventHandler(int time)
+        {
+            // the event handler runs in the same thread of the caller;
+            // the raiser thread will be blocked until the handler returns;
+            if (misbusy)
+            {
+                Console.WriteLine("i am busy");
+                return;
+            }
+            else
+                misbusy = true;
 
+            Console.WriteLine("free");
+            double d1 = 0.0;
+            double d2 = 1;
+            for (int i = 1; i < 1000000; i++)
+            {
+                double d3 = d1 * d2;
+                d3 = 0;
+            }
+            misbusy = false;
+        }
+
+
+
+
+
+
+        // 
         public bool GetTick(out LARGE_INTEGER currentTickCount)
         {
             if (QueryPerformanceCounter(out currentTickCount) == false)

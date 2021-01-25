@@ -1,6 +1,6 @@
-﻿namespace RmbHook
+﻿namespace KeyMouseDo
 {
-    partial class HookForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HookForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.mhookStop = new System.Windows.Forms.Button();
             this.mhookStart = new System.Windows.Forms.Button();
@@ -389,7 +389,7 @@
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HookForm";
-            this.Text = "RmbHook";
+            this.Text = "KeyMouseDo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HookForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.hookForm_FormClosed);
             this.Load += new System.EventHandler(this.hookForm_Load);

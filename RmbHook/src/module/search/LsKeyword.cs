@@ -6,7 +6,7 @@ using System.Threading;
 using System.IO;
 using System.Collections;
 
-namespace RmbHook.src.keyword
+namespace KeyMouseDo.src.keyword
 {
     public class LsKeyword
     {

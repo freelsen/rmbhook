@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
-    public class TaskbarNotify
+    class TaskbarNotify
     {
         public static TaskbarNotify gthis = null;
 
@@ -41,7 +41,7 @@ namespace RmbHook
 
             micon1 = new Icon("res\\icon1.ico");
 
-            mnotifyicon.Text = "RmbHook";
+            mnotifyicon.Text = "KeyMouseDo";
             mnotifyicon.Icon = micon1;
             mnotifyicon.MouseDoubleClick += new MouseEventHandler(mnotifyicon_MouseDoubleClick);
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class TextMan
     {
@@ -49,6 +49,24 @@ namespace RmbHook
         }
 
 
+        public void Fluseh()
+        {
+            if (msw != null)
+            {
+                msw.Flush();
+            }
+        }
+        public void Write(string str)
+        {
+            if (msw!=null)
+                try
+                {
+                    msw.Write(str);
+                }
+                catch (Exception e)
+                {
+                }
+        }
         public void WriteLine(string str)
         {
             if (msw != null)

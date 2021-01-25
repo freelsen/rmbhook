@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using lslibcs;      // 20150621;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class Parameter
     {
@@ -12,6 +12,7 @@ namespace RmbHook
 
         public ConfigFile mconfigfile = new ConfigFile();
         string msec = "lsmon";
+        string mfilename = "configuration.ini";
 
         public Parameter()
         {
@@ -24,11 +25,11 @@ namespace RmbHook
             int d = 0;
              
             //
-            if ((d = mconfigfile.setFilename("rmbhook.ini")) < 0) 
+            if ((d = mconfigfile.setFilename(mfilename)) < 0) 
                 return d;
             if (!mconfigfile.isExist())
                 return -1;
-            ConfigReadWrite.setFilename("rmbhook.ini");
+            ConfigReadWrite.setFilename(mfilename);
 
             //  load parameter;
             mconfigfile.setSection("rmbkey");

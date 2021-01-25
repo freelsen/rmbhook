@@ -6,15 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RmbHook.src.keyword;
+using KeyMouseDo.src.keyword;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
-    public partial class HookForm : Form
+    public partial class MainForm : Form
     {
-        public static HookForm gthis = null;
+        public static MainForm gthis = null;
 
-        public HookForm()
+        public MainForm()
         {
             gthis = this;
             InitializeComponent();

@@ -5,11 +5,11 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
-using RmbHook.src.keyword;
+using KeyMouseDo.src.keyword;
 using System.Globalization;
 using System.Threading;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class KeyMode
     {

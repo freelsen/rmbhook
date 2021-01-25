@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
 
-namespace RmbHook.src.keyword
+namespace KeyMouseDo.src.keyword
 {
     public class Searcher
     {

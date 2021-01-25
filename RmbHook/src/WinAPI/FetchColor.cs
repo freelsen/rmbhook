@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public class FetchColor
     {

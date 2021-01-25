@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class GestureDetectByDirectionFromMouse : GestureDetectByDirection
     {
@@ -57,7 +57,7 @@ namespace RmbHook
             if (dt > mtres)
             {
                 mtickPositionNow.X = x; mtickPositionNow.Y = y;
-                double ds = GestureCommon.cDis(mtickPositionNow, mtickPositionLast);  // distance;
+                double ds = GestureCommon.calDistance(mtickPositionNow, mtickPositionLast);  // distance;
 
                 // update;
                 mtickPositionLast = mtickPositionNow;
@@ -359,7 +359,7 @@ namespace RmbHook
             mv.X = e.X;
             mv.Y = e.Y;
 
-            int dis = (int)GestureCommon.cDis(mv, mo);
+            int dis = (int)GestureCommon.calDistance(mv, mo);
             int dis2 = GestureCommon.cDis2(mv, mo);
             int dx = GestureCommon.cDx(mv, mo);
             int dy = GestureCommon.cDy(mv, mo);

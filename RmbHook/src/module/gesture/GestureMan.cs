@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.ComponentModel;
+using System.Threading;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class GestureMan
     {
@@ -14,7 +15,9 @@ namespace RmbHook
         GestureParamter mGesPrm = new GestureParamter();
 
         int mgesIndex = 0;
-        GestureDetectByDirectionOne mGesByDir = new GestureDetectByDirectionOne();
+        GestureDetectByDirectionOne mGesByDirOne = new GestureDetectByDirectionOne();
+        GestureDetectByDirectionAxis mGesByDirAxis = new GestureDetectByDirectionAxis();
+        GestureDetectByDirection mGesByDir = null;
         GestureDirectionCommand mGesDirCmd = new GestureDirectionCommand();
         GestureDirection mGesDir = new GestureDirection();
 
@@ -31,11 +34,16 @@ namespace RmbHook
         {
 
             mGesPrm.mgesfun = mGesDirCmd;
-            mGesPrm.mgesture = mGesByDir;
+            mGesPrm.mgesture = mGesByDirOne;
             mGesPrm.init();
 
-            mGesByDir.mGestureDirection = mGesDir;
-            mGesByDir.init();
+            //
+            mGesByDirOne.mGestureDirection = mGesDir;
+            mGesByDirOne.init();
+
+            mGesByDirAxis.mGestureDirection = mGesDir;
+            mGesByDirAxis.init();
+            mGesByDir = mGesByDirAxis;
 
             mGesDirCmd.init();
 
@@ -83,16 +91,38 @@ namespace RmbHook
 
 
         // callback by the timer thread;
+        //volatile int mtime = 0;
+        //volatile bool misbusy = false;
         public void onTimerTick(int tm)
         {
+
             if (mGesByDir.onTimerTick(tm))
             {
                 mgesIndex = mGesByDir.getDirectionIndex();
-                Console.WriteLine(mGesDir.mdirect[mgesIndex]);
+                string str=mGesDir.mdirect[mgesIndex];
+                Console.WriteLine(str);
                 //Console.WriteLine(mgesfun.mkeys[ma].ToString());
 
                 mBkgWorker.ReportProgress(1);
             }
+        }
+
+
+        void test()
+        {
+            // Code in this region can be aborted without affecting
+            // other tasks.
+            //
+            Thread.BeginCriticalRegion();
+
+            //
+            // The host might decide to unload the application domain
+            // if a failure occurs in this code region.
+            //
+            Thread.EndCriticalRegion();
+            //
+            // Code in this region can be aborted without affecting
+            // other tasks.
         }
         
     }

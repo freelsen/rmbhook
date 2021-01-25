@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using MouseKeyboardLibrary;
 using System.Collections;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public class KeyCmd
     {

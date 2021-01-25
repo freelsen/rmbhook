@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RmbHook.src.keyword;
+using KeyMouseDo.src.keyword;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class KeyCommandNonmove
     {
@@ -37,11 +37,11 @@ namespace RmbHook
                 QuickNoteMan.mthis.ShowWindow();
                 return false;
             }
-            else if (k==Keys.N)
-            {
-                QuickNoteMan.mthis.ResetWindow();
-                return false;
-            }
+            //else if (k==Keys.N)   // distable this, too dangeous!! 2021-01-23;
+            //{
+            //    QuickNoteMan.mthis.ResetWindow();
+            //    return false;
+            //}
             
             // date & time string;
             if (k==Keys.T)

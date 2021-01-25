@@ -1,7 +1,7 @@
 ﻿using System;
-using RmbHook.src.keyword;
+using KeyMouseDo.src.keyword;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     public class FormEventMan
     {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RmbHook.src.keyword;
+using KeyMouseDo.src.keyword;
 using System.Drawing;
 
 // 2021-01-23. Sheng Li. AB.CA;
 // It is a backup for the `RmbKey` class before re-design;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class RmbKeyOne
     {

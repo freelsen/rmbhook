@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RmbHook.src.keyword
+namespace KeyMouseDo.src.keyword
 {
     public class Info
     {

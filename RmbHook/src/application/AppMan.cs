@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class AppMan
     {

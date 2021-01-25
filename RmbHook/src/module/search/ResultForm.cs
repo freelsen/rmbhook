@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RmbHook.src.keyword
+namespace KeyMouseDo.src.keyword
 {
     public partial class ResultForm : Form
     {

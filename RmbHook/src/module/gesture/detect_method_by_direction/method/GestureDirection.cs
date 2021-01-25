@@ -8,7 +8,7 @@ using System.Drawing;
 // This class define the division of a circle (360 degree);
 // Each direction has a gesture related.
 
-namespace RmbHook
+namespace KeyMouseDo
 {
     class GestureDirection
     {
@@ -59,7 +59,7 @@ namespace RmbHook
 
             double dx = GestureCommon.cDx(p1, p0);
             double dy = GestureCommon.cDy(p1, p0);
-            double dis = GestureCommon.cDis(p1, p0);
+            double dis = GestureCommon.calDistance(p1, p0);
             double cos = dx / dis;
 
             //Console.WriteLine("(dx,dy,dis,cos)=" + dx.ToString() + "," + dy.ToString()

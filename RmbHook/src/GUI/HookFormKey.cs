@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RmbHook
+namespace KeyMouseDo
 {
-    public partial class HookForm : Form
+    public partial class MainForm : Form
     {
         private static int mcntKeyEvent = 0;
         public void onKeyboardEvent(string eventType, string keyCode, string keyChar, string shift, string alt, string control)
