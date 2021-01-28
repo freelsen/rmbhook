@@ -126,6 +126,7 @@
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\GestureDetectByDirectionFromMouse.cs" />
     <Compile Include="src\hook\KeyHandler.cs" />
     <Compile Include="src\hook\MouseEvent.cs" />
+    <Compile Include="src\module\quick_note\QuickNoteParameter.cs" />
     <Compile Include="src\module\search\Info.cs" />
     <Compile Include="src\module\search\Keywords.cs" />
     <Compile Include="src\module\search\LsKeyword.cs" />
@@ -150,13 +151,13 @@
     <Compile Include="src\module\cmd_move\KeyCommandNonmove.cs" />
     <Compile Include="src\module\cmd_move\KeyEventMan.cs" />
     <Compile Include="src\module\cmd_move\KeyParameter.cs" />
-    <Compile Include="src\module\cmd_move\QickNoteForm.cs">
+    <Compile Include="src\module\quick_note\QickNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\module\cmd_move\QickNoteForm.Designer.cs">
+    <Compile Include="src\module\quick_note\QickNoteForm.Designer.cs">
       <DependentUpon>QickNoteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\module\cmd_move\QuickNoteMan.cs" />
+    <Compile Include="src\module\quick_note\QuickNoteMan.cs" />
     <Compile Include="src\module\cmd_move\nouse\RmbKeyOne.cs" />
     <Compile Include="src\WinAPI\FetchColor.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method\GestureDirectionCommand.cs" />
@@ -189,7 +190,7 @@
     <EmbeddedResource Include="src\module\search\SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\module\cmd_move\QickNoteForm.resx">
+    <EmbeddedResource Include="src\module\quick_note\QickNoteForm.resx">
       <DependentUpon>QickNoteForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

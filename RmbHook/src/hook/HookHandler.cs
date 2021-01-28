@@ -69,7 +69,11 @@ namespace KeyMouseDo
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    mMouseEHandler.OnLdown();
+                    if (mMouseEHandler.OnLDown())
+                    {
+                        KeyboardSimulator.KeyDown(Keys.M);
+                        KeyboardSimulator.KeyUp(Keys.M);
+                    }
                     break;
                 case MouseButtons.Right:
                     if (mMouseEHandler.OnRDown())

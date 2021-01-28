@@ -11,9 +11,9 @@ using System.Threading;
 
 namespace KeyMouseDo
 {
-    class KeyMode
+    class KeyCommandMode
     {
-        public static KeyMode gthis = null; 
+        public static KeyCommandMode gthis = null; 
 
         public TaskbarNotify mtasknotify = null;
         public KeyCommandNonmove mKeyCmdNmv = null;
@@ -26,13 +26,16 @@ namespace KeyMouseDo
 
         //public bool getHookMode() { return mHookMode; }
         // enable/disable by keep pressing the topkey,
-        public bool mHookmEnByKey = false;
-        public bool mHookMode = false;
+        public bool misEnableByKey = false;
+        // 2021-01-26, what is hook mode actuall? the name is confusing.
+        //  -it is actually the key-mode; (--> rename);
+        //  -then what's cmd mode? that's when it start to receive cmd.
+        //  -'cmd mode' mean's the keys are parsed as 'cmd' instead of chars;
+        public bool misEnable = false;
+        bool misCmdMode = false;          // cmd model,
 
-        bool mCmdMode = false;          // cmd model,
 
-
-        public KeyMode()
+        public KeyCommandMode()
         {
             gthis = this;
         }
@@ -57,8 +60,8 @@ namespace KeyMouseDo
 
         public void startKeyMode()
         {
-            mHookMode = true;
-            mCmdMode = false;
+            misEnable = true;
+            misCmdMode = false;
 
             mEatCntCm = 0;
             mTopKeyCntAll = 0;
@@ -67,12 +70,13 @@ namespace KeyMouseDo
         }
         public void stopKeyMode()
         {
-            mHookMode = false;
+            misEnable = false;
 
             updateModeIcon();
         }
 
-        public int mcmd = 0;    // 2021-01-23;
+        //public int mcmd = 0;    // 2021-01-23;
+        bool misstateChanged = false;   // 2021-01-26;
 
         public int onKeyMsg(KeyEventArgs e)
         {
@@ -82,43 +86,51 @@ namespace KeyMouseDo
             //Thread.Sleep(100);
 
             mEatKey = 0;
-            mcmd = 0;
+            //mcmd = 0;
+            misstateChanged = false;
 
-            if (isHookModeChange())
+            if (isEnableChanged())
             {
                 // hook mode changed.
-                mHookMode=!mHookMode;
+                misEnable=!misEnable;
 
                 mEatCntCm = 0;
                 mTopKeyCntAll = 0;
 
-                updateModeIcon();
+                misstateChanged = true;
+                //updateModeIcon();
             }
 
-            if (!mHookMode)
-                return mEatKey;
-
-            //
-            if (isCmdModeChange())
+            if (misEnable)
             {
-                mCmdMode = !mCmdMode;
-
-                updateModeIcon();
-
-                if (mCmdMode)
+                //
+                if (isCmdModeChange())
                 {
-                    mcommandmode.onStart();
+                    misCmdMode = !misCmdMode;
+
+                    misstateChanged = true; //updateModeIcon();
+
+                    if (misCmdMode)
+                    {
+                        mcommandmode.onStart();
+                    }
+                }
+                else if (misCmdMode)
+                {
+                    // 
+                    if (!onCmdKey(mk))
+                    {
+                        misCmdMode = false;
+
+                        misstateChanged = true; //updateModeIcon();
+                    }
                 }
             }
-            if (!mCmdMode)
-                return mEatKey;
 
-            // 
-            if ((mk!=mtopkey))
+            if (misstateChanged)
             {
-               onCmdKey(mk);
+                updateModeIcon();
             }
-
             //Console.WriteLine(mEatKey.ToString());
             return mEatKey;
         }
@@ -155,12 +167,12 @@ namespace KeyMouseDo
         }
 
         int mTopKeyCntAll = 0;       // count topkey in any state,     
-        bool isHookModeChange()
+        bool isEnableChanged()
         {
             return false;
             bool ismodechange = false;
 
-            if (mHookmEnByKey && (mk != mtopkey))              // 2015-06-21;
+            if (misEnableByKey && (mk != mtopkey))              // 2015-06-21;
             {
                 // press the top-key n times continuously.
                 // will change the hood mode;
@@ -180,30 +192,32 @@ namespace KeyMouseDo
 
         void stopCmdMode()
         {
-            mCmdMode = false;
+            misCmdMode = false;
 
             updateModeIcon();
         }
         
 
         // ---on cmd keys; ---
-        public bool onCmdKey(Keys key)
+        public bool onCmdKey(Keys k)
         {
             //int mEatKey = 0;
+            //if (mk == mtopkey)
+            //    return false;
 
-            bool iskeepcmd = mKeyCmdNmv.doNonMovingCmd(key);
-            if (iskeepcmd == false)
+            bool iskeepcmdmode = mKeyCmdNmv.doNonMovingCmd(k);
+            if (iskeepcmdmode == false)
             {
                 mEatKey = 1;
-                stopCmdMode();
+                //stopCmdMode();
 
-                return iskeepcmd;
+                return iskeepcmdmode;
             }
 
             // moving control,
             if (0 == mEatKey)
             {
-                mEatKey = mcommandmode.onKey(key);
+                mEatKey = mcommandmode.onKey(k);
             }
 
             // exit cmd mode if non-function chars pressed,2020-04-16,
@@ -217,7 +231,7 @@ namespace KeyMouseDo
             //    }
             //}
 
-            return iskeepcmd; //;
+            return iskeepcmdmode; //;
         }
 
 
@@ -226,9 +240,9 @@ namespace KeyMouseDo
         // ---indicator icon ---
         public void updateModeIcon()
         {
-            if (mHookMode)
+            if (misEnable)
             {
-                if( mCmdMode )
+                if( misCmdMode )
                     mtasknotify.setIcon(micon3);    // cmd mode on;
                 else
                     mtasknotify.setIcon(micon2);    // cmd monde off;

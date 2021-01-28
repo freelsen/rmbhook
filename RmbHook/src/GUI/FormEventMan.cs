@@ -51,11 +51,11 @@ namespace KeyMouseDo
 
         public static void KeyOn()
         {
-            KeyMode.gthis.startKeyMode();
+            KeyCommandMode.gthis.startKeyMode();
         }
         public static void KeyOff()
         {
-            KeyMode.gthis.stopKeyMode();
+            KeyCommandMode.gthis.stopKeyMode();
         }
 
 

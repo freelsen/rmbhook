@@ -13,7 +13,7 @@ namespace KeyMouseDo
     {
         public static KeyEventMan mthis = null;
 
-        KeyMode mRmbKey = new KeyMode();
+        KeyCommandMode mRmbKey = new KeyCommandMode();
         WinMon mWinMon = new WinMon();
         KeyParameter mKeyPrm = new KeyParameter();
         KeyCommandNonmove mKeyCmdNmv = new KeyCommandNonmove();

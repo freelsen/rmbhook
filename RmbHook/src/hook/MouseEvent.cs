@@ -17,14 +17,16 @@ namespace KeyMouseDo
         bool mldbclick = false;
         bool mmdbclick = false;
 
-        public void OnLdown()
-        {
-        }
 
-        DateTime mmiddownlast = DateTime.Now;
+        DateTime mrdownlast = DateTime.Now;
+        DateTime mldownlast = DateTime.Now;
         public bool OnRDown()
         {
-            return CheckDbTime(ref mmiddownlast);
+            return CheckDbTime(ref mrdownlast);
+        }
+        public bool OnLDown()
+        {
+            return CheckDbTime(ref mldownlast);
         }
         public void OnMDown()
         {

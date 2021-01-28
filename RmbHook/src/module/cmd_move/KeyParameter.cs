@@ -12,7 +12,7 @@ namespace KeyMouseDo
     class KeyParameter
     {
         public static KeyParameter mthis = null;
-        public KeyMode mRmbKey = null;
+        public KeyCommandMode mRmbKey = null;
         public KeyCommandNonmove mKeyCmdNmv = null;
 
         string msection = "rmbkey";
@@ -39,7 +39,7 @@ namespace KeyMouseDo
             int d=0;
             if (ConfigReadWrite.readInt(ref d, "enable_by_count") > 0)
             {
-                mRmbKey.mHookmEnByKey = (d > 0) ? true : false;
+                mRmbKey.misEnableByKey = (d > 0) ? true : false;
             }
             if (ConfigReadWrite.readInt(ref d, "enable_function_window") > 0)
             {

@@ -14,6 +14,8 @@ namespace KeyMouseDo
         public static QuickNoteMan mthis = null;
 
         QuickNoteForm mqnform = new QuickNoteForm();
+        QuickNoteParameter mQuickNotePrm = new QuickNoteParameter();
+
 
         public QuickNoteMan()
         {
@@ -21,7 +23,9 @@ namespace KeyMouseDo
         }
         public int init()
         {
-            
+            mQuickNotePrm.mQuickNoteForm = mqnform;
+            mQuickNotePrm.init();
+
             return 0;
         }
 

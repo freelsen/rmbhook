@@ -12,6 +12,7 @@ namespace KeyMouseDo
         FileStream mfs = null;
         StreamReader msr = null;
         StreamWriter msw = null;
+        bool misopen = false;
 
         public TextMan()
         {
@@ -32,11 +33,13 @@ namespace KeyMouseDo
                 msr = new StreamReader(mfs);
                 msw = new StreamWriter(mfs);
 
+                misopen = true;
                 return 1;
             }
             catch (Exception e)
             {
                 msw = null;
+                misopen = false;
                 return -1;
             }
 
@@ -44,8 +47,17 @@ namespace KeyMouseDo
         public void Close()
         {
             //msr.Close();
-            msw.Close();
-            mfs.Close();
+            if (misopen)
+            {
+                try
+                {
+                    msw.Close();
+                    mfs.Close();
+                }
+                catch (Exception e)
+                {
+                }
+            }
         }
 
 
@@ -96,7 +108,7 @@ namespace KeyMouseDo
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception: " + e.Message);
+                Console.WriteLine("TextMan exception: " + e.Message);
             }
         }
 
