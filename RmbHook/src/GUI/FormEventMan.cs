@@ -3,11 +3,12 @@ using KeyMouseDo.src.keyword;
 
 namespace KeyMouseDo
 {
-    public class FormEventMan
+    class FormEventMan
     {
         /* 2021-01-17,
          *
          */
+        public static TaskbarNotify mtasknotify = null;
 
         public FormEventMan()
         {
@@ -31,7 +32,7 @@ namespace KeyMouseDo
 
         public static void SizeChanged(object sender, EventArgs e)
         {
-            TaskbarNotify mtasknotify = ObjMan.gthis.mtasknotify;
+            //TaskbarNotify mtasknotify = ObjMan.gthis.mtasknotify; // 2021-02-07,
             if (mtasknotify != null)
                 mtasknotify.onFormSizeChanged();
         }

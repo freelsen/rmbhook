@@ -68,6 +68,8 @@ namespace KeyMouseDo
             mmkhook.init();
             mmkhook.start();
 
+            FormEventMan.mtasknotify = mtasknotify; // 2021-02-07,
+
             return 0;
         }
         public int exit()

@@ -21,13 +21,21 @@ namespace KeyMouseDo
 //--------------------------------------------------
         public int init()
         {
+            // movement keys;
             mkeymap.Add(Keys.I, Keys.Up);
             mkeymap.Add(Keys.K, Keys.Down);
             mkeymap.Add(Keys.J, Keys.Left);
             mkeymap.Add(Keys.L, Keys.Right);
             mkeymap.Add(Keys.U, Keys.Home);
             mkeymap.Add(Keys.O, Keys.End);
+            // 2021-01-27,
+            mkeymap.Add(Keys.E, Keys.Delete);
+            mkeymap.Add(Keys.R, Keys.Back);
+            // 2021-02-04,
+            mkeymap.Add(Keys.P, Keys.PageUp);
+            mkeymap.Add(Keys.M, Keys.PageDown);
 
+            // step control;
             initKeyNum();                       
 
             initKeyNums();

@@ -71,13 +71,13 @@ namespace KeyMouseDo
 
                         return false;
                 }
-                else if (k==Keys.C)
+                else if (k==Keys.V)     //.C)
                 {
                         WinMon.mthis.restore();
 
                    return false;
                 }
-                else if (k== Keys.V)
+                else if (k== Keys.N)    //.V)
                 {
                         WinMon.mthis.minNow();
                         return false;

@@ -125,9 +125,9 @@ namespace KeyMouseDo
         
         public static void SentKeyMof(Keys key1, Keys key2)
         {
-            KeyboardSimulator.KeyDown(key1);
+            if (key1 !=Keys.None)       KeyboardSimulator.KeyDown(key1);
             KeyboardSimulator.KeyPress(key2);
-            KeyboardSimulator.KeyUp(key1);
+            if (key1 != Keys.None)      KeyboardSimulator.KeyUp(key1);
 
         }
     }

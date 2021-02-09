@@ -5,6 +5,18 @@ using System.Runtime.InteropServices;
 
 namespace MouseKeyboardLibrary
 {
+    // Summary:
+    //     Represents the method that will handle the MouseDown, MouseUp, or MouseMove
+    //     event of a form, control, or other component.
+    //
+    // Parameters:
+    //   sender:
+    //     The source of the event.
+    //
+    //   e:
+    //     A System.Windows.Forms.MouseEventArgs that contains the event data.
+    public delegate int MouseEventHandlerReturn(object sender, MouseEventArgs e);   // 2021-02-03, +ls,
+    // add return to the original handler,
 
     /// <summary>
     /// Captures global mouse events
@@ -28,8 +40,8 @@ namespace MouseKeyboardLibrary
 
         #region Events
 
-        public event MouseEventHandler MouseDown;
-        public event MouseEventHandler MouseUp;
+        public event MouseEventHandlerReturn MouseDown;
+        public event MouseEventHandlerReturn MouseUp;
         public event MouseEventHandler MouseMove;
         public event MouseEventHandler MouseWheel;
 
@@ -54,6 +66,8 @@ namespace MouseKeyboardLibrary
         protected override int HookCallbackProcedure(int nCode, int wParam, IntPtr lParam)
         {
             
+            int handled = 0;    // 2021-02-03,+ls;
+
             if (nCode > -1 && (MouseDown != null || MouseUp != null || MouseMove != null))
             {
 
@@ -76,12 +90,14 @@ namespace MouseKeyboardLibrary
                     eventType = MouseEventType.None;
                 }
 
+                
+
                 switch (eventType)
                 {
                     case MouseEventType.MouseDown:
                         if (MouseDown != null)
                         {
-                            MouseDown(this, e);
+                            handled=MouseDown(this, e);
                         }
                         break;
                     case MouseEventType.MouseUp:
@@ -91,7 +107,7 @@ namespace MouseKeyboardLibrary
                         }
                         if (MouseUp != null)
                         {
-                            MouseUp(this, e);
+                            handled=MouseUp(this, e);
                         }
                         break;
                     case MouseEventType.DoubleClick:
@@ -118,7 +134,10 @@ namespace MouseKeyboardLibrary
                 
             }
 
-            return CallNextHookEx(_handleToHook, nCode, wParam, lParam);
+            if (handled == 1)
+                return 1;
+            else
+                return CallNextHookEx(_handleToHook, nCode, wParam, lParam);
 
         }
 

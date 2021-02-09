@@ -23,13 +23,15 @@ namespace KeyMouseDo
 
         public int init()
         {
-            //mouseHook.MouseMove += new MouseEventHandler(mHookEventHandler.MouseMove);
-            mouseHook.MouseDown += new MouseEventHandler(mHookEventHandler.MouseDown);
-            //mouseHook.MouseUp += new MouseEventHandler(mHookEventHandler.MouseUp);
+#if DEBUG
+            mouseHook.MouseMove += new MouseEventHandler(mHookEventHandler.MouseMove);
+#endif
+            mouseHook.MouseDown += new MouseKeyboardLibrary.MouseEventHandlerReturn(mHookEventHandler.MouseDown);
+            mouseHook.MouseUp += new MouseKeyboardLibrary.MouseEventHandlerReturn(mHookEventHandler.MouseUp);
             //mouseHook.MouseWheel += new MouseEventHandler(mHookEventHandler.MouseWheel);
 
             keyboardHook.KeyDown += new KeyEventHandler(mHookEventHandler.KeyDown);
-            //keyboardHook.KeyUp += new KeyEventHandler(mHookEventHandler.KeyUp);
+            keyboardHook.KeyUp += new KeyEventHandler(mHookEventHandler.KeyUp);
             //keyboardHook.KeyPress += new KeyPressEventHandler(mHookEventHandler.KeyPress);
 
             return 0;

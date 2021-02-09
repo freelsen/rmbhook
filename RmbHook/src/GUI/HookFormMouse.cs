@@ -18,9 +18,9 @@ namespace KeyMouseDo
             FormEventMan.MouseOff();
         }
 
-        public void ShowMouseLocation(int x, int y)
+        public void setMouseLabe(string str)
         {
-            curXYLabel.Text = String.Format("Current Mouse Point: X={0}, y={1}", x, y);
+            curXYLabel.Text = str;
         }
 
 

@@ -108,6 +108,8 @@
     <Compile Include="src\common\IndexedQueue.cs" />
     <Compile Include="src\common\TextMan.cs" />
     <Compile Include="src\configuration\ConfigReadWrite.cs" />
+    <Compile Include="src\fun\Macro1.cs" />
+    <Compile Include="src\fun\Wow.cs" />
     <Compile Include="src\GUI\HookFormGesture.cs">
       <SubType>Form</SubType>
     </Compile>

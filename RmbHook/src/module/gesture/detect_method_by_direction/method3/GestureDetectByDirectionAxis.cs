@@ -179,7 +179,9 @@ namespace KeyMouseDo
                 {
                     if (mtickspeed > mGesTriggerSpeed)
                     {
+                        #if DEBUG
                         Console.WriteLine("trigged," + mtickPos.X.ToString() + "," + mtickPos.Y.ToString() + "," + mtickspeed.ToString("f2"));
+#endif
                         misGestureTriggered = true;
                     }
                 }
@@ -372,7 +374,9 @@ namespace KeyMouseDo
 
             if (!misxcontinuous && !misycontinuous)
             {
+#if DEBUG
                 Console.WriteLine("discontinued,data=" + mgesdlen.ToString());
+#endif
                 misContinuous = false;
             }
             return misContinuous;
@@ -409,7 +413,9 @@ namespace KeyMouseDo
                 // method 3;
                 //int d = mgesDirSign * (mdOneDirSum[mgesPeakIdx] - mdOneDirSum[dlen]);
                 int d = mgesDirSign * (mdPos[mgesPeakIdx]-mdPos[dlen]);
+#if DEBUG
                 Console.WriteLine("check back=" + d.ToString());
+#endif
                 if (d>20)//mgesDistanceMin)                
                 {
                     misgesBack = true;
@@ -417,7 +423,9 @@ namespace KeyMouseDo
             }
             else
             {
+#if DEBUG
                 Console.WriteLine("stop check spd=" + mgesSpeedAvg.ToString("f2"));
+#endif
                 if (mgesSpeedAvg < mSpeedStatic)
                 // come to static;
                 //double spda = mgesPeakDis / (double)mtqueue;
