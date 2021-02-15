@@ -139,7 +139,7 @@ namespace KeyMouseDo
                 DateTime dt = DateTime.Now;
                 string str = dt.ToString("yyyy-MM-dd");
                 Console.WriteLine(str);
-                KeyHandler.SentString(str);
+                KeyHelper.SentString(str);
                 setCmdMode(false);
                 eatkey = 1;
             }
@@ -148,7 +148,7 @@ namespace KeyMouseDo
                 DateTime dt = DateTime.Now;
                 string str = dt.ToString("hh:mm tt");
                 //Console.WriteLine(str);
-                KeyHandler.SentString(str);
+                KeyHelper.SentString(str);
 
                 //KeyHandler.SentString("abc");
                 setCmdMode(false);

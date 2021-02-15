@@ -24,6 +24,8 @@ namespace KeyMouseDo
         bool mrunning = false;
         public BackgroundWorker mBkgWorker = null;
         UltraHighAccurateTimer mUhaTimer = new UltraHighAccurateTimer();
+        public WowMan mwowman = null;
+
 
         public GestureMan()
         {
@@ -86,7 +88,14 @@ namespace KeyMouseDo
 
         public void Progress()
         {
+            //mwowman.onMouseStop();      // 2021-02-13;
+            //return;
+
             mGesDirCmd.onGesture(mgesIndex);      // 140716;
+        }
+        public void Progress(int idx)
+        {
+            mGesDirCmd.onGesture(idx);      // 140716;
         }
 
 
@@ -95,6 +104,11 @@ namespace KeyMouseDo
         //volatile bool misbusy = false;
         public void onTimerTick(int tm)
         {
+            //if(mwowman.onTimerTick(tm))
+            //{
+            //    mBkgWorker.ReportProgress(1);
+            //}
+            //return;
 
             if (mGesByDir.onTimerTick(tm))
             {

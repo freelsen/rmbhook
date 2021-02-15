@@ -25,6 +25,8 @@ namespace KeyMouseDo
         private ToolStripMenuItem mmouseoffitem = new ToolStripMenuItem();
         private ToolStripMenuItem mgestureonitem = new ToolStripMenuItem();
         private ToolStripMenuItem mgestureoffitem = new ToolStripMenuItem();
+        private ToolStripMenuItem mtestitem = new ToolStripMenuItem();
+        //private ToolStripMenuItem mgestureoffitem = new ToolStripMenuItem();
         public ContextMenuStrip getMenu() { return mmenu; }
 
         public int init()
@@ -50,6 +52,8 @@ namespace KeyMouseDo
             mmouseoffitem.Text = "Mouse Off";
             mmouseoffitem.Click += new EventHandler(MouseOffItem_Click);
 
+            mtestitem.Text = "Test";
+            mtestitem.Click+=new EventHandler(TestItem_Click);
 
             mmenu.Items.Add(mopenitem);
 
@@ -62,6 +66,8 @@ namespace KeyMouseDo
             mmenu.Items.Add(mmouseonitem);
             mmenu.Items.Add(mmouseoffitem);
 
+            mmenu.Items.Add(mtestitem); // 2021-02-13,
+
             mmenu.Items.Add(mexititem);
 
             mnotify = TaskbarNotify.gthis;
@@ -70,6 +76,13 @@ namespace KeyMouseDo
             
             return 0;
         }
+
+        void TestItem_Click(object sender, EventArgs e)
+        {
+            DrawFormMan._this.doTest(); //2021-02-13,;
+        }
+
+
         void mopenitem_Click(object sender, EventArgs e)
         {
             mnotify.onFormShow();

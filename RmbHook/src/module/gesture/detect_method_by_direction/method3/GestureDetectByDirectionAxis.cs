@@ -40,7 +40,7 @@ namespace KeyMouseDo
             initData();
             resetState();
 
-            WinAPIs.GetCursorPos(ref mtickPos);
+            WinApis.GetCursorPos(ref mtickPos);
 
             mtextman.Open();
             //mtextman.WriteLine("aldkjfafd");
@@ -554,7 +554,7 @@ namespace KeyMouseDo
 
         void updatePosition()
         {
-            WinAPIs.GetCursorPos(ref mtickPos);
+            WinApis.GetCursorPos(ref mtickPos);
             mdx = mtickPos.X - mtickPosLast.X;
             mdy = mtickPos.Y - mtickPosLast.Y;
 

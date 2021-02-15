@@ -49,7 +49,7 @@ namespace KeyMouseDo
                 DateTime dt = DateTime.Now;
                 string str = dt.ToString("yyyy-MM-dd");
                 Console.WriteLine(str);
-                KeyHandler.SentString(str);
+                KeyHelper.SentString(str);
 
                 return false;
             }
@@ -58,7 +58,7 @@ namespace KeyMouseDo
                 DateTime dt1 = DateTime.Now;
                 string str1 = dt1.ToString("hh:mm tt");
                 //Console.WriteLine(str);
-                KeyHandler.SentString(str1);
+                KeyHelper.SentString(str1);
                 return false;
             }
 

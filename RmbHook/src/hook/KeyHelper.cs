@@ -8,12 +8,41 @@ using System.Threading;
 
 namespace KeyMouseDo
 {
-    class KeyHandler
+    class KeyHelper
     {
+        public static bool miskeybusy = false;  // 2021-02-14,
+        static bool setBusy()
+        {
+            bool busy = miskeybusy;  // record old status;
+            if (!miskeybusy)
+            {
+                miskeybusy = true;
+            }
+            return busy;
+        }
+        static void restoreBusy(bool busy)
+        {
+            if (miskeybusy!=busy)
+                miskeybusy = busy;
+        }
+
+
+        public static void SentKeyMof(Keys key1, Keys key2)
+        {
+            bool busy = setBusy();
+
+            if (key1 != Keys.None) KeyboardSimulator.KeyDown(key1);
+            KeyboardSimulator.KeyPress(key2);
+            if (key1 != Keys.None) KeyboardSimulator.KeyUp(key1);
+
+            restoreBusy(busy);
+        }
 
 
         public static void SentString(string str)
         {
+            bool busy = setBusy();
+
             Keys[,] akeys = null;
             if (Str2Keys(out akeys, str) > 0)
             {
@@ -34,7 +63,11 @@ namespace KeyMouseDo
                     }
                 }
             }
+
+            restoreBusy(busy);
         }
+
+
 
         public static int Str2Keys(out Keys[,] akeys, string str)
         {
@@ -123,12 +156,6 @@ namespace KeyMouseDo
                 return (Keys)c;
         }        
         
-        public static void SentKeyMof(Keys key1, Keys key2)
-        {
-            if (key1 !=Keys.None)       KeyboardSimulator.KeyDown(key1);
-            KeyboardSimulator.KeyPress(key2);
-            if (key1 != Keys.None)      KeyboardSimulator.KeyUp(key1);
-
-        }
+        
     }
 }

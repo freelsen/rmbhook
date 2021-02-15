@@ -5,11 +5,11 @@ using System.Text;
 
 namespace KeyMouseDo
 {
-    class MouseEHandler
+    class MouseEventHelper
     {
-        public static MouseEHandler mthis = null;
+        public static MouseEventHelper mthis = null;
 
-        public MouseEHandler()
+        public MouseEventHelper()
         {
         }
         

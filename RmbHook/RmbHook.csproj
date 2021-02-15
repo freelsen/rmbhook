@@ -105,11 +105,24 @@
   <ItemGroup>
     <Compile Include="lslibcs\ConfigureFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\common\DebugMsg.cs" />
     <Compile Include="src\common\IndexedQueue.cs" />
     <Compile Include="src\common\TextMan.cs" />
     <Compile Include="src\configuration\ConfigReadWrite.cs" />
-    <Compile Include="src\fun\Macro1.cs" />
-    <Compile Include="src\fun\Wow.cs" />
+    <Compile Include="src\fun\drawwin\DfTarget.cs" />
+    <Compile Include="src\fun\drawwin\DrawForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\fun\drawwin\DrawForm.Designer.cs">
+      <DependentUpon>DrawForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\fun\drawwin\DrawFormMan.cs" />
+    <Compile Include="src\fun\wow\Dw3by3.cs" />
+    <Compile Include="src\fun\wow\DwGraph.cs" />
+    <Compile Include="src\fun\wow\WowMacroOne.cs" />
+    <Compile Include="src\fun\wow\WowMacroRogue.cs" />
+    <Compile Include="src\fun\wow\WowCmd.cs" />
+    <Compile Include="src\fun\wow\WowMan.cs" />
     <Compile Include="src\GUI\HookFormGesture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,8 +139,8 @@
     <Compile Include="src\module\gesture\GestureMan.cs" />
     <Compile Include="src\module\gesture\GestureParamter.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\GestureDetectByDirectionFromMouse.cs" />
-    <Compile Include="src\hook\KeyHandler.cs" />
-    <Compile Include="src\hook\MouseEvent.cs" />
+    <Compile Include="src\hook\KeyHelper.cs" />
+    <Compile Include="src\hook\MouseEventHelper.cs" />
     <Compile Include="src\module\quick_note\QuickNoteParameter.cs" />
     <Compile Include="src\module\search\Info.cs" />
     <Compile Include="src\module\search\Keywords.cs" />
@@ -166,17 +179,20 @@
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\GesPair.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\GesPairEvent.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method1\GestureDetectByDirectionOne.cs" />
-    <Compile Include="src\hook\HookHandler.cs" />
+    <Compile Include="src\hook\HookEventHandler.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\LSortedList.cs" />
     <Compile Include="src\module\gesture\UltraHighTimer.cs" />
     <Compile Include="src\module\window\WinMon.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\WinAPI\WinAPIs.cs" />
+    <Compile Include="src\WinAPI\WinApis.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\fun\drawwin\DrawForm.resx">
+      <DependentUpon>DrawForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\GUI\HookForm.resx">
       <DependentUpon>HookForm.cs</DependentUpon>

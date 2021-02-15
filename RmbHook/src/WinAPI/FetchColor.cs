@@ -9,6 +9,7 @@ namespace KeyMouseDo
 {
     public class FetchColor
     {
+        /*
         public struct POINTAPI
         {
             public int x;
@@ -31,9 +32,10 @@ namespace KeyMouseDo
         [DllImport("user32", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
         //[DllImport("user32.dll", EntryPoint = "WindowFromPoint")]           
         private static extern int WindowFromPoint(int xPoint, int yPoint);
+        */
         
-        static POINTAPI mpt;
-        static POINTAPI mptclient;
+        static WinApis.POINTAPI mpt;
+        static WinApis.POINTAPI mptclient;
 
         public FetchColor()
         {
@@ -42,33 +44,35 @@ namespace KeyMouseDo
 
         public static Color gtColorMouse()
         {
-            GetCursorPos(ref mpt);                          
+            WinApis.GetCursorPos(ref mpt);                          
 
-            return gtColor(mpt.x, mpt.y);
+            return gtColor(mpt.X, mpt.Y);
         }
         public static Color gtColor(int x, int y)
         {
             //int h = WinMon.gtWinMouse();
-            //Console.Out.WriteLine(" hwnd=" + h.ToString() );
+
+
+            int hwnd = WinApis.WindowFromPoint(x, y);
+
+            return getColor(hwnd, x, y);
             
+        }
+        public static Color getColor(int hwnd, int x, int y)
+        {
+            int hD = WinApis.GetDC(hwnd);
 
-            int hwnd = WindowFromPoint(x, y);
-            //Console.Out.WriteLine(" mouse=" + x.ToString() + "," + y.ToString());
-            //Console.Out.WriteLine(" hwnd=" + hwnd.ToString());
-
-            int hD = GetDC(hwnd);
-
-            mptclient.x = x;
-            mptclient.y = y;
-            ScreenToClient(hwnd, ref mptclient);
+            mptclient.X = x;
+            mptclient.Y = y;
+            WinApis.ScreenToClient(hwnd, ref mptclient);
             //Console.Out.WriteLine(" client=" +mptclient.x.ToString() + ","+mptclient.y.ToString());
 
-            uint pixel = GetPixel(hD, mptclient.x, mptclient.y);
+            uint pixel = WinApis.GetPixel(hD, mptclient.X, mptclient.Y);
             //Console.Out.WriteLine(" pixel=" + pixel.ToString());
 
-            ReleaseDC(hwnd,hD);
+            WinApis.ReleaseDC(hwnd, hD);
 
-            int r = (byte) pixel;
+            int r = (byte)pixel;
             int g = (byte)(pixel >> 8);
             int b = (byte)(pixel >> 16);
             //Color clr = Color.FromArgb(c);

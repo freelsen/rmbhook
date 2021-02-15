@@ -14,7 +14,7 @@ namespace KeyMouseDo
         // hook lib;
         public MouseKeyHook mmkhook = new MouseKeyHook();
         public HookEventHandler mHookEventHandler = new HookEventHandler();//2021-01-23
-        public MouseEHandler mmehandler = new MouseEHandler();
+        public MouseEventHelper mmehandler = new MouseEventHelper();
         // user functions;
         KeyEventMan mKeyEventman = new KeyEventMan();//2021-01-23;
         //public RmbKey mrmbkey = new RmbKey();
@@ -29,6 +29,10 @@ namespace KeyMouseDo
         //public GestureDetectByDirectionOne mgesture = new GestureDetectByDirectionOne();
         public GestureMan mGestureMan = new GestureMan();
         //public GestureParamter mgesprm = new GestureParamter();
+
+        // 2021-02-13,
+        public DrawFormMan _drawFormMan = new DrawFormMan();
+        public WowMan mwowman = new WowMan();
 
         private void create()
         {
@@ -47,8 +51,14 @@ namespace KeyMouseDo
             mparameter.init();
 
             mtasknotify.init(mform);
-            
+
+            mwowman.init();     // 2021-02-13,
+            _drawFormMan.mwowman = mwowman;
+            mwowman.mdfman = _drawFormMan;
+            _drawFormMan.init();    // 2021-02-13;
+
             // gesture;
+            mGestureMan.mwowman = mwowman;  //2021-02-13;
             mGestureMan.mBkgWorker = mform.getWorker();
             mGestureMan.init();
 
@@ -57,12 +67,16 @@ namespace KeyMouseDo
             //mrmbkey.init();
             //mwinmon.init();
 
+            mHookEventHandler.mwowman = mwowman;    // 2021-02-14;
             mHookEventHandler.mForm = mform;
             mHookEventHandler.mKeyEventMan = mKeyEventman;
             mHookEventHandler.mMouseEHandler = mmehandler;
 
             // quick note;
             mqkman.init();
+
+            
+
 
             mmkhook.mHookEventHandler = mHookEventHandler;
             mmkhook.init();

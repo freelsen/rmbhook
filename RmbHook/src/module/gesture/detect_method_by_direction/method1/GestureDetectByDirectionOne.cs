@@ -59,8 +59,8 @@ namespace KeyMouseDo
             mtickTime = tm;                            // 140716;
 
             // get mouse location;
-            WinAPIs.POINTAPI mpt32 = new WinAPIs.POINTAPI();
-            WinAPIs.GetCursorPos(ref mpt32);
+            WinApis.POINTAPI mpt32 = new WinApis.POINTAPI();
+            WinApis.GetCursorPos(ref mpt32);
 
             ges = onMouseMove3(mpt32.X, mpt32.Y);
             return ges;
