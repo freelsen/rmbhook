@@ -98,27 +98,32 @@ namespace MouseKeyboardLibrary
         /// Press a mouse button down
         /// </summary>
         /// <param name="button"></param>
-        public static void MouseDown(MouseButton button)
+        public static void MouseDown(MouseButton button, int absolute, int x, int y)
         {
-            mouse_event(((int)button), 0, 0, 0, 0);
+            int flags = (int)button;
+            if (absolute == 1)
+            {
+                flags &= MOUSEEVENTF_ABSOLUTE;
+            }
+            mouse_event(flags, x, y, 0, 0);
         }
 
         /// <summary>
         /// Press a mouse button down
         /// </summary>
         /// <param name="button"></param>
-        public static void MouseDown(MouseButtons button)
+        public static void MouseDown(MouseButtons button, int absolute, int x, int y)
         {
             switch (button)
             {
                 case MouseButtons.Left:
-                    MouseDown(MouseButton.Left);
+                    MouseDown(MouseButton.Left, absolute, x, y);
                     break;
                 case MouseButtons.Middle:
-                    MouseDown(MouseButton.Middle);
+                    MouseDown(MouseButton.Middle, absolute, x, y);
                     break;
                 case MouseButtons.Right:
-                    MouseDown(MouseButton.Right);
+                    MouseDown(MouseButton.Right, absolute, x, y);
                     break;
             }
         }
@@ -127,27 +132,33 @@ namespace MouseKeyboardLibrary
         /// Let a mouse button up
         /// </summary>
         /// <param name="button"></param>
-        public static void MouseUp(MouseButton button)
+        public static void MouseUp(MouseButton button, int absolute, int x, int y)
         {
-            mouse_event(((int)button) * 2, 0, 0, 0, 0);
+            int flags = (int)button;
+            if (absolute == 1)
+            {
+                flags &= MOUSEEVENTF_ABSOLUTE;
+            }
+
+            mouse_event(flags, x, y, 0, 0);
         }
 
         /// <summary>
         /// Let a mouse button up
         /// </summary>
         /// <param name="button"></param>
-        public static void MouseUp(MouseButtons button)
+        public static void MouseUp(MouseButtons button, int absolute, int x, int y)
         {
             switch (button)
             {
                 case MouseButtons.Left:
-                    MouseUp(MouseButton.Left);
+                    MouseUp(MouseButton.Left, absolute, x, y);
                     break;
                 case MouseButtons.Middle:
-                    MouseUp(MouseButton.Middle);
+                    MouseUp(MouseButton.Middle, absolute, x, y);
                     break;
                 case MouseButtons.Right:
-                    MouseUp(MouseButton.Right);
+                    MouseUp(MouseButton.Right, absolute, x, y);
                     break;
             }
         }
@@ -156,28 +167,28 @@ namespace MouseKeyboardLibrary
         /// Click a mouse button (down then up)
         /// </summary>
         /// <param name="button"></param>
-        public static void Click(MouseButton button)
+        public static void Click(MouseButton button, int absolute, int x, int y)
         {
-            MouseDown(button);
-            MouseUp(button);
+            MouseDown(button, absolute, x, y);
+            MouseUp(button, absolute, x, y);
         }
 
         /// <summary>
         /// Click a mouse button (down then up)
         /// </summary>
         /// <param name="button"></param>
-        public static void Click(MouseButtons button)
+        public static void Click(MouseButtons button, int absolute, int x, int y)
         {
             switch (button)
             {
                 case MouseButtons.Left:
-                    Click(MouseButton.Left);
+                    Click(MouseButton.Left, absolute, x, y);
                     break;
                 case MouseButtons.Middle:
-                    Click(MouseButton.Middle);
+                    Click(MouseButton.Middle, absolute, x, y);
                     break;
                 case MouseButtons.Right:
-                    Click(MouseButton.Right);
+                    Click(MouseButton.Right, absolute, x, y);
                     break;
             }
         }
@@ -188,8 +199,8 @@ namespace MouseKeyboardLibrary
         /// <param name="button"></param>
         public static void DoubleClick(MouseButton button)
         {
-            Click(button);
-            Click(button);
+            Click(button,0,0,0);
+            Click(button,0,0,0);
         }
 
         /// <summary>

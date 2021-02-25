@@ -58,27 +58,26 @@ namespace KeyMouseDo
             return getColor(hwnd, x, y);
             
         }
-        public static Color getColor(int hwnd, int x, int y)
+        public static Color getColorClient(int hwnd, int x,int y)
         {
             int hD = WinApis.GetDC(hwnd);
-
-            mptclient.X = x;
-            mptclient.Y = y;
-            WinApis.ScreenToClient(hwnd, ref mptclient);
-            //Console.Out.WriteLine(" client=" +mptclient.x.ToString() + ","+mptclient.y.ToString());
-
-            uint pixel = WinApis.GetPixel(hD, mptclient.X, mptclient.Y);
-            //Console.Out.WriteLine(" pixel=" + pixel.ToString());
-
+            uint pixel = WinApis.GetPixel(hD, x, y);
             WinApis.ReleaseDC(hwnd, hD);
 
             int r = (byte)pixel;
             int g = (byte)(pixel >> 8);
             int b = (byte)(pixel >> 16);
-            //Color clr = Color.FromArgb(c);
             Color c = Color.FromArgb(r, g, b);
 
             return c;
+        }
+        public static Color getColor(int hwnd, int x, int y)
+        {
+            mptclient.X = x;
+            mptclient.Y = y;
+            WinApis.ScreenToClient(hwnd, ref mptclient);
+
+            return getColorClient(hwnd, mptclient.X, mptclient.Y);
         }
     }
 }

@@ -117,8 +117,10 @@
       <DependentUpon>DrawForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\fun\drawwin\DrawFormMan.cs" />
+    <Compile Include="src\fun\wow\D2c.cs" />
     <Compile Include="src\fun\wow\Dw3by3.cs" />
     <Compile Include="src\fun\wow\DwGraph.cs" />
+    <Compile Include="src\fun\wow\RogueData.cs" />
     <Compile Include="src\fun\wow\WowMacroOne.cs" />
     <Compile Include="src\fun\wow\WowMacroRogue.cs" />
     <Compile Include="src\fun\wow\WowCmd.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="src\GUI\HookFormMouse.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\hook\MouseHelper.cs" />
+    <Compile Include="src\hook\SimSentInput.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method\GestureDetectByDirection.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method3\GestureDetectByDirectionAxis.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method\GestureDirection.cs" />

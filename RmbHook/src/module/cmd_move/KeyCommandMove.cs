@@ -32,8 +32,8 @@ namespace KeyMouseDo
             mkeymap.Add(Keys.E, Keys.Delete);
             mkeymap.Add(Keys.R, Keys.Back);
             // 2021-02-04,
-            mkeymap.Add(Keys.P, Keys.PageUp);
-            mkeymap.Add(Keys.M, Keys.PageDown);
+            mkeymap.Add(Keys.N, Keys.PageUp); //p 2021-02-19,
+            mkeymap.Add(Keys.M, Keys.PageDown);//m
 
             // step control;
             initKeyNum();                       

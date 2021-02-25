@@ -21,7 +21,7 @@ namespace KeyMouseDo
         {
             _this = this;
 
-            //mhwnd= this.h
+            mhwnd = mdrawform.Handle;
 
             mdrawform.mdfman = this;
             mdrawform.init();
@@ -34,9 +34,11 @@ namespace KeyMouseDo
         {
             if (mdftarget.findTarget())
             {
+                DbMsg.Msg("target win found");
                 WinApis.MoveWindow(mdrawform.Handle, 
                     mdftarget.mposition.X, mdftarget.mposition.Y
-                    ,mdftarget.mrect.right, mdftarget.mrect.bottom,
+                    ,mdftarget.mrect.right- mdftarget.mrect.left, 
+                    mdftarget.mrect.bottom - mdftarget.mrect.top,
                     true);
             }
         }
@@ -70,7 +72,7 @@ namespace KeyMouseDo
                 grap.Clear(Color.Transparent);
 
                 // notify graphs,
-                mwowman.onSize(mdftarget.mcenter);
+                mwowman.onSize(mdftarget.mclientcenter);
 
                 onParint(grap);
             }

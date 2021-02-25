@@ -20,16 +20,16 @@ namespace KeyMouseDo
 
         void initCmdList()
         {
-            mkeylist1[0, 0] = Keys.Control; mkeylist1[0, 1] = Keys.D1;
-            mkeylist1[1, 0] = Keys.Control; mkeylist1[1, 1] = Keys.D2;
-            mkeylist1[2, 0] = Keys.Control; mkeylist1[2, 1] = Keys.D3;
-            mkeylist1[3, 0] = Keys.Control; mkeylist1[3, 1] = Keys.D4;
-            mkeylist1[4, 0] = Keys.Control; mkeylist1[4, 1] = Keys.D5;
-            mkeylist1[5, 0] = Keys.Control; mkeylist1[5, 1] = Keys.D6;
-            mkeylist1[6, 0] = Keys.Control; mkeylist1[6, 1] = Keys.D7;
-            mkeylist1[7, 0] = Keys.Control; mkeylist1[7, 1] = Keys.D8;
-            mkeylist1[8, 0] = Keys.Control; mkeylist1[8, 1] = Keys.D9;
-            mkeylist1[9, 0] = Keys.Control; mkeylist1[9, 1] = Keys.D0;
+            mkeylist1[0, 0] = Keys.Alt; mkeylist1[0, 1] = Keys.D4;
+            mkeylist1[1, 0] = Keys.Alt; mkeylist1[1, 1] = Keys.D5;
+            mkeylist1[2, 0] = Keys.Alt; mkeylist1[2, 1] = Keys.D6;
+            mkeylist1[3, 0] = Keys.Alt; mkeylist1[3, 1] = Keys.D7;
+            mkeylist1[4, 0] = Keys.Alt; mkeylist1[4, 1] = Keys.D8;
+            mkeylist1[5, 0] = Keys.Alt; mkeylist1[5, 1] = Keys.D9;
+            mkeylist1[6, 0] = Keys.Alt; mkeylist1[6, 1] = Keys.D0;
+            mkeylist1[7, 0] = Keys.Alt; mkeylist1[7, 1] = Keys.D1;
+            mkeylist1[8, 0] = Keys.Alt; mkeylist1[8, 1] = Keys.D2;
+            mkeylist1[9, 0] = Keys.Alt; mkeylist1[9, 1] = Keys.D3;
         }
 
         public void doCmd(int index)

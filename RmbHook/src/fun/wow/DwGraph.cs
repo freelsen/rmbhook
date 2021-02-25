@@ -8,6 +8,8 @@ namespace KeyMouseDo
 {
     class DwGraph
     {
+        
+
         SolidBrush _myBrush = new SolidBrush(Color.Red);
 
         public Rectangle _prect = new Rectangle(0, 0, 100, 100);
@@ -21,6 +23,15 @@ namespace KeyMouseDo
             _prect.Y = cy - _prect.Height / 2;
         }
 
+        public Pen mpen = Pens.Red;
+        public void changeColor()
+        {
+            if (mpen == Pens.Red)
+                mpen = Pens.Black;
+            else
+                mpen = Pens.Red;
+        }
+
         public void drawRect(Graphics grap)
         {
             //Rectangle rect = new Rectangle(_point.X, _point.Y, 50, 50);
@@ -28,7 +39,9 @@ namespace KeyMouseDo
             //e.Graphics.DrawRectangle(Pens.Red, rect);
             //SolidBrush myBrush = new SolidBrush(Color.Red);
             grap.FillRectangle(_myBrush, _prect);
+
         }
+        
         public void drawCircle(Graphics grap)
         {
             //grap.DrawEllipse(Pens.Red, _prect);
@@ -53,6 +66,11 @@ namespace KeyMouseDo
             Rectangle rect = new Rectangle(a,c,r,r);
             
             grap.DrawEllipse(Pens.Red, rect);
+        }
+        public void drawRect(Graphics grap, Point pt)
+        {
+            Rectangle rect = new Rectangle(pt.X - 1, pt.Y - 1, 2, 2);
+            grap.DrawRectangle(mpen, rect);
         }
     }
 }

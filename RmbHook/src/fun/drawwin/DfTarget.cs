@@ -18,7 +18,7 @@ namespace KeyMouseDo
         bool mistargetfound = false;
         public Point mposition = new Point(0, 0);
         public WinApis.RECT mrect = new WinApis.RECT() { left = 0, right = 0, top = 0, bottom = 0 };
-        public Point mcenter = new Point(0, 0);
+        public Point mclientcenter = new Point(0, 0);
 
         public DfTarget()
         {
@@ -48,8 +48,8 @@ namespace KeyMouseDo
                 //WinApis.RECT _rect;
                 WinApis.GetClientRect(hwndtarget, out mrect);
                 
-                mcenter.X = (mrect.right - mrect.left) / 2;
-                mcenter.Y = (mrect.bottom - mrect.top) / 2;
+                mclientcenter.X = (mrect.right - mrect.left) / 2;
+                mclientcenter.Y = (mrect.bottom - mrect.top) / 2;
 
                 DbMsg.Msg(mposition.X.ToString() + "," + mposition.Y.ToString());
 

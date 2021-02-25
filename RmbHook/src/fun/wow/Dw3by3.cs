@@ -12,8 +12,8 @@ namespace KeyMouseDo
     {
         Rectangle[] _rectwow = new Rectangle[10];
 
-        int _gridw = 96;
-        int _gridh = 96;
+        int _gridw = 50;
+        int _gridh = 50;
         static int _gridrow = 3;
         static int _gridcol = 3;
         static int _gridnum = _gridrow * _gridcol;

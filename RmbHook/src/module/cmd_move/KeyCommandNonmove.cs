@@ -44,7 +44,7 @@ namespace KeyMouseDo
             //}
             
             // date & time string;
-            if (k==Keys.T)
+            if (k==Keys.Y)  //.T)
             {
                 DateTime dt = DateTime.Now;
                 string str = dt.ToString("yyyy-MM-dd");
@@ -53,7 +53,7 @@ namespace KeyMouseDo
 
                 return false;
             }
-            else if (k==Keys.Y)
+            else if (k==Keys.P) //.Y) 2021-02-19,
             {
                 DateTime dt1 = DateTime.Now;
                 string str1 = dt1.ToString("hh:mm tt");
@@ -65,19 +65,19 @@ namespace KeyMouseDo
             // window management, 20150621;
             if (menWindow)
             {
-                if (k==Keys.B)           // 
+                if (k==Keys.V)//.B)           // 
                 {
                         WinMon.mthis.stBottom();
 
                         return false;
                 }
-                else if (k==Keys.V)     //.C)
+                else if (k==Keys.C)//.V)     //.C)
                 {
                         WinMon.mthis.restore();
 
                    return false;
                 }
-                else if (k== Keys.N)    //.V)
+                else if (k== Keys.B)//.N)    //.V)
                 {
                         WinMon.mthis.minNow();
                         return false;

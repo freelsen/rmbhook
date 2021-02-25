@@ -109,6 +109,8 @@ namespace KeyMouseDo
         // then must process the MouseDown event, as the wow does.
         public int MouseDown(object sender, MouseEventArgs e)
         {
+            if (MouseHelper.misbusy)
+                return 0;
             //misbusy = true;
             //WinMon.gtWinMouse();
             //mgesture.ts_dis(e);
@@ -130,11 +132,11 @@ namespace KeyMouseDo
                     if (mwowman.onLmouseDown(e.X, e.Y))
                         ishandled = true;
 
-                    mMouseEHandler.OnLDown(ref misrdouble);
-                    if (misrdouble)
-                    {
-                        mwowman.onLDouble();
-                    }
+                    //mMouseEHandler.OnLDown(ref misrdouble);
+                    //if (misrdouble)
+                    //{
+                    //    mwowman.onLDouble();
+                    //}
 
                     break;
                 case MouseButtons.Right:
@@ -156,6 +158,9 @@ namespace KeyMouseDo
 
         public int MouseUp(object sender, MouseEventArgs e)
         {
+            if (MouseHelper.misbusy)
+                return 0;
+            DbMsg.Msg("mouse up," + e.X.ToString() + "," + e.Y.ToString());
             //return 0;
             //mform.onMouseEvent("MouseUp", e.Button.ToString(),
             //    e.X.ToString(), e.Y.ToString(), "");
@@ -165,7 +170,7 @@ namespace KeyMouseDo
             //WinApis.GetCursorPos(ref point);
             //Console.WriteLine("mouse up," + point.X.ToString() + "," + point.Y.ToString());
 
-            
+
             switch (e.Button)
             {
                 case MouseButtons.Left:

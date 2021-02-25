@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace KeyMouseDo
 {
@@ -16,6 +17,8 @@ namespace KeyMouseDo
         public Dw3by3 mdw3by3 = new Dw3by3();
         public DwGraph mdwgraph = new DwGraph();
 
+        public D2c md2c = new D2c();    // 2021-02-24;
+
         public DrawFormMan mdfman = null;
 
         public WowMan()
@@ -25,11 +28,12 @@ namespace KeyMouseDo
 
         public int init()
         {
+            mwowmacro.md2c = md2c;
             return 0;
         }
 
         // ----------draw form event;----------------        
-
+        Point mlastpos = new Point(0, 0);
         public void onParint(Graphics grap)
         {
             //mdwgraph.drawCircle(grap);
@@ -37,52 +41,27 @@ namespace KeyMouseDo
 
             // 
             Point pt = new Point(0, 0);
-            pt=mwowmacro.mphpos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
+            if (misshowpos)
+            {
+                
+                Color color;
+                for (int i = 0; i < mwowmacro.mdatanum; i++)
+                {
+                    int j = 0;
+                    //for (int j = 0; j < 5; j++)
+                    {
+                        if ((mwowmacro.mpositions[i, j].X == 0) && (mwowmacro.mpositions[i, j].X == 0))
+                            continue;
+                        //    break;
 
-            pt = mwowmacro.mphpos;
-            pt.X += Convert.ToInt32(0.5 * mwowmacro.mthlen);
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mphpos;
-            pt.X += Convert.ToInt32(1.0 * mwowmacro.mthlen);
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mtpos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mthpos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mthpos;
-            pt.X += Convert.ToInt32(1.0 * mwowmacro.mthlen);
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mroguep1pos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mroguep5pos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mroguehidepos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mpengerpos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
-
-            pt = mwowmacro.mc2pos;
-            DfTarget.mthis.screenToClient(ref pt);
-            mdwgraph.drawCircle(grap, pt);
+                        pt = mwowmacro.mpositions[i, j];
+                        mdwgraph.drawRect(grap, pt);
+                        color = mwowmacro.getColor(pt);
+                        DbMsg.Msg(i.ToString() + "pos (" + pt.X.ToString() + "," + pt.Y.ToString() + "), color " +
+                            "(" + color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString() + ")");
+                    }
+                }
+            }
 
             if (DrawForm.mthis != null)
             {
@@ -96,13 +75,29 @@ namespace KeyMouseDo
             }
 
         }
+
+        bool misresize = false;
         public void onSize(Point point)
         {
+            if (mlastpos.X == point.X && mlastpos.Y == point.Y)
+                return;
+            else
+                mlastpos = point;
+
             int cx = point.X;
             int cy = point.Y;
+            DbMsg.Msg("new size=" + (cx * 2).ToString() + "," + (cy * 2).ToString());
 
             mdwgraph.setRect(cx, cy);
             mdw3by3.setRects(cx, cy);
+
+            // 2021-02-21,
+            //int high = 2 * cy;
+            mwowmacro.changeSize(2*cy, 2*cx);
+
+            // 2021-02-24;
+            //misresize = true;
+            md2c.InitColor();
         }
 
         
@@ -122,26 +117,57 @@ namespace KeyMouseDo
             //onMove(x, y);
             return false;
         }
+        bool misshowpos = false;
 
         public bool onLmouseDown(int x, int y)
+        //public bool onLmouseDown(MouseEventArgs e)
         {
+            //int x = e.X;
+            //int y = e.Y;
+
             bool ishandle = false;
 
-            
-            int idx =mdw3by3.getGridIndex(x,y);
+            Point pt = new Point(x,y);
+            WinApis.ScreenToClient(mdfman.mhwnd, ref pt);
+
+            int idx =mdw3by3.getGridIndex(pt.X,pt.Y);
             if (idx > -1 && idx<9)
             {
-                if (idx == 5)
+                //if (idx == 2)
+                //{
+                //    if (mwowmacro.isLoot())
+                //    {
+                //        //for (int i = 1; i < 4; i++)
+                //        {
+                            
+                //            ishandle = true;
+                //        }
+                //    }
+                //}
+                //else 
+                if (idx == 6)
                 {
                     mdfman.setTimer();
                     mdw3by3.setColor(idx);
                     mdfman.onParint();
+                    
+                    ishandle = true;
+                }
+                else if (idx == 7)
+                {
+                    //mdwgraph.changeColor();
+                    misshowpos = !misshowpos;
+
+                    ishandle = true;
                 }
                 else
+                {
                     mwowcmd.doCmd(idx);
-                
+                    ishandle = true;
+                }
+
                 DbMsg.Msg("cmd="+idx.ToString());
-                ishandle = true;
+                
             }
 
             return ishandle;
@@ -152,7 +178,15 @@ namespace KeyMouseDo
         // ----------------timer event;------------
         public void onTimer2()
         {
-            mwowmacro.doMacro();
+            //if (misresize)
+            //{
+            //    misresize = false;
+            //    md2c.InitColor();
+            //}
+            //else
+            //{
+                mwowmacro.doMacro();
+            //}
         }
 
 
