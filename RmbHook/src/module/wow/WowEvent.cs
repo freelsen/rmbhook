@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WrittingHelper.libs;
 using WrittingHelper.wow;
@@ -17,11 +18,22 @@ namespace WrittingHelper
         public RogueTwo _wowroguetwo = null;
         public ColorGrids _colorgrids = null;
         public Dw3by3 mdw3by3 = null;
+        public WowProc _botpump = null;
 
+        void ToggleBot()
+        {
+            //mdfman.mdrawform.setTimer();
+            this._botpump.Toggle();
+        }
         // ----------------timer event;------------
         public void onTimer()
         {
             _wowroguetwo.DoMacro();
+        }
+        public void OnLoop()
+        {
+            this._wowroguetwo.DoMacro();
+            Thread.Sleep(1000);
         }
 
 
@@ -85,7 +97,7 @@ namespace WrittingHelper
             {
                 if (idx == 6)
                 {
-                    mdfman.mdrawform.setTimer();
+                    this.ToggleBot();
                     mdw3by3.setColor(idx);
                     mdfman._formclientevent.OnParint();
 
@@ -111,6 +123,7 @@ namespace WrittingHelper
             return ishandle;
         }
 
+        
         
     }
 }

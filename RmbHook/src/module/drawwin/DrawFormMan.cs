@@ -32,6 +32,8 @@ namespace WrittingHelper
             _dfevent._formclientevent = this._formclientevent;
             _dfevent._wowwin = this._wowwin;
 
+            this._formclientevent.mdrawform = this.mdrawform;
+
             mformhwnd = mdrawform.Handle;
             mdrawform.mdfman = this;
             mdrawform.init();

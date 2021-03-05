@@ -31,6 +31,7 @@ namespace WrittingHelper
         public DwGraph mdwgraph = new DwGraph();
 
         public WowWorker mworker = new WowWorker();
+        public WowProc _botpump = new WowProc();
 
         public WowMan()
         {
@@ -41,13 +42,16 @@ namespace WrittingHelper
         {
             Assemble();
 
+            this._drawclient._colorgrids = this._colorgrids;
             this._drawclient.mdw3by3 = this.mdw3by3;
             this._drawclient.mdwgraph = this.mdwgraph;
+
             this._wowevent.mwowcmd = this.mwowcmd;
             this._wowevent.mdfman = this.mdfman;
             this._wowevent.mdw3by3 = this.mdw3by3;
             this._wowevent._colorgrids = this._colorgrids;
             this._wowevent._wowroguetwo = this._wowroguetwo;
+            this._wowevent._botpump = this._botpump;
 
             return 0;
         }
@@ -69,7 +73,9 @@ namespace WrittingHelper
 
             mdfman._formclientevent.onSizeChanged = this._drawclient.OnSizeChanged;
             mdfman._formclientevent.onPaint = this._drawclient.OnPaint;
-            mdfman.mdrawform.onTimer1 = this._wowevent.onTimer;
+
+            //mdfman.mdrawform.onTimer1 = this._wowevent.onTimer;
+            this._botpump.runProc = this._wowevent.OnLoop;
 
         }
 
