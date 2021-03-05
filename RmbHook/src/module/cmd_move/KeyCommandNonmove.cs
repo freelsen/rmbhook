@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using KeyMouseDo.src.keyword;
+using WrittingHelper.src.keyword;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class KeyCommandNonmove
     {

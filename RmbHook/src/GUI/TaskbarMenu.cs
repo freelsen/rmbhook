@@ -5,7 +5,7 @@ using System.Text;
 
 using System.Windows.Forms;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public class TaskbarMenu
     {
@@ -79,7 +79,7 @@ namespace KeyMouseDo
 
         void TestItem_Click(object sender, EventArgs e)
         {
-            DrawFormMan._this.doTest(); //2021-02-13,;
+            DrawFormMan._this._dfevent.doTest(); //2021-02-13,;
         }
 
 

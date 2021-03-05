@@ -3,6 +3,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace MouseKeyboardLibrary
 {
@@ -122,6 +123,10 @@ namespace MouseKeyboardLibrary
 
         protected const byte LLKHF_ALTDOWN = 0x20;
 
+        // for .net 4.0 or higher;
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetModuleHandle(string name);
+
         #endregion
 
         #region Private Variables
@@ -172,7 +177,8 @@ namespace MouseKeyboardLibrary
                 _handleToHook = SetWindowsHookEx(
                     _hookType,
                     _hookCallback,
-                    Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]),
+                    //Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]), 
+                    GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName), // .NET 4.0 or higher;
                     0);
 
                 // Were we able to sucessfully start hook?

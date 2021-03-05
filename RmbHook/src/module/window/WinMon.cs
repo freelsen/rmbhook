@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Threading;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public delegate bool CallBack(int hwnd, int lParam);
     

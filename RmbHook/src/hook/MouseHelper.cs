@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     internal class MouseHelper
     {

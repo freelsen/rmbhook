@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace KeyMouseDo.src.keyword
+namespace WrittingHelper.src.keyword
 {
     public class Keywords
     {

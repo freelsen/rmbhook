@@ -6,7 +6,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     /// 
     /// ManualTimer

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using WrittingHelper.libs;
 
 // 2021-01-23, Sheng Li
 // 02:24:07;
 // id> 
 // - the gesture need to start from a point, and come back to that point;
 // - 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class GestureDetectByDirectionAxis : GestureDetectByDirection
     {

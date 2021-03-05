@@ -5,17 +5,23 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using MouseKeyboardLibrary;
+using WrittingHelper.libs;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class HookEventHandler
     {
+        public event EventHandler onLmouseDown;
+        public event EventHandler onRmouseDown;
+        public event EventHandler onLmouseDouble;
+        public event EventHandler onRmouseDouble;
+
         public MainForm mForm = null;
         //RmbKey mrmbkey = null;
         public KeyEventMan mKeyEventMan = null;
         public MouseEventHelper mMouseEHandler = null;
+        //public HookEventAction _hookaction = new HookEventAction();
 
-        public WowMan mwowman = null;   // 2021-02-14,
 
 
         // ---------------------keyboard events;-----------------------------------
@@ -122,15 +128,18 @@ namespace KeyMouseDo
             DbMsg.Msg("mouse down," + e.X.ToString() + "," + e.Y.ToString());
 
             //return 0;
+            MouseArgsR er = new MouseArgsR(e.X,e.Y);
 
-            bool ishandled = false;
+            
             misrdouble = false;
             //Console.WriteLine(e.Button.ToString());
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    if (mwowman.onLmouseDown(e.X, e.Y))
-                        ishandled = true;
+                    this.onLmouseDown(sender, er);
+
+                    //if (mwowman.onLmouseDown(e.X, e.Y))
+                    //    ishandled = true;
 
                     //mMouseEHandler.OnLDown(ref misrdouble);
                     //if (misrdouble)
@@ -140,8 +149,9 @@ namespace KeyMouseDo
 
                     break;
                 case MouseButtons.Right:
-                    if (mwowman.onRmouseDown(e.X, e.Y))
-                        ishandled = false;
+                    this.onRmouseDown(sender, er);
+                    //if (mwowman.onRmouseDown(e.X, e.Y))
+                    //    ishandled = false;
 
                     break;
                 case MouseButtons.Middle:
@@ -151,6 +161,7 @@ namespace KeyMouseDo
 
             //mform.onMouseEvent("MouseDown", e.Button.ToString(),
             //    e.X.ToString(), e.Y.ToString(), "");
+            bool ishandled = er.ishandled;
             int ret = ((ishandled) && !miskeydown) ? 1 : 0;
             DbMsg.Msg("ret=" + ret.ToString()+","+miskeydown.ToString());
             return ret;
@@ -170,7 +181,7 @@ namespace KeyMouseDo
             //WinApis.GetCursorPos(ref point);
             //Console.WriteLine("mouse up," + point.X.ToString() + "," + point.Y.ToString());
 
-
+            MouseArgsR er = new MouseArgsR(e.X, e.Y);
             switch (e.Button)
             {
                 case MouseButtons.Left:
@@ -179,10 +190,12 @@ namespace KeyMouseDo
                 case MouseButtons.Right:
                     mMouseEHandler.OnRUp();
 
+                    
                     mMouseEHandler.OnRDown(ref misrdouble);
                     if (misrdouble)
                     {
-                        mwowman.onRDouble();
+                        //mwowman.onRDouble();
+                        this.onRmouseDouble(sender, er);
                     }
 
                     break;

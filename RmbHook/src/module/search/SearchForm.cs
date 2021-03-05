@@ -10,7 +10,7 @@ using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace KeyMouseDo.src.keyword
+namespace WrittingHelper.src.keyword
 {
     public partial class SearchForm : Form
     {

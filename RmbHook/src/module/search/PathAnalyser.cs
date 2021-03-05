@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections;
 using System.IO;
 
-namespace KeyMouseDo.src.keyword
+namespace WrittingHelper.src.keyword
 {
     public class PathAnalyser
     {

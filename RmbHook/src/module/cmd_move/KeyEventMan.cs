@@ -7,7 +7,7 @@ using System.Windows.Forms;
 // 2021-01-23 Sheng Li. AB.CA.
 // process all the events related to the keyboard.
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class KeyEventMan
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class ObjMan
     {
@@ -31,7 +31,7 @@ namespace KeyMouseDo
         //public GestureParamter mgesprm = new GestureParamter();
 
         // 2021-02-13,
-        public DrawFormMan _drawFormMan = new DrawFormMan();
+        public DrawFormMan mdrawFormMan = new DrawFormMan();
         public WowMan mwowman = new WowMan();
 
         private void create()
@@ -52,10 +52,12 @@ namespace KeyMouseDo
 
             mtasknotify.init(mform);
 
+            mwowman.mdfman = mdrawFormMan;
+            mwowman.mhookhandler = this.mHookEventHandler;
             mwowman.init();     // 2021-02-13,
-            _drawFormMan.mwowman = mwowman;
-            mwowman.mdfman = _drawFormMan;
-            _drawFormMan.init();    // 2021-02-13;
+
+            mdrawFormMan.mwowman = mwowman;
+            mdrawFormMan.init();    // 2021-02-13;
 
             // gesture;
             mGestureMan.mwowman = mwowman;  //2021-02-13;
@@ -67,7 +69,7 @@ namespace KeyMouseDo
             //mrmbkey.init();
             //mwinmon.init();
 
-            mHookEventHandler.mwowman = mwowman;    // 2021-02-14;
+            //mHookEventHandler.mwowman = mwowman;    // 2021-02-14;
             mHookEventHandler.mForm = mform;
             mHookEventHandler.mKeyEventMan = mKeyEventman;
             mHookEventHandler.mMouseEHandler = mmehandler;

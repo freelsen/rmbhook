@@ -1,7 +1,7 @@
 ﻿using System;
-using KeyMouseDo.src.keyword;
+using WrittingHelper.src.keyword;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class FormEventMan
     {

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Collections;
 using MouseKeyboardLibrary;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public class KeyCommand
     {

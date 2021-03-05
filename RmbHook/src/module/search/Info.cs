@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KeyMouseDo.src.keyword
+namespace WrittingHelper.src.keyword
 {
     public class Info
     {

@@ -5,11 +5,11 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
-using KeyMouseDo.src.keyword;
+using WrittingHelper.src.keyword;
 using System.Globalization;
 using System.Threading;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class KeyCommandMode
     {

@@ -8,7 +8,7 @@ using MouseKeyboardLibrary;
 using System.Collections;
 using System.Globalization;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public class KeyCommandMove
     {

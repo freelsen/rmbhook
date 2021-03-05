@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using MouseKeyboardLibrary;
 using System.Threading;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class KeyHelper
     {

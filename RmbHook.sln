@@ -1,9 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RmbHook", "RmbHook\RmbHook.csproj", "{8C8EBE5F-CB11-4ADB-8272-04560A1E7626}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6} = {9C21E45F-1B54-4028-8532-2FF7AD72D5D6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseKeyboardLibrary", "MouseKeyboardLibrary\MouseKeyboardLibrary.csproj", "{5055C5B3-13BC-46B0-917E-D417E9267F92}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Libs", "Libs\Libs.csproj", "{12888ECB-F899-47F4-B8BA-16876409DDB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libsw", "Libsw\Libsw.csproj", "{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +36,27 @@ Global
 		{5055C5B3-13BC-46B0-917E-D417E9267F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5055C5B3-13BC-46B0-917E-D417E9267F92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5055C5B3-13BC-46B0-917E-D417E9267F92}.Release|x86.ActiveCfg = Release|Any CPU
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Debug|x86.ActiveCfg = Debug|x86
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Debug|x86.Build.0 = Debug|x86
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Release|x86.ActiveCfg = Release|x86
+		{12888ECB-F899-47F4-B8BA-16876409DDB0}.Release|x86.Build.0 = Release|x86
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{9C21E45F-1B54-4028-8532-2FF7AD72D5D6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D5C73EC-394F-437A-8C7E-7FADD83612DE}
 	EndGlobalSection
 EndGlobal

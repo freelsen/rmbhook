@@ -8,7 +8,7 @@ using System.Drawing;
 // This class define the division of a circle (360 degree);
 // Each direction has a gesture related.
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class GestureDirection
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace KeyMouseDo.src.keyword
+namespace WrittingHelper.src.keyword
 {
     public partial class ResultForm : Form
     {

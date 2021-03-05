@@ -6,7 +6,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Threading;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class GestureMan
     {

@@ -6,7 +6,7 @@ using System.Threading;
 using System.IO;
 using System.Collections;
 
-namespace KeyMouseDo.src.keyword
+namespace WrittingHelper.src.keyword
 {
     public class LsKeyword
     {

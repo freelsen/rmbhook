@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using KeyMouseDo.src.keyword;
+using WrittingHelper.src.keyword;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public partial class MainForm : Form
     {

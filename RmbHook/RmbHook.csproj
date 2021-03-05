@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -8,9 +8,9 @@
     <ProjectGuid>{8C8EBE5F-CB11-4ADB-8272-04560A1E7626}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KeyMouseDo</RootNamespace>
-    <AssemblyName>KeyMouseDo</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>WrittingHelper</RootNamespace>
+    <AssemblyName>WrittingHelper</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>src\GUI\icon3.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -33,6 +33,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +54,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +71,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;D:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -84,6 +88,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;D:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -109,22 +114,33 @@
     <Compile Include="src\common\IndexedQueue.cs" />
     <Compile Include="src\common\TextMan.cs" />
     <Compile Include="src\configuration\ConfigReadWrite.cs" />
-    <Compile Include="src\fun\drawwin\DfTarget.cs" />
-    <Compile Include="src\fun\drawwin\DrawForm.cs">
+    <Compile Include="src\hook\MouseArgsR.cs" />
+    <Compile Include="src\module\drawwin\DfEvent.cs" />
+    <Compile Include="src\module\drawwin\FormClientEvent.cs" />
+    <Compile Include="src\module\drawwin\WowWin.cs" />
+    <Compile Include="src\module\drawwin\DfTimer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\fun\drawwin\DrawForm.Designer.cs">
+    <Compile Include="src\module\drawwin\DrawForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\module\drawwin\DrawForm.Designer.cs">
       <DependentUpon>DrawForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\fun\drawwin\DrawFormMan.cs" />
-    <Compile Include="src\fun\wow\D2c.cs" />
-    <Compile Include="src\fun\wow\Dw3by3.cs" />
-    <Compile Include="src\fun\wow\DwGraph.cs" />
-    <Compile Include="src\fun\wow\RogueData.cs" />
-    <Compile Include="src\fun\wow\WowMacroOne.cs" />
-    <Compile Include="src\fun\wow\WowMacroRogue.cs" />
-    <Compile Include="src\fun\wow\WowCmd.cs" />
-    <Compile Include="src\fun\wow\WowMan.cs" />
+    <Compile Include="src\module\drawwin\DrawFormMan.cs" />
+    <Compile Include="src\module\wow\draw\DrawClient.cs" />
+    <Compile Include="src\module\wow\WowEvent.cs" />
+    <Compile Include="src\module\wow\rogue\RogueEnum.cs" />
+    <Compile Include="src\module\wow\wow\ColorGrids.cs" />
+    <Compile Include="src\module\wow\wow\WowProcess.cs" />
+    <Compile Include="src\module\wow\wow\D2c.cs" />
+    <Compile Include="src\module\wow\wow\ColorFetcher.cs" />
+    <Compile Include="src\module\wow\draw\Dw3by3.cs" />
+    <Compile Include="src\module\wow\draw\DwGraph.cs" />
+    <Compile Include="src\module\wow\pixel_one\WowMacroOne.cs" />
+    <Compile Include="src\module\wow\pixel_one\WowRogueOne.cs" />
+    <Compile Include="src\module\wow\WowCmd.cs" />
+    <Compile Include="src\module\wow\WowMan.cs" />
     <Compile Include="src\GUI\HookFormGesture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +152,7 @@
     </Compile>
     <Compile Include="src\hook\MouseHelper.cs" />
     <Compile Include="src\hook\SimSentInput.cs" />
+    <Compile Include="src\Libs\AProcess.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method\GestureDetectByDirection.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method3\GestureDetectByDirectionAxis.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method\GestureDirection.cs" />
@@ -178,7 +195,7 @@
     </Compile>
     <Compile Include="src\module\quick_note\QuickNoteMan.cs" />
     <Compile Include="src\module\cmd_move\nouse\RmbKeyOne.cs" />
-    <Compile Include="src\WinAPI\FetchColor.cs" />
+    <Compile Include="src\Libs\WinAPI\FetchColor.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method\GestureDirectionCommand.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\GesPair.cs" />
     <Compile Include="src\module\gesture\detect_method_by_direction\method2\GesPairEvent.cs" />
@@ -189,13 +206,18 @@
     <Compile Include="src\module\window\WinMon.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\WinAPI\WinApis.cs" />
+    <Compile Include="src\Libs\WinAPI\WinApis.cs" />
+    <Compile Include="src\module\wow\rogue\RogueTwo.cs" />
+    <Compile Include="src\module\wow\thread\WowProc.cs" />
+    <Compile Include="src\module\wow\rogue\RogueAction.cs" />
+    <Compile Include="src\module\wow\pixel_one\WowRoguePixelOne.cs" />
+    <Compile Include="src\module\wow\thread\WowWorker.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\fun\drawwin\DrawForm.resx">
+    <EmbeddedResource Include="src\module\drawwin\DrawForm.resx">
       <DependentUpon>DrawForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\GUI\HookForm.resx">
@@ -215,6 +237,7 @@
     <EmbeddedResource Include="src\module\quick_note\QickNoteForm.resx">
       <DependentUpon>QickNoteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -246,6 +269,10 @@
     <Compile Include="src\GUI\TaskbarNotify.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Libsw\Libsw.csproj">
+      <Project>{9c21e45f-1b54-4028-8532-2ff7ad72d5d6}</Project>
+      <Name>Libsw</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MouseKeyboardLibrary\MouseKeyboardLibrary.csproj">
       <Project>{5055C5B3-13BC-46B0-917E-D417E9267F92}</Project>
       <Name>MouseKeyboardLibrary</Name>
@@ -255,6 +282,7 @@
     <Content Include="src\GUI\icon3.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\fun\" />
     <Folder Include="src\res\" />
   </ItemGroup>
   <ItemGroup>

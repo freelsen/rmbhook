@@ -12,3 +12,5 @@ old
 !**/Debug/res
 !**/Release/*.ini
 !**/Release/res
+/Libs
+/packages

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using lslibcs;      // 20150621;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class Parameter
     {

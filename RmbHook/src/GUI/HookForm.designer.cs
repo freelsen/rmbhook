@@ -1,4 +1,4 @@
-﻿namespace KeyMouseDo
+﻿namespace WrittingHelper
 {
     partial class MainForm
     {

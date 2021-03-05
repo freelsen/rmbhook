@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public partial class MainForm : Form
     {

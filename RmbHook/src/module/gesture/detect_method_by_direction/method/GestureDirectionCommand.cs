@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using MouseKeyboardLibrary;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public class GestureDirectionCommand                         // 140717;
     {

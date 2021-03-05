@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     public class LISortedList: IComparer
     {

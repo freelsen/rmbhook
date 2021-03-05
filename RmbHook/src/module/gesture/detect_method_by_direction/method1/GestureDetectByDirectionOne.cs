@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using WrittingHelper.libs;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class GestureDetectByDirectionOne : GestureDetectByDirection
     {

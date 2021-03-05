@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
 
-namespace KeyMouseDo
+namespace WrittingHelper
 {
     class ConfigReadWrite
     {

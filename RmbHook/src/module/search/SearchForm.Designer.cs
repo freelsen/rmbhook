@@ -1,4 +1,4 @@
-﻿namespace KeyMouseDo.src.keyword
+﻿namespace WrittingHelper.src.keyword
 {
     partial class SearchForm
     {
