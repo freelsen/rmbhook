@@ -29,7 +29,7 @@ namespace WrittingHelper
             else
                 mclientlast = rc;
 
-            DbMsg.Msg("new size=" + rc.Width.ToString() + "," + rc.Height.ToString());
+            Lslog.log("new size=" + rc.Width.ToString() + "," + rc.Height.ToString());
 
             this.onSizeChanged(rc);
         }
@@ -55,11 +55,11 @@ namespace WrittingHelper
             {
                 pt.X = 0; pt.Y = 0;
                 WinApis.ClientToScreen(DrawForm.mthis.Handle, ref pt);
-                DbMsg.Msg("drawform=" + pt.X.ToString() + "," + pt.Y.ToString());
+                Lslog.log("drawform=" + pt.X.ToString() + "," + pt.Y.ToString());
 
                 pt.X = 0; pt.Y = 0;
                 WinApis.ClientToScreen(WowWin.mthis._hWnd, ref pt);
-                DbMsg.Msg("target=" + pt.X.ToString() + "," + pt.Y.ToString());
+                Lslog.log("target=" + pt.X.ToString() + "," + pt.Y.ToString());
             }
 
         }

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WrittingHelper
 {
-    class DbMsg
+    class Lslog
     {
-        public static void Msg(string str)
+        public static void log(string str)
         {
 #if DEBUG
             Console.WriteLine(str);

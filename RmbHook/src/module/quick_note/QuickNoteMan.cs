@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WrittingHelper
+namespace WrittingHelper.quicknote
 {
     class QuickNoteMan
     {
@@ -13,38 +13,28 @@ namespace WrittingHelper
 
         public static QuickNoteMan mthis = null;
 
-        QuickNoteForm mqnform = new QuickNoteForm();
-        QuickNoteParameter mQuickNotePrm = new QuickNoteParameter();
+        public QuickNoteForm mqnform = new QuickNoteForm();
+        public QuickNoteParameter mqnrm = new QuickNoteParameter();
+        public QnProc _qnproc = new QnProc();
+        public QnEvent _qnevent = new QnEvent();
 
 
         public QuickNoteMan()
         {
             mthis = this;
         }
+
         public int init()
         {
-            mQuickNotePrm.mQuickNoteForm = mqnform;
-            mQuickNotePrm.init();
+            this.mqnform.onVisible = this._qnproc.OnVisible;
+            this.mqnform.onHide = this._qnproc.OnHide;
+
+            this._qnevent._qnform = this.mqnform;
+
+            mqnrm._qnproc = this._qnproc;
+            mqnrm.init();
 
             return 0;
-        }
-
-        public void ShowWindow()
-        {
-            if (mqnform.Visible)
-            {
-                mqnform.Hide();
-            }
-            else
-            {
-                mqnform.Show();
-                mqnform.Activate();
-                mqnform.Focus();
-            }
-        }
-        public void ResetWindow()
-        {
-            mqnform.ResetNote();
         }
 
     }

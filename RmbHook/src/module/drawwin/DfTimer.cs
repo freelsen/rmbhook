@@ -27,7 +27,7 @@ namespace WrittingHelper
         public void setTimer()
         {
             timer1.Enabled = !timer1.Enabled;
-            DbMsg.Msg("timer1=" + timer1.Enabled.ToString());
+            Lslog.log("timer1=" + timer1.Enabled.ToString());
 
         }
         private void timer1_Tick(object sender, EventArgs e)

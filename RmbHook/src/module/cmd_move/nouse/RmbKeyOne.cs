@@ -47,6 +47,15 @@ namespace WrittingHelper
             return 1;
         }
 
+
+        void QuickNoteShow()
+        {
+            //QuickNoteMan.mthis.ShowWindow();
+        }
+        void QuickNoteReset()
+        {
+            //QuickNoteMan.mthis.ResetWindow();
+        }
         // ---key msg entry here;---
         public int onKeymsg(KeyEventArgs e)
         {
@@ -123,13 +132,13 @@ namespace WrittingHelper
             // 2021-01-22; quick note window;
             if (key == Keys.H)
             {
-                QuickNoteMan.mthis.ShowWindow();
+                this.QuickNoteShow();
                 setCmdMode(false);
                 eatkey = 1;
             }
             else if (key == Keys.N)
             {
-                QuickNoteMan.mthis.ResetWindow();
+                this.QuickNoteReset();
                 setCmdMode(false);
                 eatkey = 1;
             }

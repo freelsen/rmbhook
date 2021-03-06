@@ -95,6 +95,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -128,6 +131,10 @@
       <DependentUpon>DrawForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\module\drawwin\DrawFormMan.cs" />
+    <Compile Include="src\module\quick_note\QnEvent.cs" />
+    <Compile Include="src\module\quick_note\QnProc.cs" />
+    <Compile Include="src\module\wow\cursor\CursorClassification.cs" />
+    <Compile Include="src\module\wow\cursor\CursorClassifier.cs" />
     <Compile Include="src\module\wow\draw\DrawClient.cs" />
     <Compile Include="src\module\wow\WowEvent.cs" />
     <Compile Include="src\module\wow\rogue\RogueEnum.cs" />
@@ -238,6 +245,7 @@
       <DependentUpon>QickNoteForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

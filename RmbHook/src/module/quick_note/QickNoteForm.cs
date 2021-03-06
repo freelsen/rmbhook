@@ -8,13 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace WrittingHelper
+namespace WrittingHelper.quicknote
 {
     public partial class QuickNoteForm : Form
     {
-        public string mpath = "C:\\Users\\Windows User\\OneDrive\\shengdoc\\abc.md";
-        public int mshowLastLines = 0;
-        public string mappendText = "";
+        public Action<TextBox> onVisible;
+        public Action<TextBox> onHide;
 
         public QuickNoteForm()
         {
@@ -25,52 +24,23 @@ namespace WrittingHelper
             
         }
 
-        void checkAppendText()
-        {
-            if (mshowLastLines > 0)
-            {
-                //mtextman.Open();
-                //string str = TextMan.ReadLastLine(mfilename,mskipline);
-                //textBox1.Text = str;
-            }
-            if (mappendText.Length > 0)
-            {
-                string str = mappendText;
-                str=str.Replace("time", DateTime.Now.ToString("hh:mm tt"));
-                str=str.Replace("date", DateTime.Now.ToString("yyyy-MM-dd"));
-
-                //string str = "### **" + DateTime.Now.ToString("hh:mm tt") + "**";
-                textBox1.AppendText(str);
-                textBox1.Select(textBox1.TextLength, 0);
-            }
-        }
+        
         //--------------------------------------
         public void ResetNote()
         {
             textBox1.Clear();
         }
 
-        int mdefaultTextLen = 0;
-        int mskipline = 3;
+        
         private void QuickNoteForm_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible == true)
             {
-                textBox1.Clear();
-                textBox1.Focus();
-
-                checkAppendText();                
-
-                mdefaultTextLen = textBox1.TextLength;
-
+                this.onVisible(this.textBox1);
             }
             else
             {
-                string str = textBox1.Text;
-                if (str.Length > mdefaultTextLen)
-                {
-                    TextMan.AppendText(mpath, str + System.Environment.NewLine);
-                }
+                this.onHide(this.textBox1);
             }
         }
 
@@ -82,5 +52,7 @@ namespace WrittingHelper
                 Hide();
             }
         }
+
+        
     }
 }

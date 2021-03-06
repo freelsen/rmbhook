@@ -38,7 +38,7 @@ namespace WrittingHelper.wow
             if (mhealcnt > 0) mhealcnt--;
             if (mslicecnt > 0) mslicecnt--;
             if (mhealcnt>0 || mslicecnt>0)
-                DbMsg.Msg("meatcnt=" + mhealcnt.ToString() +",slicent="+mslicecnt.ToString());
+                Lslog.log("meatcnt=" + mhealcnt.ToString() +",slicent="+mslicecnt.ToString());
 
             //if(md2c.getVal(Wenum.tname1)!=0)
             if (mpixelone.isSameAll(WowRoguePixelOne.Status.target_title))// isTarget())
@@ -52,13 +52,13 @@ namespace WrittingHelper.wow
                     {
                         if (mpixelone.isSame(WowRoguePixelOne.Status.rogue5p))// isPoint5())
                         {
-                            DbMsg.Msg("point5=true");
+                            Lslog.log("point5=true");
                             isevi = true;
                         }
                         if (!mpixelone.isSame(WowRoguePixelOne.Status.target_health, (float)0.4))// isTargetHealth((float)0.4))// blood <30%;
                         {
 
-                            DbMsg.Msg("target blood < 0.4");
+                            Lslog.log("target blood < 0.4");
                             isevi = true;
                         }
                         else if (mpixelone.isSame(WowRoguePixelOne.Status.target_health, (float)0.6))
@@ -101,7 +101,7 @@ namespace WrittingHelper.wow
                         {
                             if (!mpixelone.isSame(WowRoguePixelOne.Status.target_health, (float)0.2))
                             {
-                                DbMsg.Msg("target-health<0.2");
+                                Lslog.log("target-health<0.2");
                                 //KeyHelper.SentKeyMof(Keys.Control, Keys.D2);
                                 DoAction(EactionRogue.sinister);
                             }
@@ -110,7 +110,7 @@ namespace WrittingHelper.wow
                                 //showColor(Status.player_energy, (float)0.5);
                                 if (mpixelone.isSameAll(WowRoguePixelOne.Status.player_energy, (float)0.5))      // >60;
                                 {
-                                    DbMsg.Msg("energy>0.5");
+                                    Lslog.log("energy>0.5");
                                     //KeyHelper.SentKeyMof(Keys.Control, Keys.D4);        // back;
                                     //KeyHelper.SentKeyMof(Keys.Control, Keys.D2);
                                     DoAction(EactionRogue.sinister);
@@ -202,7 +202,7 @@ namespace WrittingHelper.wow
                         //mdwgraph.drawRect(grap, pt);
 
                         color = mpixelone.getColor(pt);
-                        DbMsg.Msg(i.ToString() + "pos (" + pt.X.ToString() + "," + pt.Y.ToString() + "), color " +
+                        Lslog.log(i.ToString() + "pos (" + pt.X.ToString() + "," + pt.Y.ToString() + "), color " +
                             "(" + color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString() + ")");
                     }
                 }

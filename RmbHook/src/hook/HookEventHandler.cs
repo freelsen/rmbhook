@@ -70,7 +70,7 @@ namespace WrittingHelper
             //mbusycnt--;
 
             miskeydown = false;
-            DbMsg.Msg("keydown=" + miskeydown.ToString());
+            Lslog.log("keydown=" + miskeydown.ToString());
 
             mistabdown = false;
             //mform.onKeyboardEvent("KeyUp", e.KeyCode.ToString(), "",
@@ -125,7 +125,7 @@ namespace WrittingHelper
             //point1.X = 0; point1.Y = 0;
             //WinApis.GetCursorPos(ref point1);
             
-            DbMsg.Msg("mouse down," + e.X.ToString() + "," + e.Y.ToString());
+            Lslog.log("mouse down," + e.X.ToString() + "," + e.Y.ToString());
 
             //return 0;
             MouseArgsR er = new MouseArgsR(e.X,e.Y);
@@ -163,7 +163,7 @@ namespace WrittingHelper
             //    e.X.ToString(), e.Y.ToString(), "");
             bool ishandled = er.ishandled;
             int ret = ((ishandled) && !miskeydown) ? 1 : 0;
-            DbMsg.Msg("ret=" + ret.ToString()+","+miskeydown.ToString());
+            Lslog.log("ret=" + ret.ToString()+","+miskeydown.ToString());
             return ret;
         }
 
@@ -171,7 +171,7 @@ namespace WrittingHelper
         {
             if (MouseHelper.misbusy)
                 return 0;
-            DbMsg.Msg("mouse up," + e.X.ToString() + "," + e.Y.ToString());
+            Lslog.log("mouse up," + e.X.ToString() + "," + e.Y.ToString());
             //return 0;
             //mform.onMouseEvent("MouseUp", e.Button.ToString(),
             //    e.X.ToString(), e.Y.ToString(), "");

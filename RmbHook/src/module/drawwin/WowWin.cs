@@ -35,7 +35,7 @@ namespace WrittingHelper
 
             if (hwndtarget != (IntPtr)null)
             {
-                DbMsg.Msg("target win handle=" + hwndtarget.ToString("x"));
+                Lslog.log("target win handle=" + hwndtarget.ToString("x"));
                 _hWnd = hwndtarget;
                 mhwnd = (int)hwndtarget;
                 mistargetfound = true;
@@ -63,7 +63,7 @@ namespace WrittingHelper
                 mclient.Width = mrect.right - mrect.left;
                 mclient.Height = mrect.bottom - mrect.top;
 
-                DbMsg.Msg(mposition.X.ToString() + "," + mposition.Y.ToString());
+                Lslog.log(mposition.X.ToString() + "," + mposition.Y.ToString());
 
             }
 

@@ -33,7 +33,7 @@ namespace WrittingHelper.wow
 
         public void AlignGrids()
         {
-            DbMsg.Msg("align grids");
+            Lslog.log("align grids");
             // 
             int dx = 3;
             int dy = 3;
@@ -51,7 +51,7 @@ namespace WrittingHelper.wow
 
 
             // align;
-            DbMsg.Msg("align grids done");
+            Lslog.log("align grids done");
         }
 
 

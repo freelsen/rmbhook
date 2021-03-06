@@ -68,21 +68,21 @@ namespace WrittingHelper.wow
 
             int thp = GetVal(EgridRogue.thpcur);
 #if DEBUG
-            DbMsg.Msg("thp=" + thp.ToString());
+            Lslog.log("thp=" + thp.ToString());
 #endif
 
             if (thp > 0)
             {
                 int pt = GetVal(EgridRogue.ppoint);
 #if DEBUG
-                DbMsg.Msg("pt=" + pt.ToString() + "," + mslicecnt.ToString());
+                Lslog.log("pt=" + pt.ToString() + "," + mslicecnt.ToString());
 #endif
 
                 if ((GetVal(EgridRogue.aslice) == 0))
                 {
                     if ((thp > 70) && (pt < 3))
                     {
-                        DbMsg.Msg("slice=true");
+                        Lslog.log("slice=true");
                         isslice = true;
                     }
                 }
@@ -100,7 +100,7 @@ namespace WrittingHelper.wow
                     if (isslice)
                     {
                         DoAction(EactionRogue.slice);
-                        DbMsg.Msg("slice");
+                        Lslog.log("slice");
                         //mslicecnt = 15;
                         issin = false;
                     }

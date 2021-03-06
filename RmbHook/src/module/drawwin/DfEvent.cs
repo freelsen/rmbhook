@@ -53,7 +53,7 @@ namespace WrittingHelper
         {
             if (_wowwin.FindWin())
             {
-                DbMsg.Msg("target win found");
+                Lslog.log("target win found");
                 WinApis.MoveWindow(mdrawform.Handle,
                     _wowwin.mposition.X, _wowwin.mposition.Y
                     , _wowwin.mrect.right - _wowwin.mrect.left,

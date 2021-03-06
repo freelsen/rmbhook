@@ -254,7 +254,7 @@ namespace WrittingHelper.wow
         {
             //int idx = (int)Status.loot1+mlootidx;
 
-            DbMsg.Msg("do loot");
+            Lslog.log("do loot");
             //Point pt = mpositions[idx, mlootidx];
             mlootidx++;
             if (mlootidx >= 4)
@@ -278,7 +278,7 @@ namespace WrittingHelper.wow
                     WinApis.ClientToScreen(this.getHwndDraw(),ref pt); // DrawFormMan._this.mformhwnd, ref pt);
 
                     MouseHelper.Click(1, pt.X, pt.Y);
-                    DbMsg.Msg("mouse-click=" + pt.X.ToString() + "," + pt.Y.ToString());
+                    Lslog.log("mouse-click=" + pt.X.ToString() + "," + pt.Y.ToString());
                 }
                 //Thread.Sleep(10);
             }
@@ -346,7 +346,7 @@ namespace WrittingHelper.wow
             int idx = (int)index;
             int x = mpositions[idx, 0].X + Convert.ToInt32(p * mthlen);
             Color color = getColor(x, mpositions[idx, 0].Y);
-            DbMsg.Msg("color=" +
+            Lslog.log("color=" +
                         color.R.ToString() +
                         "," + color.G.ToString() +
                         "," + color.B.ToString());

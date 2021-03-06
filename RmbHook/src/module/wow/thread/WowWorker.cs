@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks; // need .net 4.0;
-using Libs;
+using Libsw;
 
 namespace WrittingHelper.wow
 {

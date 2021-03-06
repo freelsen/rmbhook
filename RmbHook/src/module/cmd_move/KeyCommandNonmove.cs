@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WrittingHelper.src.keyword;
+using WrittingHelper.quicknote;
 
 namespace WrittingHelper
 {
@@ -19,6 +20,11 @@ namespace WrittingHelper
         {
             return 0;
         }
+        void ShowQuickNote()
+        {
+            QuickNoteMan.mthis._qnevent.ShowWindow();
+        }
+
 
         public bool doNonMovingCmd(Keys k)
         {
@@ -34,7 +40,7 @@ namespace WrittingHelper
             // quick note window;
             if (k==Keys.H)
             {
-                QuickNoteMan.mthis.ShowWindow();
+                this.ShowQuickNote();
                 return false;
             }
             //else if (k==Keys.N)   // distable this, too dangeous!! 2021-01-23;

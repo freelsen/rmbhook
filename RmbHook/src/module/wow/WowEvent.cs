@@ -116,7 +116,7 @@ namespace WrittingHelper
                     ishandle = true;
                 }
 
-                DbMsg.Msg("cmd=" + idx.ToString());
+                Lslog.log("cmd=" + idx.ToString());
 
             }
 

@@ -1,4 +1,4 @@
-﻿namespace WrittingHelper
+﻿namespace WrittingHelper.quicknote
 {
     partial class QuickNoteForm
     {
