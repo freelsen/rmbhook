@@ -60,6 +60,10 @@ namespace WrittingHelper.wow
             }
         }
 
+        public Point GetGridCenter(int idx)
+        {
+            return Wgrids.GetGridCenter(_rectwow, idx);
+        }
 
         public int getGridIndex(int x, int y)
         {

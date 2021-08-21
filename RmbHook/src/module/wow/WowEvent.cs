@@ -19,6 +19,9 @@ namespace WrittingHelper
         public ColorGrids _colorgrids = null;
         public Dw3by3 mdw3by3 = null;
         public WowProc _botpump = null;
+        public WowProcess _wowprocess = null;
+        public Botmove _botmove = null;
+        public Wpos _wpos = null;
 
         void ToggleBot()
         {
@@ -36,6 +39,22 @@ namespace WrittingHelper
             Thread.Sleep(1000);
         }
 
+        bool misbotrun = false;
+        void OnBot()
+        {
+            misbotrun = !misbotrun;
+
+            if (misbotrun)
+            {
+                this._wowprocess.Start();
+            }
+            else
+            {
+                this._wpos.SavePos();
+            }
+
+            this.ToggleBot();
+        }
 
         // -------------mouse event;------------
         public void onLmouseDown(Object sender, EventArgs e)
@@ -81,7 +100,7 @@ namespace WrittingHelper
             return false;
         }
         bool misshowpos = false;
-
+        
         bool onLmouseDown(int x, int y)
         {
             //int x = e.X;
@@ -95,12 +114,28 @@ namespace WrittingHelper
             int idx = mdw3by3.getGridIndex(pt.X, pt.Y);
             if (idx > -1 && idx < 9)
             {
-                if (idx == 6)
+                if (idx==4)
                 {
-                    this.ToggleBot();
+                    this._botmove.Up();
+
                     mdw3by3.setColor(idx);
                     mdfman._formclientevent.OnParint();
+                    ishandle = true;
+                }
+                else if (idx==5)
+                {
+                    this._botmove.Down();
 
+                    mdw3by3.setColor(idx);
+                    mdfman._formclientevent.OnParint();
+                    ishandle = true;
+                }
+                else if (idx == 6)
+                {
+                    this.OnBot();
+
+                    mdw3by3.setColor(idx);
+                    mdfman._formclientevent.OnParint();
                     ishandle = true;
                 }
                 else if (idx == 7)
@@ -122,6 +157,7 @@ namespace WrittingHelper
 
             return ishandle;
         }
+
 
         
         

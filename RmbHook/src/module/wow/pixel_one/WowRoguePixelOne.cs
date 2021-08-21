@@ -17,6 +17,36 @@ namespace WrittingHelper.wow
         {
             initData();
         }
+
+
+
+        Point[] _lootpos = new Point[4];
+        public Point[] GetLootPos()
+        {
+            return this._lootpos;
+        }
+        void UpdateLootPos()
+        {
+            this._lootpos[0] = mpositions[(int)Status.loot1, 0];
+            this._lootpos[1] = mpositions[(int)Status.loot2, 0];
+            this._lootpos[2] = mpositions[(int)Status.loot3, 0];
+            this._lootpos[3] = mpositions[(int)Status.loot4, 0];
+        }
+
+        public Point GetMinimapPos()
+        {
+            return mpositions[(int)Status.minimap, 0];
+        }
+        public Point GetLootstopPos()
+        {
+            return mpositions[(int)Status.lootstop, 0];
+        }
+
+
+
+
+
+
         public int mdatanum = 100;// 15;
         public enum Status : int
         {
@@ -39,6 +69,9 @@ namespace WrittingHelper.wow
             loot2,
             loot3,
             loot4,
+            lootstop,
+
+            minimap,    // 2021-03-06, for loot click a safe place;
 
 
             outmeleerange = 51,
@@ -76,11 +109,25 @@ namespace WrittingHelper.wow
             mwid = wid;
 
             mthlen = Convert.ToInt32(mthlen0 * scale);
-            //int basehigh = Convert.ToInt32(mbasehigh0 * scale);
-            //int gridhigh = Convert.ToInt32(mgridhigh0 * scale);
-            //int ctlhigh = Convert.ToInt32(mctlhigh0 * scale);
-            //int ctlwid = Convert.ToInt32(mctlwid0 * scale);
+            int x = 0; int y = 0;
+            for (int i=0; i<mdlen; i++)
+            {
+                for (int j=0; j<5; j++)
+                {
+                    x = Convert.ToInt32(mpositions0[i, j].X * scale);
+                    y = Convert.ToInt32(mpositions0[i, j].Y * scale);
+                    if (x >= 0)
+                        mpositions[i, j].X = x;
+                    else
+                        mpositions[i, j].X = mwid + x;
+                    if (y >= 0)
+                        mpositions[i, j].Y = y;
+                    else
+                        mpositions[i, j].Y = mhigh + y;
+                }
+            }
 
+            /*
             for (int i = 0; i < 50; i++)
             {
                 for (int j = 0; j < 5; j++)
@@ -103,20 +150,15 @@ namespace WrittingHelper.wow
                     mpositions[i, j].Y = mhigh - y;
                 }
 
-                //mpositions[i].X = wid - ctlwid;
-                //mpositions[i].Y = high - basehigh - gridhigh*idx -ctlhigh;
-
             }
+            */
 
-            //idx = 0;
-            //int wid1 = wid - gridhigh;
-            //for (int i = 70; i < 82; i++)
-            //{
-            //    mpositions[i].X = wid1 - ctlwid;
-            //    mpositions[i].Y = high - basehigh - gridhigh * idx - ctlhigh;
-            //    idx = idx + 1;
-            //}
+            this.UpdateLootPos();
         }
+
+
+
+
 
 
         void initData()
@@ -214,6 +256,9 @@ namespace WrittingHelper.wow
             idx = (int)Status.loot2; mpositions0[idx, 0] = new Point(39, 250); mcolors[idx, 0] = Color.FromArgb(20, 20, 20);
             idx = (int)Status.loot3; mpositions0[idx, 0] = new Point(39, 290); mcolors[idx, 0] = Color.FromArgb(20, 20, 20);
             idx = (int)Status.loot4; mpositions0[idx, 0] = new Point(39, 330); mcolors[idx, 0] = Color.FromArgb(20, 20, 20);
+
+            idx = (int)Status.minimap;          mpositions0[idx, 0] = new Point(-100, 100); mcolors[idx, 0] = Color.FromArgb(20, 20, 20);
+            idx = (int)Status.lootstop;          mpositions0[idx, 0] = new Point(-50, -50); mcolors[idx, 0] = Color.FromArgb(20, 20, 20);
             // monitor;
             //idx = (int)Status.roguehide; mpositions[idx] = new Point(311, 770); mcolors[idx, 0] = Color.FromArgb(255, 215, 160);
             //idx = (int)Status.ctl2; mpositions[idx] = new Point(968, 808); mcolors[idx, 0] = Color.FromArgb(255, 26, 26);
@@ -226,17 +271,18 @@ namespace WrittingHelper.wow
             int ctlwid = 32;
             //int exphigh = 8;
             //idx = (int)Status.ctl2;             mpositions[idx] = new Point(968, 808-20); mcolors[idx, 0] = Color.FromArgb(255, 26, 26);
-            idx = (int)Status.outmeleerange; mpositions0[idx, 0] = new Point(gridhigh + 26, basehigh + gridhigh * 10 + 30); mcolors[idx, 0] = Color.FromArgb(255, 26, 26);
-            mpositions0[idx, 1] = new Point(gridhigh + 26, basehigh + gridhigh * 10 + 31);
+            idx = (int)Status.outmeleerange;    mpositions0[idx, 0] = new Point(-(gridhigh + 26), -(basehigh + gridhigh * 10 + 30)); mcolors[idx, 0] = Color.FromArgb(255, 26, 26);
+                                                mpositions0[idx, 1] = new Point(-(gridhigh + 26), -(basehigh + gridhigh * 10 + 31));
             //idx = (int)Status.auto;             mpositions[idx] = new Point(315, 784);      mcolors[idx, 0] = Color.FromArgb(173, 171, 173);
-            idx = (int)Status.auto; mpositions0[idx, 0] = new Point(gridhigh + 42, basehigh + gridhigh * 3 + 20); mcolors[idx, 0] = Color.FromArgb(216, 197, 103);// mcolors[idx, 1] = Color.FromArgb(0, 0, 0);// 152, 164, 194);
-            idx = (int)Status.roguehide; mpositions0[idx, 0] = new Point(gridhigh + 42, basehigh + gridhigh * 4 + 20); mcolors[idx, 0] = Color.FromArgb(222, 201, 104); //mcolors[idx, 1] = Color.FromArgb(0, 0, 0);// 215, 160);
-            idx = (int)Status.slice; mpositions0[idx, 0] = new Point(gridhigh, basehigh); mcolors[idx, 0] = Color.FromArgb(175, 128, 4); mcolors[idx, 1] = Color.FromArgb(110, 90, 10); mcolors[idx, 2] = Color.FromArgb(86, 69, 8);
+            idx = (int)Status.auto;             mpositions0[idx, 0] = new Point(-(gridhigh + 42), -(basehigh + gridhigh * 3 + 20)); mcolors[idx, 0] = Color.FromArgb(216, 197, 103);// mcolors[idx, 1] = Color.FromArgb(0, 0, 0);// 152, 164, 194);
+            idx = (int)Status.roguehide;        mpositions0[idx, 0] = new Point(-(gridhigh + 42), -(basehigh + gridhigh * 4 + 20)); mcolors[idx, 0] = Color.FromArgb(222, 201, 104); //mcolors[idx, 1] = Color.FromArgb(0, 0, 0);// 215, 160);
+            idx = (int)Status.slice;            mpositions0[idx, 0] = new Point(-gridhigh, -basehigh); mcolors[idx, 0] = Color.FromArgb(175, 128, 4); mcolors[idx, 1] = Color.FromArgb(110, 90, 10); mcolors[idx, 2] = Color.FromArgb(86, 69, 8);
 
 
+ 
             changeSize(mhigh0, mwid);
         }
-
+        
         
 
         public bool isLoot()

@@ -93,6 +93,10 @@ namespace WrittingHelper
                 }
             }
         }
+        public void AppendLine(string str)
+        {
+
+        }
 
         // static method;
         public static void AppendText(string filename, string str)

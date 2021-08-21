@@ -10,6 +10,9 @@ namespace WrittingHelper.wow
     {
         public Func<int, int> getVal;
         public Action<int> doAction;
+        public Action doLoot;
+
+        public Action<int, int> onPos;
 
         //public WowCmd mwowcmd = null;
         //public D2c md2c = null;
@@ -33,6 +36,9 @@ namespace WrittingHelper.wow
         int _xpos;
         int _ypos;
 
+
+
+
         public void DoMacro()
         {
             if (mhealcnt > 0) mhealcnt--;
@@ -46,6 +52,8 @@ namespace WrittingHelper.wow
             _xpos = GetVal(EgridRogue.xpos);
             _ypos = GetVal(EgridRogue.ypos);
 
+            this.onPos(_xpos, _ypos);
+
 #if DEBUG
             //DbMsg.Msg("pos=(" + _xpos.ToString() + "," + _ypos.ToString());
 #endif
@@ -54,11 +62,28 @@ namespace WrittingHelper.wow
             {
                 Combat();
             }
+            //else
+            //{
+            if (GetVal(EgridRogue.pcombat) == 0)    // out of combat;
+            {
+                if (_tmlastcombat<100)    _tmlastcombat++;
+
+                Heal();
+
+                if ((mhealcnt==0) && (this._tmlastcombat < 40))
+                    DoLoot();
+            }
             else
             {
-                OutofCombat();
+                _isloot = false;
+                _tmlastcombat = 0;
             }
+            //}
         }
+
+        // count;
+        int _tmlastcombat = 99;
+        int _lootstate = 0;
 
         void Combat()
         {
@@ -67,16 +92,12 @@ namespace WrittingHelper.wow
             bool isslice = false;
 
             int thp = GetVal(EgridRogue.thpcur);
-#if DEBUG
             Lslog.log("thp=" + thp.ToString());
-#endif
 
             if (thp > 0)
             {
                 int pt = GetVal(EgridRogue.ppoint);
-#if DEBUG
                 Lslog.log("pt=" + pt.ToString() + "," + mslicecnt.ToString());
-#endif
 
                 if ((GetVal(EgridRogue.aslice) == 0))
                 {
@@ -116,23 +137,29 @@ namespace WrittingHelper.wow
                     DoAction(EactionRogue.sinister);
                 }
             }
+            else
+            {
+                DoLoot();
+            }
         }
 
 
-        void OutofCombat()
+        void Heal()
         {
-            if (GetVal(EgridRogue.pcombat) == 0)
+            //if (GetVal(EgridRogue.pcombat) == 0)
+            //{
+            if (_phpm <= 0) _phpm = 1;
+            float p = (float)_php / (float)_phpm;
+
+            if (p < 0.5 && mhealcnt == 0)
             {
-                if (_phpm <= 0) _phpm = 1;
-                float p = (float)_php / (float)_phpm;
-                if (p < 0.5 && mhealcnt == 0)
-                {
-                    DoAction(EactionRogue.heal);
-                    mhealcnt = 30;
-                }
-                if (mhealcnt > 0)
-                    DuringkHeal(p);
+                DoAction(EactionRogue.heal);
+                mhealcnt = 30;
             }
+
+            if (mhealcnt > 0)
+                DuringkHeal(p);
+            //}
         }
 
 
@@ -168,6 +195,16 @@ namespace WrittingHelper.wow
                     }
                 }
             }
+        }
+
+        // how to make sure only loot once?
+        bool _isloot = false;
+        void DoLoot()
+        {
+            if (_isloot)
+                return;
+            _isloot = true;
+            this.doLoot();
         }
     }
 }

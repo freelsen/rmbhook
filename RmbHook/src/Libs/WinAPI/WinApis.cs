@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace WrittingHelper.libs
 {
+
+    
+
     public class WinApis
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -15,7 +18,6 @@ namespace WrittingHelper.libs
             public int X;
             public int Y;
         }
-
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
@@ -24,7 +26,8 @@ namespace WrittingHelper.libs
             internal int right;
             internal int bottom;
         }
- 
+
+
         [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
         public static extern int GetCursorPos(ref POINTAPI lpPoint);
         public static bool GetCursorPos(ref int x, ref int y)

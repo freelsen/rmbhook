@@ -77,6 +77,7 @@ namespace WrittingHelper
 
         //public int mcmd = 0;    // 2021-01-23;
         bool misstateChanged = false;   // 2021-01-26;
+        CmdTimer mcmdtimer = new CmdTimer(); // 2021-03-20,
 
         public int onKeyMsg(KeyEventArgs e)
         {
@@ -88,6 +89,12 @@ namespace WrittingHelper
             mEatKey = 0;
             //mcmd = 0;
             misstateChanged = false;
+
+            //if (mcmdtimer.OnCmd(misEnable))
+            //{
+            //    stopCmdMode();
+            //}
+
 
             if (isEnableChanged())
             {
@@ -120,9 +127,7 @@ namespace WrittingHelper
                     // 
                     if (!onCmdKey(mk))
                     {
-                        misCmdMode = false;
-
-                        misstateChanged = true; //updateModeIcon();
+                        StopCmdMode();
                     }
                 }
             }
@@ -134,6 +139,12 @@ namespace WrittingHelper
             //Console.WriteLine(mEatKey.ToString());
             return mEatKey;
         }
+        void StopCmdMode()
+        {
+            misCmdMode = false;
+            misstateChanged = true; //updateModeIcon();
+        }
+
 
         // --- eat key control --- 
         // determine if to eat topkey or not in cmd mode;
@@ -205,17 +216,19 @@ namespace WrittingHelper
             //if (mk == mtopkey)
             //    return false;
 
-            bool iskeepcmdmode = mKeyCmdNmv.doNonMovingCmd(k);
-            if (iskeepcmdmode == false)
+            bool iskeepcmdmode = true;
+            bool ishandle= mKeyCmdNmv.doNonMovingCmd(k, ref iskeepcmdmode);
+            if (ishandle)
             {
-                mEatKey = 1;
-                //stopCmdMode();
+                //if (iskeepcmdmode == false)
+                {
+                    mEatKey = 1;
+                    //stopCmdMode();
 
-                return iskeepcmdmode;
+                    return iskeepcmdmode;
+                }
             }
-
-            // moving control,
-            if (0 == mEatKey)
+            else // moving control,
             {
                 mEatKey = mcommandmode.onKey(k);
             }

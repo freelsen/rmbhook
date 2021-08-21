@@ -26,38 +26,39 @@ namespace WrittingHelper
         }
 
 
-        public bool doNonMovingCmd(Keys k)
+        public bool doNonMovingCmd(Keys k, ref bool iskeepcmd)
         {
 
-            bool iskeepcmd = true;  // 2021-01-23;
+            //bool iskeepcmd = false;  // 2021-01-23;
+            iskeepcmd = true;
+            bool ishindle = false;
 
             // check function group-1,
             if (k==Keys.G)
             {
-                return false;
+                iskeepcmd = false;
+                ishindle = true;
             }
-            
-            // quick note window;
-            if (k==Keys.H)
+            else if (k==Keys.H)  // quick note window;
             {
                 this.ShowQuickNote();
-                return false;
+                iskeepcmd = false;
+                ishindle = true;
             }
             //else if (k==Keys.N)   // distable this, too dangeous!! 2021-01-23;
             //{
             //    QuickNoteMan.mthis.ResetWindow();
             //    return false;
             //}
-            
-            // date & time string;
-            if (k==Keys.Y)  //.T)
+            else if (k==Keys.Y)  //.T) // date & time string;
             {
                 DateTime dt = DateTime.Now;
                 string str = dt.ToString("yyyy-MM-dd");
                 Console.WriteLine(str);
                 KeyHelper.SentString(str);
 
-                return false;
+                iskeepcmd = true;
+                ishindle = true;
             }
             else if (k==Keys.P) //.Y) 2021-02-19,
             {
@@ -65,51 +66,54 @@ namespace WrittingHelper
                 string str1 = dt1.ToString("hh:mm tt");
                 //Console.WriteLine(str);
                 KeyHelper.SentString(str1);
-                return false;
+
+                iskeepcmd = true;
+                ishindle = true;
             }
-
-            // window management, 20150621;
-            if (menWindow)
+            else if (menWindow)      // window management, 20150621;
             {
-                if (k==Keys.V)//.B)           // 
-                {
-                        WinMon.mthis.stBottom();
+                //if (k==Keys.V)//.B)           // 
+                //{
+                //        WinMon.mthis.stBottom();
 
-                        return false;
-                }
-                else if (k==Keys.C)//.V)     //.C)
-                {
-                        WinMon.mthis.restore();
-
-                   return false;
-                }
-                else if (k== Keys.B)//.N)    //.V)
+                //    iskeepcmd = false;
+                //    ishindle = true;
+                //}
+                //else if (k==Keys.C)//.V)     //.C)
+                //{
+                //        WinMon.mthis.restore();
+                //    iskeepcmd = false;
+                //    ishindle = true;
+                //}
+                //else 
+                if (k== Keys.B)//.N)    //.V)
                 {
                         WinMon.mthis.minNow();
-                        return false;
+                    iskeepcmd = false;
+                    ishindle = true;
                 }
             }
-
-            // search function;
-            if (mensearch)
+            else if (mensearch)      // search function;
             {
                 if (k== Keys.P)            // 20160503, keyword search;
                 {
                     LsKeyword kw = LsKeyword.getThis();
                     kw.onSearchKey(true);
-
-                    return false;
+                    iskeepcmd = false;
+                    ishindle = true;
                 }
                 else if (k== Keys.M)//2021-01-22;N:
                 {
                     LsKeyword kw2 = LsKeyword.getThis();
                     kw2.onSearchKey(false);
-
-                    return false;
+                    iskeepcmd = false;
+                    ishindle = true;
                 }
             }
 
-            return iskeepcmd;
+            return ishindle;
         }
+
+
     }
 }

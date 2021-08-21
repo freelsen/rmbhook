@@ -9,7 +9,7 @@ namespace WrittingHelper.quicknote
 {
     class QnProc
     {
-        public string mfolder = "C:\\Users\\Windows User\\OneDrive\\shengdoc";
+        public string mfolder = "C:\\Users\\Sean\\OneDrive\\shengdoc";
         public string mfiledefault = "abc.md";
         
         public string mpath = "";
@@ -90,7 +90,7 @@ namespace WrittingHelper.quicknote
         string _filename = "";
 
         bool _iscmdline = true;
-        // cmdline strategy 2: cmdline locate anyline,
+        // cmdline strategy 2: cmdline can be located at anyline,
         char _cmdchar = ':';
         void CheckCmdLines(TextBox tb)
         {

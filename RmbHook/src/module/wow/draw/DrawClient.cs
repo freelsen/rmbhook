@@ -10,6 +10,8 @@ namespace WrittingHelper.wow
     class DrawClient
     {
         public ColorGrids _colorgrids = null;
+        public WowRoguePixelOne _pixelone = null;
+        public LootWheel _loot = null;
 
         public Dw3by3 mdw3by3 = null; // new Dw3by3();
         public DwGraph mdwgraph = null; // new DwGraph();
@@ -29,6 +31,10 @@ namespace WrittingHelper.wow
             // 2021-02-24;
             //misresize = true;
             _colorgrids.AlignGrids();
+
+            _pixelone.changeSize(rc.Height,rc.Width);
+            this._loot.OnSize(cx, cy);
+
         }
         public void OnPaint(Graphics grap)
         {
