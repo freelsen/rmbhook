@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-using WrittingHelper.libs;
+using ls.libs;
 
 namespace WrittingHelper
 {

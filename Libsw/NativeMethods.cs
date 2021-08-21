@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Libsw
+namespace ls.libs
 {
     public static class NativeMethods
     {

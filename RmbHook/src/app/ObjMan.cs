@@ -33,7 +33,8 @@ namespace WrittingHelper
 
         // 2021-02-13,
         public DrawFormMan mdrawFormMan = new DrawFormMan();
-        public WowMan mwowman = new WowMan();
+
+        public CreatWow mwow = new CreatWow();
 
         private void create()
         {
@@ -53,15 +54,16 @@ namespace WrittingHelper
 
             mtasknotify.init(mform);
 
-            mwowman.mdfman = mdrawFormMan;
-            mwowman.mhookhandler = this.mHookEventHandler;
-            mwowman.init();     // 2021-02-13,
+            //mwowman.mdfman = mdrawFormMan;
+            //mwowman.mhookhandler = this.mHookEventHandler;
+            //mwowman.init();     // 2021-02-13,
+            mwow.init();
 
-            mdrawFormMan.mwowman = mwowman;
+            //mdrawFormMan.mwowman = mwowman;
             mdrawFormMan.init();    // 2021-02-13;
 
             // gesture;
-            mGestureMan.mwowman = mwowman;  //2021-02-13;
+            //mGestureMan.mwowman = mwowman;  //2021-02-13;
             mGestureMan.mBkgWorker = mform.getWorker();
             mGestureMan.init();
 

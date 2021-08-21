@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using lslibcs;      // 20150621;
+using ls.libs;      // 20150621;
 
 namespace WrittingHelper
 {

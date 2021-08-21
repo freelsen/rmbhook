@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 //using System.Runtime.InteropServices;
 //using Microsoft.Xna.Framework.Graphics;
-using WrittingHelper.libs;
+using ls.libs;
 
 namespace WrittingHelper
 {

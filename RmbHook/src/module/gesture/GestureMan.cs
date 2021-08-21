@@ -24,7 +24,7 @@ namespace WrittingHelper
         bool mrunning = false;
         public BackgroundWorker mBkgWorker = null;
         UltraHighAccurateTimer mUhaTimer = new UltraHighAccurateTimer();
-        public WowMan mwowman = null;
+        //public WowMan mwowman = null;
 
 
         public GestureMan()

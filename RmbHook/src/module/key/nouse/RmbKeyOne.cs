@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using WrittingHelper.src.keyword;
 using System.Drawing;
+using MouseKeyboardLibrary;
 
 // 2021-01-23. Sheng Li. AB.CA;
 // It is a backup for the `RmbKey` class before re-design;

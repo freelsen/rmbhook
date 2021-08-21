@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using MouseKeyboardLibrary;
-using WrittingHelper.libs;
+using ls.libs;
 
 namespace WrittingHelper
 {

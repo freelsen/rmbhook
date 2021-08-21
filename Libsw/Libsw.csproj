@@ -48,9 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="cursor\ImageHashing.cs" />
+    <Compile Include="src\cursor\ImageHashing.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\tool\AProcess.cs" />
+    <Compile Include="src\tool\ConfigureFile.cs" />
+    <Compile Include="src\tool\DebugMsg.cs" />
+    <Compile Include="src\tool\IndexedQueue.cs" />
+    <Compile Include="src\tool\TextMan.cs" />
+    <Compile Include="src\WinAPI\FetchColor.cs" />
+    <Compile Include="src\WinAPI\WinApis.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

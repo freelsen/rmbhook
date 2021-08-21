@@ -81,6 +81,10 @@
     <Compile Include="src\KeyboardSimulator.cs" />
     <Compile Include="src\MouseHook.cs" />
     <Compile Include="src\MouseSimulator.cs" />
+    <Compile Include="src\tool\KeyHelper.cs" />
+    <Compile Include="src\tool\MouseArgsR.cs" />
+    <Compile Include="src\tool\MouseHelper.cs" />
+    <Compile Include="src\tool\SimSentInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

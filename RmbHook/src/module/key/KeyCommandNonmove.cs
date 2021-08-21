@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using WrittingHelper.src.keyword;
 using WrittingHelper.quicknote;
+using MouseKeyboardLibrary;
 
 namespace WrittingHelper
 {

@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WrittingHelper.libs;
-using WrittingHelper.wow;
+using ls.libs;
 
 namespace WrittingHelper
 {

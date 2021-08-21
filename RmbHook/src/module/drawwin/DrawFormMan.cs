@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WrittingHelper.libs;
-using WrittingHelper.wow;
+using ls.libs;
 
 namespace WrittingHelper
 {
@@ -13,7 +12,7 @@ namespace WrittingHelper
     {
         public static DrawFormMan _this = null;
 
-        public WowMan mwowman = null;
+        //!!>public WowMan mwowman = null;
         public IntPtr mformhwnd = (IntPtr)null;
 
         public DrawForm mdrawform = new DrawForm();
